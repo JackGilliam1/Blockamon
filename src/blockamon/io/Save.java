@@ -2,8 +2,8 @@ package blockamon.io;
 
 import blockamon.IncorrectNameException;
 import blockamon.items.Item;
+import blockamon.objects.Blockamon;
 import blockamon.objects.Player;
-import blockamon.objects.WildBlockamon;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -47,7 +47,7 @@ public class Save {
 	private void savePlayersProgress(PrintWriter save)
 	{
 		int amountOfPlayersBlockamon = player.getPartySize();
-		double amountOfMoneyPlayerHas = player.getTotalMoney();
+		double amountOfMoneyPlayerHas = 0;
 		int amountOfItemsPlayerHas = player.getBagSize();
 		save.printf(PLAYERSTATSFORMAT, amountOfPlayersBlockamon, amountOfItemsPlayerHas, amountOfMoneyPlayerHas);
 
@@ -61,7 +61,7 @@ public class Save {
 		}
 		for(int position = 0; position < amountOfPlayersBlockamon; position++)
 		{
-			WildBlockamon blockamon = player.getBlockamonAt(position);
+			Blockamon blockamon = player.getBlockamonAt(position);
 			if(blockamon != null)
 			{
 				save.printf(BLOCKAMONSTATSFORMAT, position, blockamon.getName(), blockamon.getCurrentLevel(),

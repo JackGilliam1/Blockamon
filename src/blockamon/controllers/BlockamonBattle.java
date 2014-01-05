@@ -1,10 +1,10 @@
 package blockamon.controllers;
 
 import blockamon.World;
-import blockamon.objects.BlockamonType;
+import blockamon.objects.ElementType;
 import blockamon.objects.GameImage;
 import blockamon.objects.Player;
-import blockamon.objects.WildBlockamon;
+import blockamon.objects.Blockamon;
 
 import java.util.Random;
 
@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 public class BlockamonBattle {
 
-	private WildBlockamon blockamon, playerBlock;
+	private Blockamon blockamon, playerBlock;
 	private JPanel world;
 	private World theWorld;
 	private Player player;
@@ -32,7 +32,7 @@ public class BlockamonBattle {
 
     //TODO: Refactor the battle code
 	// Sets all of the starting values of the battle
-	public void startTheBattle(WildBlockamon aBlock, WildBlockamon playersBlockamon) {
+	public void startTheBattle(Blockamon aBlock, Blockamon playersBlockamon) {
 		playerBlock = playersBlockamon;
 		// determines which block appears
 		blockamon = aBlock;
@@ -68,7 +68,7 @@ public class BlockamonBattle {
 		menu.addButtons("battle");
 		menu.removeButtons("OutOfBattle");
 	}
-	public void addPlayersBlock(WildBlockamon inactiveBlock, WildBlockamon activeBlock) {
+	public void addPlayersBlock(Blockamon inactiveBlock, Blockamon activeBlock) {
 		player.moveBlockamon();
 		if(inactiveBlock != null) {
 			world.remove(inactiveBlock);
@@ -78,7 +78,7 @@ public class BlockamonBattle {
 		}
 	}
     //TODO: Refactor string such as this
-	private void whichBlockamon(BlockamonType blockAttackType) {
+	private void whichBlockamon(ElementType blockAttackType) {
 		printText("A wild " + blockAttackType + " Blockamon appears!", "Oh noes!", JOptionPane.WARNING_MESSAGE, "info");
 	}
 
@@ -154,7 +154,7 @@ public class BlockamonBattle {
 	private void playerWhitedOut() {// tells the user the player whited out
 		printText("The player has whited out and was returned to the nearest Healing Center", "Lol you died", JOptionPane.INFORMATION_MESSAGE, "info");
 		theWorld.playerWhitedOut();
-		
+
 	}
 	private void whoWon(Player player) {
 		// if the player has their health go down below 0
@@ -187,8 +187,8 @@ public class BlockamonBattle {
 	}
 
 	private void blockBattle() {
-		BlockamonType playerType = playerBlock.getElementType();
-		BlockamonType foeType = blockamon.getElementType();
+		ElementType playerType = playerBlock.getElementType();
+		ElementType foeType = blockamon.getElementType();
         double playerAttackPower = 1;
         double foeAttackPower = 1;
         if(playerType.negatesAttackAgainst(foeType)) {

@@ -3,8 +3,8 @@ package blockamon.controllers;
 import blockamon.io.Load;
 import blockamon.io.Save;
 import blockamon.items.Item;
+import blockamon.objects.Blockamon;
 import blockamon.objects.Player;
-import blockamon.objects.WildBlockamon;
 import blockamon.objects.buildings.HealingCenter;
 import blockamon.objects.buildings.ItemShop;
 import blockamon.objects.encounters.Grass;
@@ -24,48 +24,48 @@ public class ControlPanel extends JPanel {
         HEAL("Heal"), ITEM("Item"), MONEY("Money"), INFO("Info"),
         BUY("Buy"), SAVE("Save"), LOAD("Load"),
         BACK("Back");
-        
+
         private String text;
-        
+
         MenuItemType(String text) {
             this.text = text;
         }
-        
+
         public String getText() {
             return text;
         }
     }
-    
+
     private enum MenuType {
         EXPLORE(), BATTLE(), SHOP("Shop"), HEAL("Heal"),
         SWITCH("Switch"), INFO("Info"), ITEM("Items");
-        
+
         private String text;
-        
+
         MenuType() {
             this("Actions");
         }
-        
+
         MenuType(String text) {
             this.text = text;
         }
-        
+
         public String getText() {
             return text;
         }
     }
-    
+
     public Map<MenuItemType, JMenuItem> menuItems;
     public Map<MenuType, JMenu> menus;
     public JMenuBar menuBar;
-    
+
     public ControlPanel() {
         menuItems = getMenuItems();
         menus = getMenus();
         attachMenuItems();
         menuBar = createMenuBar(menus);
     }
-    
+
     private JMenuBar createMenuBar(Map<MenuType, JMenu> menuMap) {
         final JMenuBar jMenuBar = new JMenuBar();
         Collection<JMenu> menus = menuMap.values();
@@ -95,7 +95,7 @@ public class ControlPanel extends JPanel {
                          MenuItemType.FLEE, MenuItemType.ITEM, MenuItemType.INFO);
         addToMenu(MenuType.HEAL, MenuItemType.HEAL);
         addToMenu(MenuType.SHOP, MenuItemType.BUY);
-        
+
     }
     private void addToMenu(MenuType menuType, MenuItemType... menuItemTypes) {
         final JMenu menu = getMenu(menuType);
@@ -120,7 +120,7 @@ public class ControlPanel extends JPanel {
     private void setMenu(MenuType menuType, JMenu menu) {
         menus.put(menuType, menu);
     }
-    
+
     private void setMenuEnabled(MenuType menuType, boolean isEnabled) {
         final JMenu menu = getMenu(menuType);
         menu.setEnabled(isEnabled);
@@ -132,12 +132,12 @@ public class ControlPanel extends JPanel {
     private void enableMenu(MenuType menuType) {
         setMenuEnabled(menuType, true);
     }
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
 	/**
 	 * Author: Jack Gilliam Date: 4/17/2011
 	 */
@@ -149,7 +149,7 @@ public class ControlPanel extends JPanel {
             switchBackButton, storeBackButton, inventoryBackButton, infoBackButton, OOBinfoBackButton, OOBswitchBackButton;
 	private ItemShop itemShop;
     private HealingCenter healingCenter;
-	private WildBlockamon blockamon;
+	private Blockamon blockamon;
 	private Grass wildGrass;
 	private JMenuItem[] inventoryButtons, partyButtons, storeButtons, infoButtons;
 	private Player player;
@@ -177,7 +177,7 @@ public class ControlPanel extends JPanel {
     private static final String EXP_FORMAT = "%nCurrent Experience: %d/Needed Experience: %d";
     private static final String HEALTH_FORMAT = "Current Health: %d/Max Health: %d";
     private static final String INFO_FORMAT = LEVEL_FORMAT + ATTACK_FORMAT + STATUS_FORMAT + TYPE_FORMAT + EXP_FORMAT;
-    
+
 	public ControlPanel(Player player, ItemShop itemShop, HealingCenter healingCenter, Grass wildGrass) {
 		super();
 		this.setLayout(new FlowLayout());
@@ -201,24 +201,24 @@ public class ControlPanel extends JPanel {
 		ItemsInShop = addMenus("Shop", theMenu);
 		PlayerItems = addMenus("Your Items", theMenu);
 		info = addMenus("Info", theMenu);
-		
+
 		attackButton = addItems("Attack", Battle);
 		switchButton = addItems("Switch", Battle);
 		fleeButton= addItems("Flee", Battle);
 		itemButton = addItems("Item", Battle);
 		showInfoButton = addItems("Info", Battle);
-		
+
 		healingButton = addItems("Heal", Heal);
-		
+
 		buyButton = addItems("Buy", Shop);
-		
+
 		inventoryBackButton = addItems("Back", null);
 		switchBackButton = addItems("Back", null);
 		infoBackButton = addItems("Back", null);
 		storeBackButton = addItems("Back", null);
 		OOBswitchBackButton = addItems("Back", null);
 		OOBinfoBackButton = addItems("Back", null);
-		
+
 		moneyButton = addItems("Money", OutOfBattle);
 		saveButton = addItems("Save", OutOfBattle);
 		loadButton = addItems("Load", OutOfBattle);
@@ -385,7 +385,7 @@ public class ControlPanel extends JPanel {
 		boolean thereIsABlockamon = false;
 		// for however long the itemButton array is
 		for (int partySlotNum = 0; partySlotNum < infoButtons.length; partySlotNum++) {
-			WildBlockamon playerBlockamon = player.getBlockamonAt(partySlotNum);
+			Blockamon playerBlockamon = player.getBlockamonAt(partySlotNum);
 			if (playerBlockamon != null) {
 				if(infoButtons[partySlotNum] != null)
 				{
@@ -438,7 +438,7 @@ public class ControlPanel extends JPanel {
 	private void displayInfo(JMenuItem theButton, boolean inBattle) {
 		for (int position = 0; position < infoButtons.length; position++) {
 			if (infoButtons[position] == theButton) {
-				WildBlockamon chosenBlockamon = player.getBlockamonAt(position);
+				Blockamon chosenBlockamon = player.getBlockamonAt(position);
 				if (chosenBlockamon != null) {
 					printText(chosenBlockamon.toString(), "Info for " + chosenBlockamon.getName(), JOptionPane.INFORMATION_MESSAGE, "info");
 					if (inBattle) {
@@ -454,7 +454,7 @@ public class ControlPanel extends JPanel {
 			}
 		}
 	}
-	public void storeTheBlockamon(WildBlockamon opponentBlockamon) {
+	public void storeTheBlockamon(Blockamon opponentBlockamon) {
 		blockamon = opponentBlockamon;
 	}
 	public void createPartyButtons(boolean inBattle) {
@@ -464,7 +464,7 @@ public class ControlPanel extends JPanel {
 		boolean thereIsABlockamon = false;
 		// for however long the itemButton array is
 		for (int partySlotNum = 0; partySlotNum < partyButtons.length; partySlotNum++) {
-			WildBlockamon playerBlockamon = player.getBlockamonAt(partySlotNum);
+			Blockamon playerBlockamon = player.getBlockamonAt(partySlotNum);
 			if (playerBlockamon != null) {
 				if(partyButtons[partySlotNum] != null)
 				{
@@ -538,8 +538,8 @@ public class ControlPanel extends JPanel {
 	private void switchBlockamon(JMenuItem theButton, boolean inBattle) {
 		for (int position = 0; position < partyButtons.length; position++) {
 			if (partyButtons[position] == theButton) {
-				WildBlockamon chosenBlockamon = player.getBlockamonAt(position);
-				WildBlockamon activeBlockamon = player.getLeadBlockamon();
+				Blockamon chosenBlockamon = player.getBlockamonAt(position);
+				Blockamon activeBlockamon = player.getLeadBlockamon();
 				if (!chosenBlockamon.equals(activeBlockamon)) {
                     activeBlockamon.isLead(false);
                     chosenBlockamon.isLead(true);
@@ -567,7 +567,7 @@ public class ControlPanel extends JPanel {
 		}
 	}
 	// does the player catch the blockamon
-	private boolean wasCaught(WildBlockamon PBlock) {
+	private boolean wasCaught(Blockamon PBlock) {
 		boolean amCaught = false;
 		int maxCaughtChance = CHANCETOCATCHWHENHIGHEST;
 		Random randNum = new Random();
@@ -643,13 +643,13 @@ public class ControlPanel extends JPanel {
 				// if the item in the specified position is not null
 				if (player.getItem(position) != null) {
 					Item playersItem = player.getItem(position);
-					WildBlockamon PBlock = player.getLeadBlockamon();
+					Blockamon PBlock = player.getLeadBlockamon();
 					// if the item is a HealVial
 					if (playersItem.equals(Item.HEALVIAL)) {
 						// if the players Blockamon exists
 						if (PBlock != null) {
 							// heal the blockamon for 10 health
-							PBlock.heal(playersItem.getHealAmount());
+							PBlock.heal((int) playersItem.getHealAmount());
 							// inform the user what their blockamons health is
 							printText("Your Blockamon Now has "
 									+ PBlock.getCurrentHealth() + " Health",

@@ -1,9 +1,9 @@
 package blockamon.io;
 
 import blockamon.items.Item;
-import blockamon.objects.BlockamonType;
+import blockamon.objects.ElementType;
 import blockamon.objects.Player;
-import blockamon.objects.WildBlockamon;
+import blockamon.objects.Blockamon;
 import generators.BlockamonGenerator;
 import generators.StringBuilderGenerator;
 
@@ -22,12 +22,12 @@ public class Load {
     private static final String FILELOADED_MESSAGE = "You loaded a Save";
     private static final String FILEPROMPT_MESSAGE = "Type the file you would like to load from the list below with the .save";
     private static final String FILECORRUPTERR_MESSAGE = "File could not be loaded, as it is either corrupt or not in the correct format";
-    
+
 	public Load(Player player) {
 		this.player = player;
 		loadAFile();
 	}
-    
+
 	private void loadAFile() {
         final StringBuilder builder = StringBuilderGenerator.getStringBuilder();
 		Scanner scanner = null;
@@ -56,7 +56,7 @@ public class Load {
 			{
 				file = new File(fileName);
 				scanner = new Scanner((file));
-				
+
 				scanner.nextLine();
 				String Blocks = scanner.nextLine();
 				String Items = scanner.nextLine();
@@ -109,7 +109,7 @@ public class Load {
 		player.addItem(Enum.valueOf(Item.class, itemName.toUpperCase()));
 	}
 	private void getStats(Scanner scanner) {
-		WildBlockamon aBlock;
+		Blockamon aBlock;
 		String blockamon = scanner.nextLine();
 		String[] splitBlock = blockamon.split(" ");
 		int position = Integer.parseInt(splitBlock[1]);
@@ -128,12 +128,12 @@ public class Load {
 		String[] splitIsActive = blockIsActive.split(" ");
 		String name = splitName[1];
 		double attack = Double.parseDouble(splitAttack[1]);
-		BlockamonType type = BlockamonType.valueOf(splitAttackType[1].toUpperCase());
+		ElementType type = ElementType.valueOf(splitAttackType[1].toUpperCase());
 		double health = Double.parseDouble(splitHealth[1]);
 		boolean isLead = Boolean.parseBoolean(splitIsActive[1]);
 		aBlock = BlockamonGenerator.generateBlockamonOfType(type);
         aBlock.setTotalHealth(health);
-        aBlock.setTotalAttack(attack);
+        aBlock.setTotalAttack((int) attack);
         aBlock.setName(name);
         aBlock.setCurrentLevel(level);
         aBlock.setExperience(currentExperience);

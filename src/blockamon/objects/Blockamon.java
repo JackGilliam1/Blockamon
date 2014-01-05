@@ -4,19 +4,19 @@ import java.awt.*;
 
 import javax.swing.*;
 import java.util.*;
-public class WildBlockamon extends IBoundable {
+public class Blockamon extends IBoundable {
 
     //TODO: Fix information being displayed incorrectly
     private String _name;
-    private BlockamonType _elementType;
+    private ElementType _elementType;
     private double _currentAttack;
     private double _totalAttack;
     private double _totalHealth;
     private double _currentHealth;
     private double _attackPower;
-    
+
 	private static final Random randomNumberGenerator = new Random();
-    
+
 	private boolean isLead;
 	private static int healthRange = 10;
 	private static int healthAddition = 10;
@@ -33,7 +33,7 @@ public class WildBlockamon extends IBoundable {
 	private static final double EXPERIENCE_NEEDED_MULTIPLIER = 2.5;
 	private static final double EXPERIENCE_GAIN_MULTIPLIER = 1.5;
 	private int randomExperience, currentLevel, experience, soNotZero, experienceNeeded;
-	
+
     private static final int DEFAULT_WIDTH = 50;
     private static final int DEFAULT_HEIGHT = 30;
     private static final int DEFAULT_LEVEL = 1;
@@ -41,29 +41,29 @@ public class WildBlockamon extends IBoundable {
     private static final int DEFAULT_EXPERIENCE_NEEDED = 50;
     private static final double DEFAULT_ATTACK_POWER = 1.0;
     private static final Color DEFAULT_COLOR = Color.WHITE;
-    
-    public WildBlockamon(BlockamonType type) {
+
+    public Blockamon(ElementType type) {
         this(type, type.toString());
     }
-    public WildBlockamon(BlockamonType type, String name) {
+    public Blockamon(ElementType type, String name) {
         this(type, name, DEFAULT_LEVEL);
     }
-    public WildBlockamon(BlockamonType type, String name, int currentLevel) {
+    public Blockamon(ElementType type, String name, int currentLevel) {
         this(type, name, DEFAULT_WIDTH, DEFAULT_HEIGHT, currentLevel, DEFAULT_EXPERIENCE_NEEDED);
     }
-    public WildBlockamon(BlockamonType type, String name, int currentLevel, int experienceNeeded) {
+    public Blockamon(ElementType type, String name, int currentLevel, int experienceNeeded) {
         this(type, name, DEFAULT_WIDTH, DEFAULT_HEIGHT, currentLevel, experienceNeeded);
     }
-    public WildBlockamon(BlockamonType type, String name, int width, int height, int currentLevel, int experienceNeeded) {
+    public Blockamon(ElementType type, String name, int width, int height, int currentLevel, int experienceNeeded) {
         this(type, name, width, height, currentLevel, experienceNeeded, DEFAULT_COLOR);
     }
-    public WildBlockamon(BlockamonType type, String name, int width, int height, int currentLevel, int experienceNeeded, int red, int green, int blue) {
+    public Blockamon(ElementType type, String name, int width, int height, int currentLevel, int experienceNeeded, int red, int green, int blue) {
         this(type, name, width, height, currentLevel, experienceNeeded, new Color(red, green, blue));
     }
-    public WildBlockamon(BlockamonType type, String name, int width, int height, int currentLevel, int experienceNeeded, Color color) {
+    public Blockamon(ElementType type, String name, int width, int height, int currentLevel, int experienceNeeded, Color color) {
         this(type, name, width, height, currentLevel, DEFAULT_EXPERIENCE, experienceNeeded, color);
     }
-    public WildBlockamon(BlockamonType type, String name, int width, int height, int currentLevel, int experience, int experienceNeeded, Color color) {
+    public Blockamon(ElementType type, String name, int width, int height, int currentLevel, int experience, int experienceNeeded, Color color) {
         super();
         setElementType(type);
         setName(name);
@@ -106,14 +106,14 @@ public class WildBlockamon extends IBoundable {
      * Retrieves the element type of this blockamon
      * @return The element type of this blockamon
      */
-    public BlockamonType getElementType() {
+    public ElementType getElementType() {
         return _elementType;
     }
     /**
      * Sets the element type of this blockamon to the specified value
      * @param value The new element type of this blockamon
      */
-    private void setElementType(BlockamonType value) {
+    private void setElementType(ElementType value) {
         _elementType = value;
     }
     /**
@@ -210,7 +210,7 @@ public class WildBlockamon extends IBoundable {
         this.isLead = isLead;
     }
     //</editor-fold>
-    
+
     /**
      * Heals the blockamon to full health
      */
@@ -234,7 +234,7 @@ public class WildBlockamon extends IBoundable {
         final double newHealth = (currentHealth - value) + ((value%currentHealth)%value);
         setCurrentHealth(newHealth);
     }
-    
+
 	public void levelUp() {
         setCurrentLevel(getCurrentLevel() + 1);
 		showInfo("Your blockamon is now level " + getCurrentLevel(), "Level up", JOptionPane.INFORMATION_MESSAGE);
@@ -290,14 +290,8 @@ public class WildBlockamon extends IBoundable {
 	}
     /**
      * Heals this blockamon for the specified amount, or to the blockamons total health
-     * @param value The amount to heal the blockamon for
+     * @param damage The amount to heal the blockamon for
      */
-	public void heal(double value) {
-        final double currentHealth = getCurrentHealth();
-        final double totalHealth = getTotalHealth();
-        value = value - (currentHealth + value)%totalHealth;
-		setCurrentHealth(currentHealth + value);
-	}
 	public void takeDamage(double damage, boolean isPlayersTurn) {
 		int criticalHit = randomNumberGenerator.nextInt(CRITICAL_HIT_MAX);
 		int hitMiss = randomNumberGenerator.nextInt(HIT_MAX);
@@ -333,17 +327,17 @@ public class WildBlockamon extends IBoundable {
 		}
 		return who;
 	}
-    
+
     //resets the attack and attack power to their defaults
     public void resetAttack() {
         setCurrentAttack(getTotalAttack());
         setAttackPower(DEFAULT_ATTACK_POWER);
     }
-    
+
     public void resetHealth() {
         setCurrentHealth(getTotalHealth());//health = totalHealth;
     }
-    
+
     public String toString() {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Level: ");
@@ -374,4 +368,54 @@ public class WildBlockamon extends IBoundable {
         stringBuilder.append(getNeededExperience());
         return stringBuilder.toString();
     }
+
+
+
+
+    private ElementType _element;
+    private int _maxHP;
+    private int _currentHP;
+
+    public Blockamon(int maxHP) {
+        maxHitPoints(maxHP);
+        currentHitPoints(maxHP);
+        _element = ElementType.NORMAL;
+    }
+
+    public void element(ElementType element) {
+        _element = element;
+    }
+
+    public ElementType element() {
+        return _element;
+    }
+
+    public void maxHitPoints(int maxHP) {
+        _maxHP = maxHP;
+    }
+
+    public void currentHitPoints(int currentHP) {
+        _currentHP = currentHP;
+    }
+
+    public void takeDamage(int hp) {
+        _currentHP -= hp;
+        if(_currentHP < 0) {
+            _currentHP = 0;
+        }
+    }
+
+    public int maxHP() {
+        return _maxHP;
+    }
+
+    public int currentHitPoints() {
+        return _currentHP;
+    }
+
+    public void heal(int hp) {
+        _currentHP = (_currentHP += hp) - (_currentHP % _maxHP);
+    }
+
+
 }

@@ -33,9 +33,9 @@ public class World extends JFrame implements MessageDialogListener {
     private static final int playerYStartingLocation = 100;
     private static final int playerWidth = 30;
     private static final int playerHeight = 50;
-    
-    
-    
+
+
+
 	public World() {
 		super(GAME_TITLE);
 		this.setLayout(new BorderLayout());
@@ -45,12 +45,11 @@ public class World extends JFrame implements MessageDialogListener {
 		worldSize = playingField.getPreferredSize();
 		playingField.setBorder(BorderFactory.createLineBorder(Color.black));
 	}
-    
+
     public void run() {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         player = createPlayer();
         playingField.add(player);
-        player.addListener(this);
         createItemShop();
         createHealingCenter();
         createGrass();
@@ -63,22 +62,22 @@ public class World extends JFrame implements MessageDialogListener {
         setVisible(true);
         this.repaint();
     }
-    
+
     public ControlPanel getMenu() {
         return menu;
     }
-    
+
 	private void createItemShop() {
 		//creates the shop you can buy from
 		itemShop = new ItemShop();
         itemShop.stockItems(Item.HEALVIAL, Item.BLOCKABALL);
 		playingField.add(itemShop);
 	}
-    
+
 	public ItemShop getItemShop() {
 		return itemShop;
 	}
-    
+
 	//creates grass
 	private void createGrass() {
 		//creates the grass where wild Blockamon live
@@ -96,11 +95,11 @@ public class World extends JFrame implements MessageDialogListener {
 	}
     //creates the place that can heal
     private void createHealingCenter() {
-        healingCenter = new HealingCenter();
+        healingCenter = new HealingCenter(null, null);
         playingField.add(healingCenter);
         playingField.repaint();
     }
-    
+
 	//returns the grass
 	public Grass getTheGrass() {
 		return wildGrass;
@@ -109,8 +108,8 @@ public class World extends JFrame implements MessageDialogListener {
 	public HealingCenter getHealingCenter() {
 		return healingCenter;
 	}
-	
-	
+
+
 	//player loses a battle and all blockamon in their party have lost all HealthPoints
 	public void playerWhitedOut() {
 		player.setLocation(healingCenter.getX(), healingCenter.getY());
@@ -120,7 +119,7 @@ public class World extends JFrame implements MessageDialogListener {
 	}
 	public void inStore() {
 		//if the player is within the bounds of the healing center
-		if(player.getX() < itemShop.getX()+itemShop.getWidth()&& 
+		if(player.getX() < itemShop.getX()+itemShop.getWidth()&&
 		player.getX()+ player.getWidth() > itemShop.getX()&&
 		player.getY() < itemShop.getY()+itemShop.getHeight()&&
 		player.getY() + player.getHeight() > itemShop.getY())
@@ -150,7 +149,7 @@ public class World extends JFrame implements MessageDialogListener {
 	}
 	public void inHealingStation() {
 		//if the player is within the bounds of the healing center
-		if(player.getX() < healingCenter.getX()+ healingCenter.getWidth()&& 
+		if(player.getX() < healingCenter.getX()+ healingCenter.getWidth()&&
 		player.getX()+ player.getWidth() > healingCenter.getX()&&
 		player.getY() < healingCenter.getY()+ healingCenter.getHeight()&&
 		player.getY() + player.getHeight() > healingCenter.getY())
@@ -177,8 +176,8 @@ public class World extends JFrame implements MessageDialogListener {
 	public Player getPlayer() {
 		return player;
 	}
-	
-	
+
+
 	//change whether the player is in battle or not
 	public void changeBattleState() {
 		inBattle = !inBattle;
@@ -187,8 +186,8 @@ public class World extends JFrame implements MessageDialogListener {
 	public boolean inBattle() {
 		return inBattle;
 	}
-    
-    
+
+
 	//moves the player
 	public void movePlayer(char aKey) {
 		menu.removeButtons("info");
@@ -196,16 +195,16 @@ public class World extends JFrame implements MessageDialogListener {
 		//tells the player to move
 		player.movePlayer(aKey, this.getWidth(), this.getHeight());
 	}
-    
+
 	public void changePlayerImage(GameImage.Direction direction) {
 		player.changeImage(direction);
 	}
-	
-	
+
+
 	//determines whether the player is within the grass or not
 	public void blockAppear() {
 		//if the player is within the bounds of the grass
-		if(player.getX() < wildGrass.getX()+wildGrass.getWidth()&& 
+		if(player.getX() < wildGrass.getX()+wildGrass.getWidth()&&
 		   player.getX()+ player.getWidth() > wildGrass.getX()&&
 		   player.getY() < wildGrass.getY()+wildGrass.getHeight()&&
 		   player.getY() + player.getHeight() > wildGrass.getY())
@@ -216,17 +215,17 @@ public class World extends JFrame implements MessageDialogListener {
 		//if the player is outside the bounds of the grass
 		else
 		{
-			
+
 		}
 	}
-	
+
 	//returns the focus to the window when it is not the focus to begin with
 	public void takeTheFocus() {
 		this.requestFocusInWindow();
 	}
 
-    
-    
+
+
     public void displayMessageDialog(MessageDialogEvent dialogEvent) {
         JOptionPane.showMessageDialog(null, dialogEvent.getMessage(), dialogEvent.getMessageTitle(), dialogEvent.getMessageType());
     }

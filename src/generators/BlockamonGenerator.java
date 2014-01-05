@@ -1,7 +1,7 @@
 package generators;
 
-import blockamon.objects.WildBlockamon;
-import blockamon.objects.BlockamonType;
+import blockamon.objects.Blockamon;
+import blockamon.objects.ElementType;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,13 +12,13 @@ import blockamon.objects.BlockamonType;
  */
 public class BlockamonGenerator
 {
-    public static WildBlockamon generateRandomBlockamon()
+    public static Blockamon generateRandomBlockamon()
     {
-        return new WildBlockamon(BlockamonType.getRandomType());
+        return new Blockamon(ElementType.getRandomType());
     }
-    
-    public static WildBlockamon generateBlockamonOfType(BlockamonType type)
+
+    public static Blockamon generateBlockamonOfType(ElementType type)
     {
-        return new WildBlockamon(type);
+        return new Blockamon(type);
     }
 }
