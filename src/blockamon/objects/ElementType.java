@@ -2,24 +2,33 @@ package blockamon.objects;
 
 import blockamon.ExtensionMethods;
 
-import java.awt.*;
 import java.util.*;
 
 public enum ElementType {
-	BUG(168, 184, 32), DARK(112, 88, 72), DRAGON(112, 56, 248), ELECTRIC(248, 208, 48),
-    FAIRY(255, 192, 203), FIGHTING(192, 48, 40), FIRE(240, 128, 48), FLYING(168, 144, 240),
-    GHOST(112, 88, 152), GRASS(0, 200, 0), GROUND(227, 199, 106), ICE(152, 216, 216),
-    NORMAL(152, 149, 116), POISON(160, 64, 160), PSYCHIC(248, 88, 136), ROCK(184, 160, 56),
-    STEEL(184, 184, 208), WATER(0, 0, 200);
+	BUG(ElementColor.BUG), DARK(ElementColor.DARK), DRAGON(ElementColor.DRAGON), ELECTRIC(ElementColor.ELECTRIC),
+    FAIRY(ElementColor.FAIRY), FIGHTING(ElementColor.FIGHTING), FIRE(ElementColor.FIRE), FLYING(ElementColor.FLYING),
+    GHOST(ElementColor.GHOST), GRASS(ElementColor.GRASS), GROUND(ElementColor.GROUND), ICE(ElementColor.ICE),
+    NORMAL(ElementColor.NORMAL), POISON(ElementColor.POISON), PSYCHIC(ElementColor.PSYCHIC), ROCK(ElementColor.ROCK),
+    STEEL(ElementColor.STEEL), WATER(ElementColor.WATER);
 
     static {
         _weaknesses = new Hashtable<ElementType, ArrayList<ElementType>>();
         _resistances = new Hashtable<ElementType, ArrayList<ElementType>>();
         _negations = new Hashtable<ElementType, ArrayList<ElementType>>();
-        addDummyElementTypes();
-        setWeaknesses();
-        setResistances();
-        setNegations();
+        setUpDummyElementTypes();
+        setUpWeaknesses();
+        setUpResistances();
+        setUpNegations();
+    }
+
+    private ElementColor _elementColor;
+
+    private ElementType(ElementColor elementColor) {
+        _elementColor = elementColor;
+    }
+
+    public ElementColor getColor() {
+        return _elementColor;
     }
 
     private static Dictionary<ElementType, ArrayList<ElementType>> _weaknesses;
@@ -27,13 +36,13 @@ public enum ElementType {
     private static Dictionary<ElementType, ArrayList<ElementType>> _negations;
 
     public boolean isWeakAgainst(ElementType type) {
-        ArrayList<ElementType> weaknesses =_weaknesses.get(this);
+        ArrayList<ElementType> weaknesses = _weaknesses.get(this);
         return weaknesses.contains(type);
     }
 
     public boolean resists(ElementType type) {
-        ArrayList<ElementType> resistences = _resistances.get(this);
-        return resistences.contains(type);
+        ArrayList<ElementType> resistances = _resistances.get(this);
+        return resistances.contains(type);
     }
 
     public boolean negates(ElementType type) {
@@ -41,7 +50,7 @@ public enum ElementType {
         return negation.contains(type);
     }
 
-    private static void setWeaknesses() {
+    private static void setUpWeaknesses() {
         addWeaknesses(ElementType.NORMAL, ElementType.FIGHTING);
         addWeaknesses(ElementType.FIGHTING, ElementType.FLYING, ElementType.PSYCHIC);
         addWeaknesses(ElementType.FLYING, ElementType.ROCK, ElementType.ELECTRIC, ElementType.ICE);
@@ -66,7 +75,7 @@ public enum ElementType {
         _weaknesses.put(element, ExtensionMethods.toArrayList(weaknesses));
     }
 
-    private static void setResistances() {
+    private static void setUpResistances() {
         addResistance(ElementType.FIGHTING, ElementType.BUG,  ElementType.DARK, ElementType.ROCK);
         addResistance(ElementType.FLYING, ElementType.BUG, ElementType.FIGHTING, ElementType.GRASS);
         addResistance(ElementType.POISON, ElementType.BUG, ElementType.FAIRY, ElementType.FIGHTING, ElementType.GRASS, ElementType.POISON);
@@ -92,7 +101,7 @@ public enum ElementType {
         _resistances.put(element, ExtensionMethods.toArrayList(resistances));
     }
 
-    private static void setNegations(){
+    private static void setUpNegations(){
         addNegation(ElementType.NORMAL, ElementType.GHOST);
         addNegation(ElementType.FLYING, ElementType.GROUND);
         addNegation(ElementType.GROUND, ElementType.ELECTRIC);
@@ -106,7 +115,7 @@ public enum ElementType {
         _negations.put(element, ExtensionMethods.toArrayList(negations));
     }
 
-    private static void addDummyElementTypes() {
+    private static void setUpDummyElementTypes() {
         ArrayList<ElementType> dummyList = new ArrayList<ElementType>();
         ElementType[] elementTypes = ElementType.values();
         for(ElementType elementType : elementTypes) {
@@ -122,19 +131,9 @@ public enum ElementType {
 
 
 
-
     private static final ElementType[] _TYPES = ElementType.values();
     private static final int _NUMBEROFTYPES = _TYPES.length;
     private static final Random TYPE_RANDOMIZER = new Random();
-
-    private ArrayList<ElementType> weaknesses;
-	private ArrayList<ElementType> resistance;
-	private ArrayList<ElementType> negated;
-    private Color _color;
-
-    ElementType(int red, int green, int blue) {
-        _color = new Color(red, green, blue);
-    }
 
     public boolean negatesAttackAgainst(ElementType attackingType) {
         return false;

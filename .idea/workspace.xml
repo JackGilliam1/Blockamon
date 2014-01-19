@@ -2,25 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="476e3c72-fc5f-4435-83a3-6abee93e188d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/tests/objects/AlwaysCritical.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/tests/objects/AlwaysNoCritical.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/blockamon/DamageCalculator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/tests/DamageCalculatorTests.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/blockamon/ICriticalHitDeterminator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/blockamon/RandomCriticalHitDeterminator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/Jack_s_Computer.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/Jack_s_Computer.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/tests/BlockamonBattleTests.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/tests/BlockamonEncounterTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/blockamon/objects/ElementColor.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/blockamon/events/EventAggregator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/blockamon/events/IEncounterBlockamon.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/blockamon/events/IEventArgs.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/blockamon/events/IEventHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/blockamon/DamageCalculator.java" afterPath="$PROJECT_DIR$/src/blockamon/DamageCalculator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/blockamon/objects/ElementType.java" afterPath="$PROJECT_DIR$/src/blockamon/objects/ElementType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/junit_4_11.xml" afterPath="$PROJECT_DIR$/.idea/libraries/junit_4_11.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Blockamon.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1388963427580" ignored="false" />
+    <file path="/Dummy.txt" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1390162933257" ignored="false" />
     <file path="/blockamontests.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1388957283819" ignored="false" />
     <file path="/World.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1388953779035" ignored="false" />
     <file path="/Blockamon.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1388963539453" ignored="false" />
     <file path="/blockamonTypeTests.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1388957817380" ignored="false" />
     <file path="/BlockamonType.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1388959076924" ignored="false" />
     <file path="/extensionMethods.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1388957277664" ignored="false" />
-    <file path="/ElementType.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1388962063892" ignored="false" />
+    <file path="/ElementType.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1390164491462" ignored="false" />
     <file path="/a.dummy" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1388958707318" ignored="false" />
     <file path="/ElementTypeTests.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1388962310699" ignored="false" />
     <file path="/blockamonBattleTests.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1388963412373" ignored="false" />
@@ -30,6 +33,13 @@
     <file path="/DamageCalculatorTests.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1388964597371" ignored="false" />
     <file path="/AlwaysNoCritical.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1388964335314" ignored="false" />
     <file path="/AlwaysCritical.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1388964375799" ignored="false" />
+    <file path="/ElementColor.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1390163555939" ignored="false" />
+    <file path="/BlockamonBattleTests.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1390164721579" ignored="false" />
+    <file path="/BlockamonEncounterTest.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1390164822732" ignored="false" />
+    <file path="/IHandleBlockamonEncounter.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1390166704636" ignored="false" />
+    <file path="/EventAggregator.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1390166969155" ignored="false" />
+    <file path="/IHandleEvent.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1390166533423" ignored="false" />
+    <file path="/IEventArgs.java" changelist="476e3c72-fc5f-4435-83a3-6abee93e188d" time="1390166048158" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,23 +91,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/blockamon/objects/ElementType.java" line="65" class="blockamon.objects.ElementType" package="blockamon.objects">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </line_breakpoints>
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -107,110 +101,45 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Blockamon.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/blockamon/objects/Blockamon.java">
+      <file leaf-file-name="World.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/blockamon/World.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="373" column="0" selection-start="12954" selection-end="12954" vertical-scroll-proportion="0.0">
+            <state line="36" column="0" selection-start="1236" selection-end="1236" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="method#Blockamon#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#Blockamon#1;class#Blockamon#0" expanded="false" />
-                <element signature="method#Blockamon#2;class#Blockamon#0" expanded="false" />
-                <element signature="method#Blockamon#3;class#Blockamon#0" expanded="false" />
-                <element signature="method#Blockamon#4;class#Blockamon#0" expanded="false" />
-                <element signature="method#Blockamon#5;class#Blockamon#0" expanded="false" />
-                <element signature="method#Blockamon#6;class#Blockamon#0" expanded="false" />
-                <element signature="method#getName#0;class#Blockamon#0" expanded="false" />
-                <element signature="docComment;method#setName#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#setName#0;class#Blockamon#0" expanded="false" />
-                <element signature="docComment;method#getElementType#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#getElementType#0;class#Blockamon#0" expanded="false" />
-                <element signature="docComment;method#setElementType#0;class#Blockamon#0" expanded="false" />
-                <element signature="docComment;method#getCurrentAttack#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#getCurrentAttack#0;class#Blockamon#0" expanded="false" />
-                <element signature="docComment;method#setCurrentAttack#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#setCurrentAttack#0;class#Blockamon#0" expanded="false" />
-                <element signature="docComment;method#getTotalAttack#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#getTotalAttack#0;class#Blockamon#0" expanded="false" />
-                <element signature="docComment;method#setTotalAttack#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#setTotalAttack#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#setAttackPower#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#getAttackPower#0;class#Blockamon#0" expanded="false" />
-                <element signature="docComment;method#getTotalHealth#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#getTotalHealth#0;class#Blockamon#0" expanded="false" />
-                <element signature="docComment;method#setTotalHealth#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#setTotalHealth#0;class#Blockamon#0" expanded="false" />
-                <element signature="docComment;method#getCurrentHealth#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#getCurrentHealth#0;class#Blockamon#0" expanded="false" />
-                <element signature="docComment;method#setCurrentHealth#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#setCurrentHealth#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#getCurrentLevel#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#setCurrentLevel#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#getExperience#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#setExperience#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#getNeededExperience#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#setNeededExperience#0;class#Blockamon#0" expanded="false" />
-                <element signature="docComment;method#hasFainted#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#hasFainted#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#isLead#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#isLead#1;class#Blockamon#0" expanded="false" />
-                <element signature="docComment;method#fullyHeal#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#fullyHeal#0;class#Blockamon#0" expanded="false" />
-                <element signature="docComment;method#healAttack#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#healAttack#0;class#Blockamon#0" expanded="false" />
-                <element signature="docComment;method#damage#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#damage#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#levelUp#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#showInfo#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#gainExperience#0;class#Blockamon#0" expanded="false" />
-                <element signature="e#9177#9215#0" expanded="false" />
-                <element signature="method#addToStats#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#scoredCritical#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#missedAttack#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#whoDidIt#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#resetAttack#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#resetHealth#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#toString#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#Blockamon#8;class#Blockamon#0" expanded="false" />
-                <element signature="method#element#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#element#1;class#Blockamon#0" expanded="false" />
-                <element signature="method#maxHitPoints#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#currentHitPoints#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#takeDamage#1;class#Blockamon#0" expanded="false" />
-                <element signature="method#maxHP#0;class#Blockamon#0" expanded="false" />
-                <element signature="method#currentHitPoints#1;class#Blockamon#0" expanded="false" />
-                <element signature="method#heal#0;class#Blockamon#0" expanded="false" />
+                <element signature="method#World#0;class#World#0" expanded="false" />
+                <element signature="method#run#0;class#World#0" expanded="false" />
+                <element signature="method#getMenu#0;class#World#0" expanded="false" />
+                <element signature="method#createItemShop#0;class#World#0" expanded="false" />
+                <element signature="method#getItemShop#0;class#World#0" expanded="false" />
+                <element signature="method#createGrass#0;class#World#0" expanded="false" />
+                <element signature="method#createPlayer#0;class#World#0" expanded="false" />
+                <element signature="method#createHealingCenter#0;class#World#0" expanded="false" />
+                <element signature="method#getTheGrass#0;class#World#0" expanded="false" />
+                <element signature="method#getHealingCenter#0;class#World#0" expanded="false" />
+                <element signature="method#playerWhitedOut#0;class#World#0" expanded="false" />
+                <element signature="method#inStore#0;class#World#0" expanded="false" />
+                <element signature="method#getPlayingField#0;class#World#0" expanded="false" />
+                <element signature="method#inHealingStation#0;class#World#0" expanded="false" />
+                <element signature="method#getPlayer#0;class#World#0" expanded="false" />
+                <element signature="method#changeBattleState#0;class#World#0" expanded="false" />
+                <element signature="method#inBattle#0;class#World#0" expanded="false" />
+                <element signature="method#movePlayer#0;class#World#0" expanded="false" />
+                <element signature="method#changePlayerImage#0;class#World#0" expanded="false" />
+                <element signature="method#blockAppear#0;class#World#0" expanded="false" />
+                <element signature="method#takeTheFocus#0;class#World#0" expanded="false" />
+                <element signature="method#displayMessageDialog#0;class#World#0" expanded="false" />
+                <element signature="docComment;method#displayDialog#0;class#World#0" expanded="false" />
+                <element signature="method#displayDialog#0;class#World#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BlockamonBattle.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/blockamon/controllers/BlockamonBattle.java">
+      <file leaf-file-name="BlockamonBattleTests.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/tests/BlockamonBattleTests.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="0" selection-start="647" selection-end="647" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="method#BlockamonBattle#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#startTheBattle#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#whoGoesFirst#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#addObjects#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#addPlayersBlock#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#whichBlockamon#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#doDamage#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#playerTakesDamage#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#printAttackOfBattle#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="e#3142#3210#0" expanded="false" />
-                <element signature="method#printStatusOfBattle#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="e#3472#3527#0" expanded="false" />
-                <element signature="method#changeActiveBlockamon#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#doAttack#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#playerWhitedOut#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#whoWon#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#battleOver#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#blockBattle#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#adjustAttackPowers#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#tryToFlee#0;class#BlockamonBattle#0" expanded="false" />
-                <element signature="method#printText#0;class#BlockamonBattle#0" expanded="false" />
-              </folding>
+            <state line="10" column="0" selection-start="170" selection-end="170" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -218,77 +147,57 @@
       <file leaf-file-name="DamageCalculator.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/blockamon/DamageCalculator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="48" selection-start="363" selection-end="363" vertical-scroll-proportion="0.0">
+            <state line="5" column="11" selection-start="74" selection-end="74" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ICriticalHitDeterminator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/blockamon/ICriticalHitDeterminator.java">
+      <file leaf-file-name="EventAggregator.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/blockamon/events/EventAggregator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="16" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DamageCalculatorTests.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/tests/DamageCalculatorTests.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="5" selection-start="1573" selection-end="1573" vertical-scroll-proportion="0.8229167">
+            <state line="32" column="5" selection-start="771" selection-end="771" vertical-scroll-proportion="0.7962329">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="docComment;class#DamageCalculatorTests#0" expanded="false" />
-                <element signature="method#DamageCalculatorTests#0;class#DamageCalculatorTests#0" expanded="false" />
-                <element signature="method#testCalculatesForResistance#0;class#DamageCalculatorTests#0" expanded="false" />
-                <element signature="method#testCalculatesForWeakness#0;class#DamageCalculatorTests#0" expanded="false" />
-                <element signature="method#testCalculatesForNegation#0;class#DamageCalculatorTests#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AlwaysNoCritical.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/tests/objects/AlwaysNoCritical.java">
+      <file leaf-file-name="BlockamonEncounterTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/tests/BlockamonEncounterTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="16" selection-start="354" selection-end="354" vertical-scroll-proportion="0.0">
+            <state line="11" column="0" selection-start="216" selection-end="216" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AlwaysCritical.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/tests/objects/AlwaysCritical.java">
+      <file leaf-file-name="IEncounterBlockamon.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/blockamon/events/IEncounterBlockamon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="17" selection-start="353" selection-end="353" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ElementType.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/blockamon/objects/ElementType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="128" column="0" selection-start="6995" selection-end="6995" vertical-scroll-proportion="0.0">
+            <state line="11" column="60" selection-start="303" selection-end="303" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="initializer##0;class#ElementType#0" expanded="false" />
-                <element signature="method#isWeakAgainst#0;class#ElementType#0" expanded="false" />
-                <element signature="method#resists#0;class#ElementType#0" expanded="false" />
-                <element signature="method#setWeaknesses#0;class#ElementType#0" expanded="false" />
-                <element signature="method#addWeaknesses#0;class#ElementType#0" expanded="false" />
-                <element signature="method#setResistances#0;class#ElementType#0" expanded="false" />
-                <element signature="method#addResistance#0;class#ElementType#0" expanded="false" />
-                <element signature="method#setNegations#0;class#ElementType#0" expanded="false" />
-                <element signature="method#addNegation#0;class#ElementType#0" expanded="false" />
-                <element signature="method#addDummyElementTypes#0;class#ElementType#0" expanded="false" />
-                <element signature="e#6487#6500#0" expanded="true" />
-                <element signature="method#ElementType#0;class#ElementType#0" expanded="false" />
-                <element signature="method#negatesAttackAgainst#0;class#ElementType#0" expanded="false" />
-                <element signature="method#getTypeAt#0;class#ElementType#0" expanded="false" />
-                <element signature="method#getNumOfTypes#0;class#ElementType#0" expanded="false" />
-                <element signature="method#getRandomType#0;class#ElementType#0" expanded="false" />
+                <element signature="class#BlockamonEncounterEvent#0;class#IEncounterBlockamon#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IEventArgs.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/blockamon/events/IEventArgs.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="33" selection-start="157" selection-end="157" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IEventHandler.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/blockamon/events/IEventHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="18" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -311,30 +220,30 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/tests/elementTypeTests.java" />
-        <option value="$PROJECT_DIR$/src/tests/ElementTypeTests.java" />
-        <option value="$PROJECT_DIR$/src/blockamon/objects/ElementType.java" />
-        <option value="$PROJECT_DIR$/src/tests/blockamonBattleTests.java" />
-        <option value="$PROJECT_DIR$/src/tests/BlockamonBattleTests.java" />
-        <option value="$PROJECT_DIR$/src/tests/BlockamonDamageCalculatorTests.java" />
-        <option value="$PROJECT_DIR$/src/blockamon/objects/DamageCalculator.java" />
-        <option value="$PROJECT_DIR$/src/blockamon/objects/Blockamon.java" />
-        <option value="$PROJECT_DIR$/src/tests/ICriticalHitGenerator.java" />
-        <option value="$PROJECT_DIR$/src/tests/CriticalHitGenerator.java" />
-        <option value="$PROJECT_DIR$/src/tests/RandomCriticalHitGenerator.java" />
         <option value="$PROJECT_DIR$/src/tests/RandomCriticalHitDeterminator.java" />
-        <option value="$PROJECT_DIR$/src/blockamon/DamageCalculator.java" />
         <option value="$PROJECT_DIR$/src/tests/objects/AlwaysNoCritical.java" />
         <option value="$PROJECT_DIR$/src/tests/objects/AlwaysCritical.java" />
         <option value="$PROJECT_DIR$/src/tests/DamageCalculatorTests.java" />
+        <option value="$PROJECT_DIR$/src/blockamon/objects/Blockamon.java" />
+        <option value="$PROJECT_DIR$/src/blockamon/objects/ElementColor.java" />
+        <option value="$PROJECT_DIR$/src/blockamon/objects/ElementType.java" />
+        <option value="$PROJECT_DIR$/src/tests/BlockamonBattleTests.java" />
+        <option value="$PROJECT_DIR$/src/tests/BlockamonEncounterTest.java" />
+        <option value="$PROJECT_DIR$/src/blockamon/events/IHandleBlockamonEncounter.java" />
+        <option value="$PROJECT_DIR$/src/blockamon/DamageCalculator.java" />
+        <option value="$PROJECT_DIR$/src/blockamon/events/IEventArgs.java" />
+        <option value="$PROJECT_DIR$/src/blockamon/events/IHandleEvent.java" />
+        <option value="$PROJECT_DIR$/src/blockamon/events/IEventHandler.java" />
+        <option value="$PROJECT_DIR$/src/blockamon/events/IEncounterBlockamon.java" />
+        <option value="$PROJECT_DIR$/src/blockamon/events/EventAggregator.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="570" />
-    <option name="y" value="128" />
-    <option name="width" value="1189" />
-    <option name="height" value="816" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -344,14 +253,24 @@
             <id />
           </State>
           <State>
+            <id>Android Lint</id>
+          </State>
+          <State>
+            <id>Class structure</id>
+          </State>
+          <State>
             <id>Code style issues</id>
           </State>
-        </expanded-state>
-        <selected-state>
           <State>
-            <id>Abstraction issues</id>
+            <id>IntelliJ IDEA Platform Inspections</id>
           </State>
-        </selected-state>
+          <State>
+            <id>Performance issues</id>
+          </State>
+          <State>
+            <id>XPath</id>
+          </State>
+        </expanded-state>
       </profile-state>
     </entry>
   </component>
@@ -382,7 +301,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -436,28 +354,6 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tests" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="objects" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Blockamon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Blockamon" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -495,57 +391,41 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
+              <option name="myItemId" value="events" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="OverrideImplement.combined" value="true" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="editor" />
+    <property name="options.lastSelected" value="fileTemplates" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/junit-4.11.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/hamcrest-core-1.3.jar!/" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
-  <component name="RunManager" selected="JUnit.DamageCalculatorTests">
-    <configuration default="false" name="blockamontests" type="JUnit" factoryName="JUnit" temporary="true">
-      <module name="Blockamon" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="tests" />
-      <option name="MAIN_CLASS_NAME" value="tests.blockamontests" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Work\Blockamon" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.GameMaster">
     <configuration default="false" name="BlockamonTests" type="JUnit" factoryName="JUnit" temporary="true">
       <module name="Blockamon" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -618,6 +498,44 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
+    <configuration default="false" name="tests in Blockamon" type="JUnit" factoryName="JUnit" temporary="true">
+      <module name="Blockamon" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="tests" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="package" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="GameMaster" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="blockamon.controllers.GameMaster" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="Blockamon" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
@@ -630,6 +548,19 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -657,19 +588,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -706,18 +624,20 @@
       <patterns />
       <method />
     </configuration>
-    <list size="4">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.blockamontests" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.BlockamonTests" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.ElementTypeTests" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.DamageCalculatorTests" />
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="JUnit.BlockamonTests" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.ElementTypeTests" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.DamageCalculatorTests" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.tests in Blockamon" />
+      <item index="4" class="java.lang.String" itemvalue="Application.GameMaster" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.DamageCalculatorTests" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.BlockamonTests" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.ElementTypeTests" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.blockamontests" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Application.GameMaster" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.tests in Blockamon" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.DamageCalculatorTests" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.BlockamonTests" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.ElementTypeTests" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -757,25 +677,25 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="570" y="128" width="1189" height="816" extended-state="0" />
+    <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44695258" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2697517" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39954853" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3261851" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3261851" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.512" sideWeight="0.56595093" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.43404907" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30736393" sideWeight="0.6884876" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3115124" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -847,115 +767,23 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/blockamon/controllers/ControlPanel.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/src.zip!/java/awt/Color.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="651" column="59" selection-start="23502" selection-end="23503" vertical-scroll-proportion="0.0">
+        <state line="367" column="11" selection-start="10438" selection-end="10438" vertical-scroll-proportion="0.33255813">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/blockamon/ExtensionMethods.java">
+    <entry file="file://$PROJECT_DIR$/src/blockamon/controllers/BlockamonBattle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="446" selection-end="446" vertical-scroll-proportion="0.0">
+        <state line="193" column="22" selection-start="6219" selection-end="6219" vertical-scroll-proportion="0.24671052">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tests/ElementTypeTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="0" selection-start="736" selection-end="736" vertical-scroll-proportion="0.26516464">
-          <folding>
-            <element signature="docComment;class#ElementTypeTests#0" expanded="false" />
-            <element signature="method#testWaterIsWeakAgainstGrass#0;class#ElementTypeTests#0" expanded="false" />
-            <element signature="method#testGrassIsWeakAgainstWater#0;class#ElementTypeTests#0" expanded="false" />
-            <element signature="method#testGrassResistsWater#0;class#ElementTypeTests#0" expanded="false" />
-            <element signature="method#testWaterResistsGrass#0;class#ElementTypeTests#0" expanded="false" />
-            <element signature="method#testGhostNegatesFighting#0;class#ElementTypeTests#0" expanded="false" />
-            <element signature="method#testFightingNegatesGhost#0;class#ElementTypeTests#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/blockamon/World.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="22" selection-start="1572" selection-end="1572" vertical-scroll-proportion="0.44194108">
-          <folding>
-            <element signature="method#World#0;class#World#0" expanded="false" />
-            <element signature="method#run#0;class#World#0" expanded="false" />
-            <element signature="method#getMenu#0;class#World#0" expanded="false" />
-            <element signature="method#createItemShop#0;class#World#0" expanded="false" />
-            <element signature="method#getItemShop#0;class#World#0" expanded="false" />
-            <element signature="method#createGrass#0;class#World#0" expanded="false" />
-            <element signature="method#createPlayer#0;class#World#0" expanded="false" />
-            <element signature="method#createHealingCenter#0;class#World#0" expanded="false" />
-            <element signature="method#getTheGrass#0;class#World#0" expanded="false" />
-            <element signature="method#getHealingCenter#0;class#World#0" expanded="false" />
-            <element signature="method#playerWhitedOut#0;class#World#0" expanded="false" />
-            <element signature="method#inStore#0;class#World#0" expanded="false" />
-            <element signature="method#getPlayingField#0;class#World#0" expanded="false" />
-            <element signature="method#inHealingStation#0;class#World#0" expanded="false" />
-            <element signature="method#getPlayer#0;class#World#0" expanded="false" />
-            <element signature="method#changeBattleState#0;class#World#0" expanded="false" />
-            <element signature="method#inBattle#0;class#World#0" expanded="false" />
-            <element signature="method#movePlayer#0;class#World#0" expanded="false" />
-            <element signature="method#changePlayerImage#0;class#World#0" expanded="false" />
-            <element signature="method#blockAppear#0;class#World#0" expanded="false" />
-            <element signature="method#takeTheFocus#0;class#World#0" expanded="false" />
-            <element signature="method#displayMessageDialog#0;class#World#0" expanded="false" />
-            <element signature="docComment;method#displayDialog#0;class#World#0" expanded="false" />
-            <element signature="method#displayDialog#0;class#World#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tests/BlockamonTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="373" selection-end="373" vertical-scroll-proportion="0.12998267">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/blockamon/objects/ElementType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="128" column="0" selection-start="6995" selection-end="6995" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="initializer##0;class#ElementType#0" expanded="false" />
-            <element signature="method#isWeakAgainst#0;class#ElementType#0" expanded="false" />
-            <element signature="method#resists#0;class#ElementType#0" expanded="false" />
-            <element signature="method#setWeaknesses#0;class#ElementType#0" expanded="false" />
-            <element signature="method#addWeaknesses#0;class#ElementType#0" expanded="false" />
-            <element signature="method#setResistances#0;class#ElementType#0" expanded="false" />
-            <element signature="method#addResistance#0;class#ElementType#0" expanded="false" />
-            <element signature="method#setNegations#0;class#ElementType#0" expanded="false" />
-            <element signature="method#addNegation#0;class#ElementType#0" expanded="false" />
-            <element signature="method#addDummyElementTypes#0;class#ElementType#0" expanded="false" />
-            <element signature="e#6487#6500#0" expanded="true" />
-            <element signature="method#ElementType#0;class#ElementType#0" expanded="false" />
-            <element signature="method#negatesAttackAgainst#0;class#ElementType#0" expanded="false" />
-            <element signature="method#getTypeAt#0;class#ElementType#0" expanded="false" />
-            <element signature="method#getNumOfTypes#0;class#ElementType#0" expanded="false" />
-            <element signature="method#getRandomType#0;class#ElementType#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/blockamon/input/KeyListen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="30" selection-start="250" selection-end="250" vertical-scroll-proportion="0.20623916">
-          <folding>
-            <element signature="method#KeyListen#0;class#KeyListen#0" expanded="false" />
-            <element signature="method#keyPressed#0;class#KeyListen#0" expanded="false" />
-            <element signature="method#keyReleased#0;class#KeyListen#0" expanded="false" />
-            <element signature="method#keyTyped#0;class#KeyListen#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/blockamon/objects/Blockamon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="373" column="0" selection-start="12954" selection-end="12954" vertical-scroll-proportion="0.0">
+        <state line="372" column="0" selection-start="12953" selection-end="12953" vertical-scroll-proportion="0.5072464">
           <folding>
             <element signature="method#Blockamon#0;class#Blockamon#0" expanded="false" />
             <element signature="method#Blockamon#1;class#Blockamon#0" expanded="false" />
@@ -964,12 +792,16 @@
             <element signature="method#Blockamon#4;class#Blockamon#0" expanded="false" />
             <element signature="method#Blockamon#5;class#Blockamon#0" expanded="false" />
             <element signature="method#Blockamon#6;class#Blockamon#0" expanded="false" />
+            <element signature="method#Blockamon#7;class#Blockamon#0" expanded="false" />
+            <element signature="e#3788#3830#0" expanded="false" />
+            <element signature="docComment;method#getName#0;class#Blockamon#0" expanded="false" />
             <element signature="method#getName#0;class#Blockamon#0" expanded="false" />
             <element signature="docComment;method#setName#0;class#Blockamon#0" expanded="false" />
             <element signature="method#setName#0;class#Blockamon#0" expanded="false" />
             <element signature="docComment;method#getElementType#0;class#Blockamon#0" expanded="false" />
             <element signature="method#getElementType#0;class#Blockamon#0" expanded="false" />
             <element signature="docComment;method#setElementType#0;class#Blockamon#0" expanded="false" />
+            <element signature="method#setElementType#0;class#Blockamon#0" expanded="false" />
             <element signature="docComment;method#getCurrentAttack#0;class#Blockamon#0" expanded="false" />
             <element signature="method#getCurrentAttack#0;class#Blockamon#0" expanded="false" />
             <element signature="docComment;method#setCurrentAttack#0;class#Blockamon#0" expanded="false" />
@@ -1009,13 +841,15 @@
             <element signature="method#gainExperience#0;class#Blockamon#0" expanded="false" />
             <element signature="e#9177#9215#0" expanded="false" />
             <element signature="method#addToStats#0;class#Blockamon#0" expanded="false" />
+            <element signature="method#setStats#0;class#Blockamon#0" expanded="false" />
+            <element signature="docComment;method#takeDamage#0;class#Blockamon#0" expanded="false" />
+            <element signature="method#takeDamage#0;class#Blockamon#0" expanded="false" />
             <element signature="method#scoredCritical#0;class#Blockamon#0" expanded="false" />
             <element signature="method#missedAttack#0;class#Blockamon#0" expanded="false" />
             <element signature="method#whoDidIt#0;class#Blockamon#0" expanded="false" />
             <element signature="method#resetAttack#0;class#Blockamon#0" expanded="false" />
             <element signature="method#resetHealth#0;class#Blockamon#0" expanded="false" />
             <element signature="method#toString#0;class#Blockamon#0" expanded="false" />
-            <element signature="method#Blockamon#8;class#Blockamon#0" expanded="false" />
             <element signature="method#element#0;class#Blockamon#0" expanded="false" />
             <element signature="method#element#1;class#Blockamon#0" expanded="false" />
             <element signature="method#maxHitPoints#0;class#Blockamon#0" expanded="false" />
@@ -1028,87 +862,144 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/src.zip!/java/util/Random.java">
+    <entry file="file://$PROJECT_DIR$/src/blockamon/objects/ElementType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="442" column="18" selection-start="17804" selection-end="17804" vertical-scroll-proportion="0.5979203">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/blockamon/controllers/BlockamonBattle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="647" selection-end="647" vertical-scroll-proportion="0.0">
+        <state line="137" column="26" selection-start="7348" selection-end="7348" vertical-scroll-proportion="1.0016103">
           <folding>
-            <element signature="method#BlockamonBattle#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#startTheBattle#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#whoGoesFirst#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#addObjects#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#addPlayersBlock#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#whichBlockamon#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#doDamage#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#playerTakesDamage#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#printAttackOfBattle#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="e#3142#3210#0" expanded="false" />
-            <element signature="method#printStatusOfBattle#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="e#3472#3527#0" expanded="false" />
-            <element signature="method#changeActiveBlockamon#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#doAttack#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#playerWhitedOut#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#whoWon#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#battleOver#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#blockBattle#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#adjustAttackPowers#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#tryToFlee#0;class#BlockamonBattle#0" expanded="false" />
-            <element signature="method#printText#0;class#BlockamonBattle#0" expanded="false" />
+            <element signature="initializer##0;class#ElementType#0" expanded="false" />
+            <element signature="method#ElementType#0;class#ElementType#0" expanded="false" />
+            <element signature="method#getColor#0;class#ElementType#0" expanded="false" />
+            <element signature="method#isWeakAgainst#0;class#ElementType#0" expanded="false" />
+            <element signature="method#resists#0;class#ElementType#0" expanded="false" />
+            <element signature="method#negates#0;class#ElementType#0" expanded="false" />
+            <element signature="method#setUpWeaknesses#0;class#ElementType#0" expanded="false" />
+            <element signature="method#addWeaknesses#0;class#ElementType#0" expanded="false" />
+            <element signature="method#setUpResistances#0;class#ElementType#0" expanded="false" />
+            <element signature="method#addResistance#0;class#ElementType#0" expanded="false" />
+            <element signature="method#setUpNegations#0;class#ElementType#0" expanded="false" />
+            <element signature="method#addNegation#0;class#ElementType#0" expanded="false" />
+            <element signature="method#setUpDummyElementTypes#0;class#ElementType#0" expanded="false" />
+            <element signature="method#getTypeAt#0;class#ElementType#0" expanded="false" />
+            <element signature="method#getNumOfTypes#0;class#ElementType#0" expanded="false" />
+            <element signature="method#getRandomType#0;class#ElementType#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/blockamon/ICriticalHitDeterminator.java">
+    <entry file="file://$PROJECT_DIR$/src/blockamon/objects/ElementColor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="16" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0">
+        <state line="21" column="0" selection-start="681" selection-end="681" vertical-scroll-proportion="0.52012885">
+          <folding>
+            <element signature="method#ElementColor#0;class#ElementColor#0" expanded="false" />
+            <element signature="method#getColor#0;class#ElementColor#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/blockamon/controllers/GameMaster.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="0" selection-start="83" selection-end="83" vertical-scroll-proportion="0.14554794">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/blockamon/RandomCriticalHitDeterminator.java">
+    <entry file="file://$PROJECT_DIR$/src/tests/BlockamonTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="31" selection-start="239" selection-end="239" vertical-scroll-proportion="0.32409012">
-          <folding />
+        <state line="12" column="13" selection-start="305" selection-end="305" vertical-scroll-proportion="0.3321918">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/blockamon/DamageCalculator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="48" selection-start="363" selection-end="363" vertical-scroll-proportion="0.0">
+        <state line="5" column="11" selection-start="74" selection-end="74" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tests/objects/AlwaysCritical.java">
+    <entry file="file://$PROJECT_DIR$/src/blockamon/World.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="17" selection-start="353" selection-end="353" vertical-scroll-proportion="0.0">
+        <state line="36" column="0" selection-start="1236" selection-end="1236" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="method#World#0;class#World#0" expanded="false" />
+            <element signature="method#run#0;class#World#0" expanded="false" />
+            <element signature="method#getMenu#0;class#World#0" expanded="false" />
+            <element signature="method#createItemShop#0;class#World#0" expanded="false" />
+            <element signature="method#getItemShop#0;class#World#0" expanded="false" />
+            <element signature="method#createGrass#0;class#World#0" expanded="false" />
+            <element signature="method#createPlayer#0;class#World#0" expanded="false" />
+            <element signature="method#createHealingCenter#0;class#World#0" expanded="false" />
+            <element signature="method#getTheGrass#0;class#World#0" expanded="false" />
+            <element signature="method#getHealingCenter#0;class#World#0" expanded="false" />
+            <element signature="method#playerWhitedOut#0;class#World#0" expanded="false" />
+            <element signature="method#inStore#0;class#World#0" expanded="false" />
+            <element signature="method#getPlayingField#0;class#World#0" expanded="false" />
+            <element signature="method#inHealingStation#0;class#World#0" expanded="false" />
+            <element signature="method#getPlayer#0;class#World#0" expanded="false" />
+            <element signature="method#changeBattleState#0;class#World#0" expanded="false" />
+            <element signature="method#inBattle#0;class#World#0" expanded="false" />
+            <element signature="method#movePlayer#0;class#World#0" expanded="false" />
+            <element signature="method#changePlayerImage#0;class#World#0" expanded="false" />
+            <element signature="method#blockAppear#0;class#World#0" expanded="false" />
+            <element signature="method#takeTheFocus#0;class#World#0" expanded="false" />
+            <element signature="method#displayMessageDialog#0;class#World#0" expanded="false" />
+            <element signature="docComment;method#displayDialog#0;class#World#0" expanded="false" />
+            <element signature="method#displayDialog#0;class#World#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tests/BlockamonBattleTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="170" selection-end="170" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tests/objects/AlwaysNoCritical.java">
+    <entry file="file://$PROJECT_DIR$/src/tests/BlockamonEncounterTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="16" selection-start="354" selection-end="354" vertical-scroll-proportion="0.0">
+        <state line="11" column="0" selection-start="216" selection-end="216" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tests/DamageCalculatorTests.java">
+    <entry file="file://$PROJECT_DIR$/src/blockamon/events/IEventArgs.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="5" selection-start="1573" selection-end="1573" vertical-scroll-proportion="0.8229167">
+        <state line="8" column="33" selection-start="157" selection-end="157" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/blockamon/events/IEventHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="18" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.7.0_45/src.zip!/java/util/List.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="233" column="7" selection-start="9661" selection-end="9661" vertical-scroll-proportion="0.15097691">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/blockamon/events/IEncounterBlockamon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="60" selection-start="303" selection-end="303" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="class#BlockamonEncounterEvent#0;class#IEncounterBlockamon#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/blockamon/events/EventAggregator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="5" selection-start="771" selection-end="771" vertical-scroll-proportion="0.7962329">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="docComment;class#DamageCalculatorTests#0" expanded="false" />
-            <element signature="method#DamageCalculatorTests#0;class#DamageCalculatorTests#0" expanded="false" />
-            <element signature="method#testCalculatesForResistance#0;class#DamageCalculatorTests#0" expanded="false" />
-            <element signature="method#testCalculatesForWeakness#0;class#DamageCalculatorTests#0" expanded="false" />
-            <element signature="method#testCalculatesForNegation#0;class#DamageCalculatorTests#0" expanded="false" />
           </folding>
         </state>
       </provider>

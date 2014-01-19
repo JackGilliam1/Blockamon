@@ -3,11 +3,9 @@ package blockamon;
 import blockamon.objects.ElementType;
 
 /**
- * Created with IntelliJ IDEA.
  * User: Jack's Computer
  * Date: 1/5/14
  * Time: 4:00 PM
- * To change this template use File | Settings | File Templates.
  */
 public class DamageCalculator {
 
