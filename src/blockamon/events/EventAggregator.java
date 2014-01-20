@@ -42,14 +42,26 @@ public class EventAggregator {
     public <TEvent> void broadcast(TEvent event) throws InvocationTargetException, IllegalAccessException {
         for(EventHandler eh : _subscriptions) {
 
-            broadcastToMethod(eh, event);
+            ArrayList<SingleParameterMethodData> methods = getSingleParameterMethodData(eh.getUUID());
+            boolean calledAny = false;
+            if(methods != null) {
+                for(SingleParameterMethodData method : methods){
+                    if(method.getParameterType() == event.getClass()) {
+                        method.getMethod().invoke(eh, event);
+                        calledAny = true;
+                    }
+                }
+            }
+            if(!calledAny) {
+                broadcastToMethod(eh, event);
+            }
         }
     }
 
     private <TEvent> void broadcastToMethod(EventHandler eh, TEvent event)
             throws InvocationTargetException, IllegalAccessException {
-        Method[] objectMethods = eh.getClass().getDeclaredMethods();
-        for(Method method : objectMethods) {
+        Method[] methods = eh.getClass().getDeclaredMethods();
+        for(Method method : methods) {
             Class<?>[] parameterTypes = method.getParameterTypes();
             if(parameterTypes.length == 1) {
                 Class<?> firstParameterType = parameterTypes[0];
