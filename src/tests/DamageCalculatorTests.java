@@ -1,18 +1,15 @@
 package tests;
 
 import blockamon.DamageCalculator;
+import blockamon.ICriticalHitDeterminator;
 import blockamon.objects.ElementType;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
-import tests.objects.AlwaysCritical;
-import tests.objects.AlwaysNoCritical;
 
 /**
- * Created with IntelliJ IDEA.
  * User: Jack's Computer
  * Date: 1/5/14
  * Time: 3:59 PM
- * To change this template use File | Settings | File Templates.
  */
 public class DamageCalculatorTests extends TestCase {
 
@@ -53,5 +50,17 @@ public class DamageCalculatorTests extends TestCase {
         calculator = new DamageCalculator(new AlwaysCritical());
         int resultingDamage = calculator.calculate(20, ElementType.GROUND, ElementType.FLYING);
         assertEquals(0, resultingDamage);
+    }
+
+    private class AlwaysCritical implements ICriticalHitDeterminator {
+        public int determineCriticalHit() {
+            return 2;
+        }
+    }
+
+    private class AlwaysNoCritical implements ICriticalHitDeterminator {
+        public int determineCriticalHit() {
+            return 1;
+        }
     }
 }
