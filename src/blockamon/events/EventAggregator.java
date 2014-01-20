@@ -2,8 +2,7 @@ package blockamon.events;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * User: Jack's Computer
@@ -11,33 +10,72 @@ import java.util.List;
  * Time: 1:59 PM
  */
 public class EventAggregator {
-    private List _subscriptions;
+    private List<EventHandler> _subscriptions;
+    private Dictionary<UUID, ArrayList<SingleParameterMethodData>> _singleParameterMethodData;
 
     public EventAggregator() {
-        _subscriptions = new ArrayList();
+        _subscriptions = new ArrayList<EventHandler>();
+        _singleParameterMethodData = new Hashtable<UUID, ArrayList<SingleParameterMethodData>>();
     }
 
-    public void subscribe(Object handler) {
+    public void subscribe(EventHandler handler) {
         _subscriptions.add(handler);
     }
 
-    public void unSubscribe(Object handler) {
+    public void unSubscribe(EventHandler handler) {
         _subscriptions.remove(handler);
     }
 
+    private void addSingleParameterMethodData(UUID id, Class<?> parameterType, Method method) {
+        ArrayList<SingleParameterMethodData> methodData = _singleParameterMethodData.get(id);
+        if(methodData == null) {
+            methodData = new ArrayList<SingleParameterMethodData>();
+        }
+        methodData.add(new SingleParameterMethodData(parameterType, method));
+        _singleParameterMethodData.put(id, methodData);
+    }
+
+    private ArrayList<SingleParameterMethodData> getSingleParameterMethodData(UUID id) {
+        return _singleParameterMethodData.get(id);
+    }
+
     public <TEvent> void broadcast(TEvent event) throws InvocationTargetException, IllegalAccessException {
-        for(Object obj : _subscriptions) {
-            Method[] objectMethods = obj.getClass().getDeclaredMethods();
-            for(Method method : objectMethods) {
-                Class<?>[] parameterTypes = method.getParameterTypes();
-                if(parameterTypes.length == 1)
-                {
-                    Class<?> parameterTypeOne = parameterTypes[0];
-                    if(event.getClass() == parameterTypeOne) {
-                        method.invoke(obj, event);
-                    }
+        for(EventHandler eh : _subscriptions) {
+
+            broadcastToMethod(eh, event);
+        }
+    }
+
+    private <TEvent> void broadcastToMethod(EventHandler eh, TEvent event)
+            throws InvocationTargetException, IllegalAccessException {
+        Method[] objectMethods = eh.getClass().getDeclaredMethods();
+        for(Method method : objectMethods) {
+            Class<?>[] parameterTypes = method.getParameterTypes();
+            if(parameterTypes.length == 1) {
+                Class<?> firstParameterType = parameterTypes[0];
+                if(event.getClass() == firstParameterType) {
+                    addSingleParameterMethodData(eh.getUUID(), firstParameterType, method);
+                    method.invoke(eh, event);
                 }
             }
+        }
+    }
+
+    private class SingleParameterMethodData {
+        private Class<?> _parameterType;
+        private Method _method;
+
+        public SingleParameterMethodData(Class<?> parameterType, Method method) {
+            _parameterType = parameterType;
+            _method = method;
+        }
+
+        public Class<?> getParameterType() {
+            return _parameterType;
+        }
+
+        public Method getMethod() {
+            return _method;
         }
     }
 }

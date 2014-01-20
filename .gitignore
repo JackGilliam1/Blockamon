@@ -3,6 +3,4 @@
 # Package Files #
 *.jar
 *.war
-*.ear
-
-.idea
+*.ear#out/production*idea/workspace.xml

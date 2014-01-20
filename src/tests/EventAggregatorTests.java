@@ -1,6 +1,7 @@
 package tests;
 
 import blockamon.events.EventAggregator;
+import blockamon.events.EventHandler;
 import junit.framework.TestCase;
 
 import java.lang.reflect.InvocationTargetException;
@@ -80,7 +81,7 @@ public class EventAggregatorTests extends TestCase {
         assertEquals(secondSubscriber.getCount(), 1);
     }
 
-    public class AlternateTestEventHandler {
+    public class AlternateTestEventHandler extends EventHandler {
         private int _count;
 
         public AlternateTestEventHandler(){
@@ -100,7 +101,7 @@ public class EventAggregatorTests extends TestCase {
         }
     }
 
-    public class TestEventHandler {
+    public class TestEventHandler extends EventHandler {
 
         private int _count;
 
