@@ -1,5 +1,6 @@
 package blockamon.events;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,24 +11,32 @@ import java.util.List;
  * Time: 1:59 PM
  */
 public class EventAggregator {
-    private List<IEventHandler> _subscribers;
+    private List _subscriptions;
 
     public EventAggregator() {
-        _subscribers = new ArrayList<IEventHandler>();
+        _subscriptions = new ArrayList();
     }
 
-    public void subscribe(IEventHandler handler) {
-        _subscribers.add(handler);
+    public void subscribe(Object handler) {
+        _subscriptions.add(handler);
     }
 
-    public void unSubscribe(IEventHandler handler) {
-        _subscribers.remove(handler);
+    public void unSubscribe(Object handler) {
+        _subscriptions.remove(handler);
     }
 
-    public void broadcast(IEventArgs eventArgs) {
-        for(IEventHandler subscriber : _subscribers) {
-            if(subscriber.canHandle(eventArgs)) {
-                subscriber.handle(eventArgs);
+    public <TEvent> void broadcast(TEvent event) throws InvocationTargetException, IllegalAccessException {
+        for(Object obj : _subscriptions) {
+            Method[] objectMethods = obj.getClass().getDeclaredMethods();
+            for(Method method : objectMethods) {
+                Class<?>[] parameterTypes = method.getParameterTypes();
+                if(parameterTypes.length == 1)
+                {
+                    Class<?> parameterTypeOne = parameterTypes[0];
+                    if(event.getClass() == parameterTypeOne) {
+                        method.invoke(obj, event);
+                    }
+                }
             }
         }
     }
