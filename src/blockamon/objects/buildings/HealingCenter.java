@@ -9,7 +9,7 @@ public class HealingCenter extends Building {
 	private World world;
 	private Player thePlayer;
 	public HealingCenter(Player aPlayer, World w) {
-		super(300, 20, 75, 75, "HealShop.png");
+		super(300, 20, 75, 75, "HealShop");
 		world = w;
 		thePlayer = aPlayer;
 	}

@@ -8,7 +8,7 @@ import java.util.List;
 public class ItemShop extends Building {
     private static List<Item> _items;
 	public ItemShop() {
-		super(300, 150, 75, 75, "ItemShop.png");
+		super(300, 150, 75, 75, "ItemShop");
         if(_items == null) {
             _items = new ArrayList<Item>();
         }

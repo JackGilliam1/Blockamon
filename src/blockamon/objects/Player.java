@@ -1,6 +1,11 @@
 package blockamon.objects;
 
 import blockamon.items.Item;
+import blockamon.objects.data.AppearanceData;
+import blockamon.objects.data.Direction;
+import blockamon.objects.data.ImageData;
+import blockamon.objects.images.DirectionalObjectImage;
+import blockamon.objects.images.ObjectImage;
 import generators.BlockamonGenerator;
 
 import javax.swing.*;
@@ -8,18 +13,20 @@ import java.awt.*;
 import java.util.*;
 
 public class Player extends IBoundable {
-    private static final String _imagesFolder = "player/";
+    private static final String _imagesFolder = "player";
 
-	/**
-	 *
-	 */
+    private AppearanceData _appearanceData;
+    private DirectionalObjectImage _objectImage;
+
+
+
 	private static int blockamonX, blockamonY;
-    private static Map<GameImage.Direction, GameImage> _images;
 
 	private double amountOfMoney = 200;
 	private static final int PARTYLIMIT = 6;
 	private static final int BAGSIZELIMIT = 6;
 	private static final Random randomNumberGenerator = new Random();
+
     /**
      * Messages
      */
@@ -33,43 +40,67 @@ public class Player extends IBoundable {
      */
     private static final String ITEMRECEIVED_MESSAGEFORMAT = "Player has received a(n) %s";
 
-    private ArrayList<Item> ownedItems;
-    private ArrayList<Blockamon> ownedBlockamon;
-    private Map<Character, GameImage.Direction> controls;
 
-	public Player(int playerWidth, int playerHeight) {
+    private ArrayList<Item> _items;
+    private ArrayList<Blockamon> _blockamon;
+
+	public Player(int width, int height) {
 		super();
-        ownedBlockamon = new ArrayList<Blockamon>();
+        _appearanceData = new AppearanceData(width, height);
+        _objectImage = new DirectionalObjectImage(
+                _appearanceData,
+                new ImageData(_imagesFolder));
+
+        this.paintPlayer();
+        this.add(_objectImage, 0);
+
+        _blockamon = new ArrayList<Blockamon>();
+        _items = new ArrayList<Item>();
+
 		generateStartingBlockamon();
-        if(_images == null) {
-            _images = new HashMap<GameImage.Direction, GameImage>();
-            final int width = playerWidth;
-            final int height = playerHeight;
-            _images.put(GameImage.Direction.NONE, new GameImage(width, height, _imagesFolder + "PlayerRight.png"));
-            _images.put(GameImage.Direction.RIGHT, new GameImage(width, height, _imagesFolder + "PlayerRight.png"));
-            _images.put(GameImage.Direction.LEFT, new GameImage(width, height, _imagesFolder + "PlayerLeft.png"));
-            _images.put(GameImage.Direction.DOWN, new GameImage(width, height, _imagesFolder + "PlayerDown.png"));
-            _images.put(GameImage.Direction.UP, new GameImage(width, height, _imagesFolder + "PlayerUp.png"));
-        }
-        if(controls == null) {
-            controls = new HashMap<Character, GameImage.Direction>();
-            controls.put(GameImage.Direction.NONE.getKey(), GameImage.Direction.NONE);
-            controls.put(GameImage.Direction.UP.getKey(), GameImage.Direction.UP);
-            controls.put(GameImage.Direction.RIGHT.getKey(), GameImage.Direction.RIGHT);
-            controls.put(GameImage.Direction.DOWN.getKey(), GameImage.Direction.DOWN);
-            controls.put(GameImage.Direction.LEFT.getKey(), GameImage.Direction.LEFT);
-        }
-        GameImage playerImage = _images.get(GameImage.Direction.LEFT);
-        this.setHeight(playerImage.getHeight());
-        this.setWidth(playerImage.getWidth());
-		this.add(playerImage, 0);
-		this.repaint();
         System.out.println("PlayerWidth: " + this.getWidth());
         System.out.println("PlayerHeight: " + this.getHeight());
-		//sets the amount of items the player can hold
-		ownedItems = new ArrayList<Item>();
+
         addItem(Item.HEALVIAL);
 	}
+
+    public void changeImage(Direction direction) {
+        if(direction != null) {
+//            Component componentToRemove;
+//            if(super.getComponentCount() > 0) {
+//                if((componentToRemove = super.getComponent(0)) != null){
+//                    this.remove(componentToRemove);
+//                }
+//            }
+            //this.add(_images.get(direction), 0);
+            _objectImage.updateDirection(direction);
+
+        }
+    }
+    public void movePlayer(char typed, int maxX, int maxY) {
+        System.out.println(typed);
+        Direction direction = _objectImage.updateDirection(typed);
+        //Position player wants to move to
+        int playersNewX = this.getX() + (direction.getModifier() * (direction.isOnXAxis() ? this.getWidth() : 0));
+        int playersNewY = this.getY() + (direction.getModifier() * (!direction.isOnXAxis() ? this.getHeight() : 0));
+
+        //player clamping, allows the player to loop on the map
+        playersNewX = (playersNewX%maxX + maxX)%maxX;
+        playersNewY = (playersNewY%maxY + maxY)%maxY;
+
+        if(direction != null) {
+            changeImage(direction);
+            this.setLocation(playersNewX, playersNewY);
+            this.repaint();
+        }
+    }
+
+    private void paintPlayer() {
+        this.setHeight(_objectImage.getHeight());
+        this.setWidth(_objectImage.getWidth());
+        this.add(_objectImage, 0);
+        this.repaint();
+    }
 
 	public void receiveMoney() {
 		int money = randomNumberGenerator.nextInt(50)+50;
@@ -89,7 +120,7 @@ public class Player extends IBoundable {
 		}
 	}
 	public void resetMyBlocksAttack() {
-        for(Blockamon blockamon : ownedBlockamon) {
+        for(Blockamon blockamon : _blockamon) {
             blockamon.healAttack();
         }
 	}
@@ -100,20 +131,17 @@ public class Player extends IBoundable {
         }
     }
 
-    public void boughtAnItem(Item item){
-	}
-
 
 
 	public void moveBlockamon() {
 		blockamonX = this.getX() + this.getWidth();
 		blockamonY = this.getY() + 20;
-        for(final Blockamon blockamon : ownedBlockamon) {
+        for(final Blockamon blockamon : _blockamon) {
             blockamon.setLocation(blockamonX, blockamonY);
         }
 	}
 	public void healAllBlockamon() {
-        for(final Blockamon blockamon : ownedBlockamon) {
+        for(final Blockamon blockamon : _blockamon) {
             blockamon.fullyHeal();
         }
 	}
@@ -132,7 +160,7 @@ public class Player extends IBoundable {
 
     public void addToParty(Blockamon capturedBlockamon){
         if(canAddToParty()) {
-            ownedBlockamon.add(capturedBlockamon);
+            _blockamon.add(capturedBlockamon);
         }
         else {
         }
@@ -141,34 +169,6 @@ public class Player extends IBoundable {
         return (getPartySize() + 1) < getPartyLimit();
     }
 
-	public void changeImage(GameImage.Direction direction) {
-        if(direction != null) {
-            Component toRemove;
-            if(super.getComponentCount() > 0) {
-                if((toRemove = super.getComponent(0)) != null){
-                    this.remove(toRemove);
-                }
-            }
-            this.add(_images.get(direction), 0);
-        }
-	}
-	public void movePlayer(char typed, int maxX, int maxY) {
-        System.out.println(typed);
-		GameImage.Direction direction = controls.get(typed);
-        //Position player wants to move to
-		int playersNewX = this.getX() + (direction.getModifier() * (direction.isOnXAxis() ? this.getWidth() : 0));
-		int playersNewY = this.getY() + (direction.getModifier() * (!direction.isOnXAxis() ? this.getHeight() : 0));
-
-        //player clamping, allows the player to loop on the map
-        playersNewX = (playersNewX%maxX + maxX)%maxX;
-        playersNewY = (playersNewY%maxY + maxY)%maxY;
-
-        if(direction != null) {
-            changeImage(direction);
-            this.setLocation(playersNewX, playersNewY);
-            this.repaint();
-        }
-	}
 
 
     public double getMoney() {
@@ -181,7 +181,7 @@ public class Player extends IBoundable {
         return PARTYLIMIT;
     }
     public synchronized  int getPartySize() {
-        return ownedBlockamon.size();
+        return _blockamon.size();
     }
 	public synchronized Blockamon getBlockamon() {
 		//creation of the activeBlockamon is sent to nothing
@@ -203,7 +203,7 @@ public class Player extends IBoundable {
     public synchronized  void setLeadBlockamon(Blockamon blockamon) {
         if(getPartySize() > 0)
         {
-            ownedBlockamon.set(0, blockamon);
+            _blockamon.set(0, blockamon);
         }
         else {
             addToParty(blockamon);
@@ -213,23 +213,23 @@ public class Player extends IBoundable {
         Blockamon blockamon = null;
         if(index < getPartySize())
         {
-            blockamon = ownedBlockamon.get(index);
+            blockamon = _blockamon.get(index);
         }
         return blockamon;
     }
     public synchronized  void setBlockamonAt(int index, Blockamon blockamon) {
-        ownedBlockamon.set(index, blockamon);
+        _blockamon.set(index, blockamon);
     }
     public synchronized  void removeFromParty(int index) {
-        ownedBlockamon.remove(index);
+        _blockamon.remove(index);
     }
     public synchronized  void removeFromParty(Blockamon blockamon) {
-        ownedBlockamon.remove(blockamon);
+        _blockamon.remove(blockamon);
     }
     public synchronized void addItem(Item item) {
         if(canAddItem())
         {
-            ownedItems.add(item);
+            _items.add(item);
         }
         else
         {
@@ -239,32 +239,32 @@ public class Player extends IBoundable {
         return getBagSize() < getBagLimit();
     }
     public synchronized boolean hasItems() {
-        return ownedItems.size() > 0;
+        return _items.size() > 0;
     }
     public synchronized  void setItem(int index, Item item) {
         if(getBagSize() > 0)
-            ownedItems.set(index, item);
+            _items.set(index, item);
         else
             addItem(item);
     }
     public synchronized  Item getItem(int index) {
-        return ownedItems.get(index);
+        return _items.get(index);
     }
     public synchronized  int getBagSize() {
-        return ownedItems.size();
+        return _items.size();
     }
     public synchronized  int getBagLimit() {
         return BAGSIZELIMIT;
     }
     public synchronized  void removeItem(int index) {
-        ownedItems.remove(index);
+        _items.remove(index);
     }
     public synchronized  void removeItem(Item item) {
-        ownedItems.remove(item);
+        _items.remove(item);
     }
     public synchronized  boolean canFight() {
         boolean canFight = false;
-        for(Blockamon blockamon : ownedBlockamon) {
+        for(Blockamon blockamon : _blockamon) {
             if(canFight = !blockamon.hasFainted()) {
                 break;
             }
@@ -272,8 +272,8 @@ public class Player extends IBoundable {
         return canFight;
     }
     public synchronized  void swapPartyAt(int positionOne, int positionTwo) {
-        Blockamon block = ownedBlockamon.get(positionOne);
-        ownedBlockamon.set(positionOne, ownedBlockamon.get(positionTwo));
-        ownedBlockamon.set(positionTwo, block);
+        Blockamon block = _blockamon.get(positionOne);
+        _blockamon.set(positionOne, _blockamon.get(positionTwo));
+        _blockamon.set(positionTwo, block);
     }
 }

@@ -3,7 +3,9 @@ package blockamon;
 import blockamon.controllers.ControlPanel;
 import blockamon.input.KeyListen;
 import blockamon.items.Item;
-import blockamon.objects.GameImage;
+import blockamon.objects.data.Direction;
+import blockamon.objects.images.DirectionalObjectImage;
+import blockamon.objects.images.ObjectImage;
 import blockamon.objects.Player;
 import blockamon.objects.buildings.HealingCenter;
 import blockamon.objects.buildings.ItemShop;
@@ -196,7 +198,7 @@ public class World extends JFrame implements MessageDialogListener {
 		player.movePlayer(aKey, this.getWidth(), this.getHeight());
 	}
 
-	public void changePlayerImage(GameImage.Direction direction) {
+	public void changePlayerImage(Direction direction) {
 		player.changeImage(direction);
 	}
 

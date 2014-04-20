@@ -2,7 +2,9 @@ package blockamon.controllers;
 
 import blockamon.World;
 import blockamon.objects.ElementType;
-import blockamon.objects.GameImage;
+import blockamon.objects.data.Direction;
+import blockamon.objects.images.DirectionalObjectImage;
+import blockamon.objects.images.ObjectImage;
 import blockamon.objects.Player;
 import blockamon.objects.Blockamon;
 
@@ -37,7 +39,7 @@ public class BlockamonBattle {
 		// determines which block appears
 		blockamon = aBlock;
 		if (playerBlock != null && blockamon != null) {
-			theWorld.changePlayerImage(GameImage.Direction.NONE);
+			theWorld.changePlayerImage(Direction.RIGHT);
 			// notify the world that the player is in battle
 			theWorld.changeBattleState();
 			menu.storeTheBlockamon(blockamon);

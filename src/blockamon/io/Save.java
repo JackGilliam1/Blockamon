@@ -21,7 +21,8 @@ public class Save {
     private static final String FILESAVED_MESSAGEFORMAT = "File has been saved as %s";
     private static final String FILECREATED_MESSAGEFORMAT = "File %s was not found so a Save was created";
     private static final String INCORRECTFILENAME_MESSAGE = "File name is incorrect it cannot be null or empty";
-	public Save(Player player) {
+
+    public Save(Player player) {
 		super();
 		this.player = player;
 		File file = null;
