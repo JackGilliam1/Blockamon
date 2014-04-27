@@ -14,11 +14,9 @@ import javax.swing.JOptionPane;
 
 public class Load {
 	private Player player;
-    /**
-     * FORMATS
-     */
+    //Formats
     private static final String FILELOADERR_MESSAGEFORMAT = "File %s was nowhere to be found, please place it within the projects folder";
-    private static final String FILELOADED_MESSAGE = "You loaded a Save";
+    private static final String FILELOADED_MESSAGE = "You Loaded a Save";
     private static final String FILEPROMPT_MESSAGE = "Type the file you would like to load from the list below with the .save";
     private static final String FILECORRUPTERR_MESSAGE = "File could not be loaded, as it is either corrupt or not in the correct format";
 

@@ -8,7 +8,6 @@ public class Blockamon extends IBoundable {
 
     //TODO: Fix information being displayed incorrectly
     private String _name;
-    private ElementType _elementType;
     private double _currentAttack;
     private double _totalAttack;
     private double _totalHealth;
@@ -40,31 +39,14 @@ public class Blockamon extends IBoundable {
     private static final int DEFAULT_EXPERIENCE = 0;
     private static final int DEFAULT_EXPERIENCE_NEEDED = 50;
     private static final double DEFAULT_ATTACK_POWER = 1.0;
-    private static final Color DEFAULT_COLOR = Color.WHITE;
 
     public Blockamon(ElementType type) {
-        this(type, type.toString());
-    }
-    public Blockamon(ElementType type, String name) {
-        this(type, name, DEFAULT_LEVEL);
-    }
-    public Blockamon(ElementType type, String name, int currentLevel) {
-        this(type, name, DEFAULT_WIDTH, DEFAULT_HEIGHT, currentLevel, DEFAULT_EXPERIENCE_NEEDED);
-    }
-    public Blockamon(ElementType type, String name, int currentLevel, int experienceNeeded) {
-        this(type, name, DEFAULT_WIDTH, DEFAULT_HEIGHT, currentLevel, experienceNeeded);
-    }
-    public Blockamon(ElementType type, String name, int width, int height, int currentLevel, int experienceNeeded) {
-        this(type, name, width, height, currentLevel, experienceNeeded, DEFAULT_COLOR);
-    }
-    public Blockamon(ElementType type, String name, int width, int height, int currentLevel, int experienceNeeded, int red, int green, int blue) {
-        this(type, name, width, height, currentLevel, experienceNeeded, new Color(red, green, blue));
+        this(type, type.toString(), DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_LEVEL, DEFAULT_EXPERIENCE_NEEDED, type.getElementColor().getColor());
     }
     public Blockamon(ElementType type, String name, int width, int height, int currentLevel, int experienceNeeded, Color color) {
         this(type, name, width, height, currentLevel, DEFAULT_EXPERIENCE, experienceNeeded, color);
     }
     public Blockamon(ElementType type, String name, int width, int height, int currentLevel, int experience, int experienceNeeded, Color color) {
-        super();
         setElementType(type);
         setName(name);
         this.setSize(width, height);
@@ -107,14 +89,14 @@ public class Blockamon extends IBoundable {
      * @return The element type of this blockamon
      */
     public ElementType getElementType() {
-        return _elementType;
+        return _element;
     }
     /**
      * Sets the element type of this blockamon to the specified value
      * @param value The new element type of this blockamon
      */
     private void setElementType(ElementType value) {
-        _elementType = value;
+        _element = value;
     }
     /**
      * Retrieves the base attack of this blockamon
@@ -377,23 +359,32 @@ public class Blockamon extends IBoundable {
     private int _currentHP;
 
     public Blockamon(int maxHP) {
-        maxHitPoints(maxHP);
-        currentHitPoints(maxHP);
-        _element = ElementType.NORMAL;
+        this(maxHP, ElementType.NORMAL);
     }
 
-    public void element(ElementType element) {
-        _element = element;
+    public Blockamon(int maxHP, ElementType type) {
+        maxHitPoints(maxHP);
+        currentHitPoints(maxHP);
+        _element = type;
     }
 
     public ElementType element() {
         return _element;
     }
+    public void element(ElementType element) {
+        _element = element;
+    }
 
+    public int maxHP() {
+        return _maxHP;
+    }
     public void maxHitPoints(int maxHP) {
         _maxHP = maxHP;
     }
 
+    public int currentHitPoints() {
+        return _currentHP;
+    }
     public void currentHitPoints(int currentHP) {
         _currentHP = currentHP;
     }
@@ -403,14 +394,6 @@ public class Blockamon extends IBoundable {
         if(_currentHP < 0) {
             _currentHP = 0;
         }
-    }
-
-    public int maxHP() {
-        return _maxHP;
-    }
-
-    public int currentHitPoints() {
-        return _currentHP;
     }
 
     public void heal(int hp) {

@@ -23,7 +23,6 @@ public class Save {
     private static final String INCORRECTFILENAME_MESSAGE = "File name is incorrect it cannot be null or empty";
 
     public Save(Player player) {
-		super();
 		this.player = player;
 		File file = null;
 		try {

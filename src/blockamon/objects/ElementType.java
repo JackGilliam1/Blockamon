@@ -27,7 +27,7 @@ public enum ElementType {
         _elementColor = elementColor;
     }
 
-    public ElementColor getColor() {
+    public ElementColor getElementColor() {
         return _elementColor;
     }
 

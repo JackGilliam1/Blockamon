@@ -17,7 +17,8 @@ public class Player extends IBoundable {
 
     private AppearanceData _appearanceData;
     private DirectionalObjectImage _objectImage;
-
+    private final int WIDTH = 30;
+    private final int HEIGHT = 50;
 
 
 	private static int blockamonX, blockamonY;
@@ -44,9 +45,8 @@ public class Player extends IBoundable {
     private ArrayList<Item> _items;
     private ArrayList<Blockamon> _blockamon;
 
-	public Player(int width, int height) {
-		super();
-        _appearanceData = new AppearanceData(width, height);
+	public Player() {
+        _appearanceData = new AppearanceData(WIDTH, HEIGHT);
         _objectImage = new DirectionalObjectImage(
                 _appearanceData,
                 new ImageData(_imagesFolder));
@@ -57,7 +57,6 @@ public class Player extends IBoundable {
         _blockamon = new ArrayList<Blockamon>();
         _items = new ArrayList<Item>();
 
-		generateStartingBlockamon();
         System.out.println("PlayerWidth: " + this.getWidth());
         System.out.println("PlayerHeight: " + this.getHeight());
 
@@ -77,6 +76,11 @@ public class Player extends IBoundable {
 
         }
     }
+    public void setPosition(int x, int y) {
+        this.setLocation(x, y);
+        this.repaint();
+    }
+
     public void movePlayer(char typed, int maxX, int maxY) {
         System.out.println(typed);
         Direction direction = _objectImage.updateDirection(typed);
@@ -90,8 +94,7 @@ public class Player extends IBoundable {
 
         if(direction != null) {
             changeImage(direction);
-            this.setLocation(playersNewX, playersNewY);
-            this.repaint();
+            this.setPosition(playersNewX, playersNewY);
         }
     }
 
@@ -144,16 +147,6 @@ public class Player extends IBoundable {
         for(final Blockamon blockamon : _blockamon) {
             blockamon.fullyHeal();
         }
-	}
-	private void generateStartingBlockamon() {
-		//determine which blockamon the player will receive to start
-        Blockamon leadBlockamon;
-        if((leadBlockamon = getLeadBlockamon()) == null)
-        {
-            leadBlockamon = BlockamonGenerator.generateRandomBlockamon();
-            setLeadBlockamon(leadBlockamon);
-        }
-        leadBlockamon.isLead(true);
 	}
 
 

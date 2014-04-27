@@ -1,17 +1,37 @@
 package blockamon.io;
 
-/**
- * User: Jack's Computer
- * Date: 4/20/2014
- * Time: 12:17 PM
- */
-public class SaveWriter implements ISaveWriter {
+import blockamon.objects.Player;
 
-    public SaveWriter(){
+import java.io.File;
 
+public class SaveWriter implements ISaveWriter
+{
+    private IFileChooserHandler _fileChooserHandler;
+
+    public SaveWriter(IFileChooserHandler fileChooserHandler)
+    {
+        _fileChooserHandler = fileChooserHandler;
     }
 
-    public void SaveGame() {
+    public void SaveGame(Player player)
+    {
+        File file = _fileChooserHandler.getSaveFile();
+    }
 
+    /**
+     * Things to save:
+     * Player:
+     *  Items:
+     *      Type, Count
+     *  Money
+     *  Position:
+     *      X, Y
+     *  Blockamon:
+     *      Type, Status, CurrentHealth, TotalHealth, Level, IsLead
+     *  Blockamon Team:
+     *      Order
+     */
+    private String BuildSaveFile(Player player) {
+        return "";
     }
 }

@@ -3,6 +3,7 @@ package blockamon;
 import blockamon.controllers.ControlPanel;
 import blockamon.input.KeyListen;
 import blockamon.items.Item;
+import blockamon.objects.Blockamon;
 import blockamon.objects.data.Direction;
 import blockamon.objects.images.DirectionalObjectImage;
 import blockamon.objects.images.ObjectImage;
@@ -10,6 +11,7 @@ import blockamon.objects.Player;
 import blockamon.objects.buildings.HealingCenter;
 import blockamon.objects.buildings.ItemShop;
 import blockamon.objects.encounters.Grass;
+import generators.BlockamonGenerator;
 import listeners.MessageDialogEvent;
 import listeners.MessageDialogListener;
 import java.awt.BorderLayout;
@@ -33,8 +35,6 @@ public class World extends JFrame implements MessageDialogListener {
     private static final String _receivedMessageFormat = "You recieved a(n) %s Blockamon";
     private static final int playerXStartingLocation = 130;
     private static final int playerYStartingLocation = 100;
-    private static final int playerWidth = 30;
-    private static final int playerHeight = 50;
 
 
 
@@ -88,13 +88,25 @@ public class World extends JFrame implements MessageDialogListener {
 	}
 	//creates the player
 	private Player createPlayer() {
-		Player player = new Player(playerWidth, playerHeight);
+		Player player = new Player();
+        generateStartingBlockamon(player);
         player.setLocation(playerXStartingLocation, playerYStartingLocation);
         final String message = String.format(_receivedMessageFormat, player.getLeadBlockamon().getElementType());
         displayDialog(message, "Block received", JOptionPane.INFORMATION_MESSAGE);
 		this.addKeyListener(new KeyListen(this));
 		return player;
 	}
+
+    private void generateStartingBlockamon(Player player) {
+        //determine which blockamon the player will receive to start
+        Blockamon leadBlockamon;
+        if((leadBlockamon = player.getLeadBlockamon()) == null)
+        {
+            leadBlockamon = BlockamonGenerator.generateRandomBlockamon();
+            player.setLeadBlockamon(leadBlockamon);
+        }
+        leadBlockamon.isLead(true);
+    }
     //creates the place that can heal
     private void createHealingCenter() {
         healingCenter = new HealingCenter(null, null);
