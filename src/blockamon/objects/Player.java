@@ -5,6 +5,8 @@ import blockamon.objects.data.AppearanceData;
 import blockamon.objects.data.Direction;
 import blockamon.objects.data.ImageData;
 import blockamon.objects.images.DirectionalObjectImage;
+import blockamon.objects.images.IDirectionalObjectImage;
+import blockamon.objects.images.ObjectImage;
 
 import javax.swing.*;
 import java.util.*;
@@ -13,14 +15,14 @@ public class Player extends IBoundable {
     private static final String _imagesFolder = "player";
 
     private AppearanceData _appearanceData;
-    private DirectionalObjectImage _objectImage;
+    private IDirectionalObjectImage _objectImage;
     private final int WIDTH = 30;
     private final int HEIGHT = 50;
 
 
 	private static int blockamonX, blockamonY;
 
-	private double amountOfMoney = 200;
+	private double amountOfMoney = 0;
 	private static final int PARTYLIMIT = 6;
 	private static final int BAGSPACE = 6;
 	private static final Random randomNumberGenerator = new Random();
@@ -42,20 +44,21 @@ public class Player extends IBoundable {
 
     private ArrayList<Blockamon> _blockamon;
 
-	public Player() {
+    public Player() {
+        this(null);
+    }
+
+	public Player(IDirectionalObjectImage image) {
         _appearanceData = new AppearanceData(WIDTH, HEIGHT);
-        _objectImage = new DirectionalObjectImage(
+        _objectImage = image != null ? image : new DirectionalObjectImage(
                 _appearanceData,
                 new ImageData(_imagesFolder));
         _itemsMap = new HashMap<Item, Integer>();
 
         this.paintPlayer();
-        this.add(_objectImage, 0);
+        this.add(_objectImage.getComponent(), 0);
 
         _blockamon = new ArrayList<Blockamon>();
-
-        System.out.println("PlayerWidth: " + this.getWidth());
-        System.out.println("PlayerHeight: " + this.getHeight());
 	}
 
     public void changeImage(Direction direction) {
@@ -98,9 +101,9 @@ public class Player extends IBoundable {
     }
 
     private void paintPlayer() {
-        this.setHeight(_objectImage.getHeight());
-        this.setWidth(_objectImage.getWidth());
-        this.add(_objectImage, 0);
+        this.setHeight(_objectImage.getComponent().getHeight());
+        this.setWidth(_objectImage.getComponent().getWidth());
+        this.add(_objectImage.getComponent(), 0);
         this.repaint();
     }
 

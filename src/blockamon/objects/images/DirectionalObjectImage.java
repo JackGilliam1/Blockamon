@@ -4,6 +4,7 @@ import blockamon.objects.data.AppearanceData;
 import blockamon.objects.data.Direction;
 import blockamon.objects.data.ImageData;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  * Date: 4/20/2014
  * Time: 12:57 PM
  */
-public class DirectionalObjectImage extends ObjectImage {
+public class DirectionalObjectImage extends ObjectImage implements IDirectionalObjectImage {
     private Direction _currentDirection;
     private ArrayList<Direction> _directions;
 
@@ -46,6 +47,10 @@ public class DirectionalObjectImage extends ObjectImage {
 
     public Direction getCurrentDirection() {
         return _currentDirection;
+    }
+
+    public JComponent getComponent() {
+        return this;
     }
 
     private void setUpDirections() {

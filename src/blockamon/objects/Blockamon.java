@@ -364,7 +364,7 @@ public class Blockamon extends IBoundable {
     }
 
     public Blockamon(int maxHP, ElementType type) {
-        maxHitPoints(maxHP);
+        maxHP(maxHP);
         currentHitPoints(maxHP);
         _element = type;
     }
@@ -379,7 +379,7 @@ public class Blockamon extends IBoundable {
     public int maxHP() {
         return _maxHP;
     }
-    public void maxHitPoints(int maxHP) {
+    public void maxHP(int maxHP) {
         _maxHP = maxHP;
     }
 

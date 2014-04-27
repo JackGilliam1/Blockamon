@@ -10,18 +10,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class SaveWriter implements ISaveWriter
-{
+public class SaveWriter implements ISaveWriter {
     private IFileChooserHandler _fileChooserHandler;
 
-    public SaveWriter(IFileChooserHandler fileChooserHandler)
-    {
+    public SaveWriter(IFileChooserHandler fileChooserHandler) {
         _fileChooserHandler = fileChooserHandler;
     }
 
     public void SaveGame(Player player) throws IOException {
         File file = _fileChooserHandler.getSaveFile();
-        if(file != null) {
+        if (file != null) {
             String saveData = BuildSaveFile(player);
             WriteSaveData(file, saveData);
         }
@@ -34,45 +32,31 @@ public class SaveWriter implements ISaveWriter
             fileWriter = new FileWriter(file);
             writer = new BufferedWriter(fileWriter);
             writer.write(data);
-        }
-        finally{
-            if(writer != null) {
+        } finally {
+            if (writer != null) {
                 writer.close();
             }
-            if(fileWriter != null) {
+            if (fileWriter != null) {
                 fileWriter.close();
             }
         }
     }
 
     /**
-     * Things to save:
-     * Player:
-     *  Items:
-     *      Type, Count
-     *  Money
-     *  Position:
-     *      X, Y
-     *  Blockamon:
-     *      Type, Status, CurrentHealth, TotalHealth, Level, IsLead
-     *  Blockamon Team:
-     *      Order
-     */
-
-    /**
      * Format (without the empty lines):
      * Player
      * Money:2500.0
-     * Position:8,10
-     *
+     * PositionX:8
+     * PositionY:10
+     * <p/>
      * Item
      * Name:'Some Item'
      * Count:10
-     *
+     * <p/>
      * Item
      * Name:'Some Other Item'
      * Count:20
-     *
+     * <p/>
      * Blockamon
      * Name:'Some Blockamon Name'
      * Type:'Fire'
@@ -80,9 +64,12 @@ public class SaveWriter implements ISaveWriter
      * CurrentHealth:0
      * TotalHealth:800
      * Level:14
+     * CurrentEXP:20
+     * EXPNeeded:200
+     * TotalAttack:20
      * IsLead:true
      * Position:0
-     *
+     * <p/>
      * Blockamon
      * Name:'Some Other Name'
      * Type:'Ice'
@@ -90,6 +77,9 @@ public class SaveWriter implements ISaveWriter
      * CurrentHealth:88
      * TotalHealth:800
      * Level:17
+     * CurrentEXP:20
+     * EXPNeeded:200
+     * TotalAttack:20
      * IsLead:false
      * Position:1
      */
@@ -97,7 +87,8 @@ public class SaveWriter implements ISaveWriter
         StringBuilder builder = new StringBuilder();
         appendLn(builder, "Player");
         appendLn(builder, "Money:" + player.getMoney());
-        appendLn(builder, "Position:" + player.getPosition().getPositionString());
+        appendLn(builder, "PositionX:" + player.getX());
+        appendLn(builder, "PositionY:" + player.getY());
         BuildItemString(builder, player);
         BuildBlockamonString(builder, player.getBlockamon());
         return builder.toString();
@@ -112,15 +103,15 @@ public class SaveWriter implements ISaveWriter
 
     private void BuildItemString(StringBuilder builder, Player player) {
         Item[] items = player.getItems();
-        for(Item item : items) {
+        for (Item item : items) {
             appendLn(builder, "Item");
-            appendLn(builder, "Name:'" + item.getName() + "'");
+            appendLn(builder, "Name:'" + item.toString() + "'");
             appendLn(builder, "Count:" + player.getItemCount(item));
         }
     }
 
     private void BuildBlockamonString(StringBuilder builder, ArrayList<Blockamon> blockamons) {
-        for(int i = 0; i < blockamons.size(); i++) {
+        for (int i = 0; i < blockamons.size(); i++) {
             Blockamon blockamon = blockamons.get(i);
             appendLn(builder, "Blockamon");
             appendLn(builder, "Name:'" + blockamon.getName() + "'");
@@ -129,6 +120,9 @@ public class SaveWriter implements ISaveWriter
             appendLn(builder, "CurrentHealth:" + blockamon.currentHitPoints());
             appendLn(builder, "TotalHealth:" + blockamon.maxHP());
             appendLn(builder, "Level:" + blockamon.getCurrentLevel());
+            appendLn(builder, "CurrentEXP:" + blockamon.getExperience());
+            appendLn(builder, "EXPNeeded:" + blockamon.getNeededExperience());
+            appendLn(builder, "TotalAttack:" + blockamon.getTotalAttack());
             appendLn(builder, "IsLead:" + blockamon.isLead());
             appendLn(builder, "Position:" + i);
         }

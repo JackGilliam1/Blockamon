@@ -38,8 +38,4 @@ public enum Item {
     public String getName() {
         return _name;
     }
-
-    public String toString() {
-        return getName();
-    }
 }
