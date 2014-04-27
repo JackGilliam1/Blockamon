@@ -151,7 +151,8 @@ public class ControlPanel extends JPanel {
     private HealingCenter healingCenter;
 	private Blockamon blockamon;
 	private Grass wildGrass;
-	private JMenuItem[] inventoryButtons, partyButtons, storeButtons, infoButtons;
+    private ArrayList<JMenuItem> _inventoryButtons;
+	private JMenuItem[] partyButtons, storeButtons, infoButtons;
 	private Player player;
 	private JMenu OutOfBattle;
 	private JMenu Battle;
@@ -185,7 +186,7 @@ public class ControlPanel extends JPanel {
 		this.itemShop = itemShop;
         this.wildGrass = wildGrass;
         this.healingCenter = healingCenter;
-		inventoryButtons = new JMenuItem[this.player.getBagSize()];
+        _inventoryButtons = new ArrayList<JMenuItem>();
 		partyButtons = new JMenuItem[this.player.getPartyLimit()];
 		storeButtons = new JMenuItem[this.itemShop.getNumberOfItems()];
 		infoButtons = new JMenuItem[this.player.getPartyLimit()];
@@ -590,26 +591,18 @@ public class ControlPanel extends JPanel {
 		return amCaught;
 	}
 	private void createItemButtons(boolean inBattle) {
-		// there is not item
-		boolean thereIsAnItem = false;
-		// for however long the itemButton array is
-		for (int itemSlotNum = 0; itemSlotNum < inventoryButtons.length; itemSlotNum++) {
-			Item playerItem = player.getItem(itemSlotNum);
-			if (playerItem != null) {
-				if(inventoryButtons[itemSlotNum] != null)
-				{
-					PlayerItems.remove(inventoryButtons[itemSlotNum]);
-				}
-				// puts a button inside the itemButtons array
-				inventoryButtons[itemSlotNum] = createItemButtons(playerItem);
-				// there is an item
-				thereIsAnItem = true;
-				PlayerItems.add(inventoryButtons[itemSlotNum]);
-			}
-		}
+		Set<Item> items = player.getItems();
+        for(JMenuItem menuItem : _inventoryButtons) {
+            PlayerItems.remove(menuItem);
+        }
+        for(Item playerItem : items) {
+            JMenuItem button = createItemButtons(playerItem);
+            _inventoryButtons.add(button);
+            PlayerItems.add(button);
+        }
 		PlayerItems.add(inventoryBackButton);
 		// if there are items add the buttons
-		if (thereIsAnItem) {
+		if (items.size() > 0) {
 			removeButtons("Battle");
 			addButtons("Items");
 			if (inBattle) {
@@ -638,11 +631,10 @@ public class ControlPanel extends JPanel {
 		return button;
 	}
 	private void activateThatItem(JMenuItem theButton) {
-		for (int position = 0; position < inventoryButtons.length; position++) {
-			if (inventoryButtons[position] == theButton) {
-				// if the item in the specified position is not null
-				if (player.getItem(position) != null) {
-					Item playersItem = player.getItem(position);
+        for(JMenuItem inventoryButton : _inventoryButtons) {
+			if (inventoryButton == theButton) {
+                    String itemName = theButton.getText();
+                    Item playersItem = Item.valueOf(itemName);
 					Blockamon PBlock = player.getLeadBlockamon();
 					// if the item is a HealVial
 					if (playersItem.equals(Item.HEALVIAL)) {
@@ -656,7 +648,7 @@ public class ControlPanel extends JPanel {
 									"Current Health",
 									JOptionPane.INFORMATION_MESSAGE, "info");
 							// set the item in that position to null
-							player.removeItem(position);
+							player.removeItem(playersItem);
 							// add the battle buttons
 							addButtons("Battle");
 							// remove the item buttons
@@ -722,13 +714,12 @@ public class ControlPanel extends JPanel {
 							}
 						}
 					}
-					player.removeItem(position);
+					player.removeItem(playersItem);
 				} else {
 					printText("That item does not exist", "Not an Item",
 							JOptionPane.ERROR_MESSAGE, "error");
 				}
 			}
-		}
 	}
 	// adds each button
 	public void addButtons(String type) {

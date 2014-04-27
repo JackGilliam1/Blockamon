@@ -48,12 +48,12 @@ public class Save {
 	{
 		int amountOfPlayersBlockamon = player.getPartySize();
 		double amountOfMoneyPlayerHas = 0;
-		int amountOfItemsPlayerHas = player.getBagSize();
+		int amountOfItemsPlayerHas = player.getBagSpaceUsed();
 		save.printf(PLAYERSTATSFORMAT, amountOfPlayersBlockamon, amountOfItemsPlayerHas, amountOfMoneyPlayerHas);
 
 		for(int position = 0; position < amountOfItemsPlayerHas; position++)
 		{
-			Item item = player.getItem(position);
+			Item item = Item.HEALVIAL;//player.getItem(position);
 			if(item != null)
 			{
 				save.printf(ITEMFORMAT, position, item.toString());

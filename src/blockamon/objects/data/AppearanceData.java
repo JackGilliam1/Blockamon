@@ -30,6 +30,10 @@ public class AppearanceData {
         return _height;
     }
 
+    public String getPositionString() {
+        return getX() + "," + getY();
+    }
+
     public int getX() {
         return _x;
     }
@@ -44,5 +48,10 @@ public class AppearanceData {
 
     public void setY(int y) {
         _y = y;
+    }
+
+    public void setPosition(int x, int y) {
+        setX(x);
+        setY(y);
     }
 }

@@ -5,11 +5,8 @@ import blockamon.objects.data.AppearanceData;
 import blockamon.objects.data.Direction;
 import blockamon.objects.data.ImageData;
 import blockamon.objects.images.DirectionalObjectImage;
-import blockamon.objects.images.ObjectImage;
-import generators.BlockamonGenerator;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.*;
 
 public class Player extends IBoundable {
@@ -25,7 +22,7 @@ public class Player extends IBoundable {
 
 	private double amountOfMoney = 200;
 	private static final int PARTYLIMIT = 6;
-	private static final int BAGSIZELIMIT = 6;
+	private static final int BAGSPACE = 6;
 	private static final Random randomNumberGenerator = new Random();
 
     /**
@@ -41,8 +38,8 @@ public class Player extends IBoundable {
      */
     private static final String ITEMRECEIVED_MESSAGEFORMAT = "Player has received a(n) %s";
 
+    private Map<Item, Integer> _itemsMap;
 
-    private ArrayList<Item> _items;
     private ArrayList<Blockamon> _blockamon;
 
 	public Player() {
@@ -50,12 +47,12 @@ public class Player extends IBoundable {
         _objectImage = new DirectionalObjectImage(
                 _appearanceData,
                 new ImageData(_imagesFolder));
+        _itemsMap = new HashMap<Item, Integer>();
 
         this.paintPlayer();
         this.add(_objectImage, 0);
 
         _blockamon = new ArrayList<Blockamon>();
-        _items = new ArrayList<Item>();
 
         System.out.println("PlayerWidth: " + this.getWidth());
         System.out.println("PlayerHeight: " + this.getHeight());
@@ -76,7 +73,11 @@ public class Player extends IBoundable {
 
         }
     }
+    public AppearanceData getPosition() {
+        return _appearanceData;
+    }
     public void setPosition(int x, int y) {
+        _appearanceData.setPosition(x, y);
         this.setLocation(x, y);
         this.repaint();
     }
@@ -162,8 +163,6 @@ public class Player extends IBoundable {
         return (getPartySize() + 1) < getPartyLimit();
     }
 
-
-
     public double getMoney() {
         return amountOfMoney;
     }
@@ -222,38 +221,42 @@ public class Player extends IBoundable {
     public synchronized void addItem(Item item) {
         if(canAddItem())
         {
-            _items.add(item);
-        }
-        else
-        {
+            if(_itemsMap.containsKey(item)) {
+                int count = _itemsMap.get(item) + 1;
+                _itemsMap.remove(item);
+                _itemsMap.put(item, count);
+            }
+            else {
+                _itemsMap.put(item, 1);
+            }
         }
     }
     public synchronized  boolean canAddItem() {
-        return getBagSize() < getBagLimit();
+        return getBagSpaceUsed() < getBagSpace();
     }
-    public synchronized boolean hasItems() {
-        return _items.size() > 0;
+    public synchronized Set<Item> getItems() {
+        return _itemsMap.keySet();
     }
-    public synchronized  void setItem(int index, Item item) {
-        if(getBagSize() > 0)
-            _items.set(index, item);
-        else
-            addItem(item);
+    public synchronized  int getBagSpaceUsed() {
+        int bagSpaceUsed = 0;
+        for(Item item : Item.values()) {
+            if(_itemsMap.containsKey(item)) {
+                bagSpaceUsed += _itemsMap.get(item);
+            }
+        }
+        return bagSpaceUsed;
     }
-    public synchronized  Item getItem(int index) {
-        return _items.get(index);
-    }
-    public synchronized  int getBagSize() {
-        return _items.size();
-    }
-    public synchronized  int getBagLimit() {
-        return BAGSIZELIMIT;
-    }
-    public synchronized  void removeItem(int index) {
-        _items.remove(index);
+    public synchronized  int getBagSpace() {
+        return BAGSPACE;
     }
     public synchronized  void removeItem(Item item) {
-        _items.remove(item);
+        if(_itemsMap.containsKey(item)) {
+            int count = _itemsMap.get(item) - 1;
+            _itemsMap.remove(item);
+            if(count > 0) {
+                _itemsMap.put(item, count);
+            }
+        }
     }
     public synchronized  boolean canFight() {
         boolean canFight = false;
