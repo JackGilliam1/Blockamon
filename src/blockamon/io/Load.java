@@ -5,7 +5,6 @@ import blockamon.objects.ElementType;
 import blockamon.objects.Player;
 import blockamon.objects.Blockamon;
 import generators.BlockamonGenerator;
-import generators.StringBuilderGenerator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,7 +28,7 @@ public class Load {
 	}
 
 	private void loadAFile() {
-        final StringBuilder builder = StringBuilderGenerator.getStringBuilder();
+        final StringBuilder builder = new StringBuilder();
 		Scanner scanner = null;
 		File file = null;
 		try {
