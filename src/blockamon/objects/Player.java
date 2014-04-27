@@ -56,8 +56,6 @@ public class Player extends IBoundable {
 
         System.out.println("PlayerWidth: " + this.getWidth());
         System.out.println("PlayerHeight: " + this.getHeight());
-
-        addItem(Item.HEALVIAL);
 	}
 
     public void changeImage(Direction direction) {
@@ -219,8 +217,7 @@ public class Player extends IBoundable {
         _blockamon.remove(blockamon);
     }
     public synchronized void addItem(Item item) {
-        if(canAddItem())
-        {
+        if(canAddItem()) {
             if(_itemsMap.containsKey(item)) {
                 int count = _itemsMap.get(item) + 1;
                 _itemsMap.remove(item);
@@ -231,11 +228,24 @@ public class Player extends IBoundable {
             }
         }
     }
+    public synchronized int getItemCount(Item item) {
+        if(_itemsMap.containsKey(item)) {
+            return _itemsMap.get(item);
+        }
+        return 0;
+    }
     public synchronized  boolean canAddItem() {
         return getBagSpaceUsed() < getBagSpace();
     }
-    public synchronized Set<Item> getItems() {
-        return _itemsMap.keySet();
+    public synchronized Item[] getItems() {
+        int current = 0;
+        Item[] items = new Item[_itemsMap.size()];
+        for(Item item : Item.values()) {
+            if(current < items.length && _itemsMap.containsKey(item)) {
+                items[current++] = item;
+            }
+        }
+        return items;
     }
     public synchronized  int getBagSpaceUsed() {
         int bagSpaceUsed = 0;

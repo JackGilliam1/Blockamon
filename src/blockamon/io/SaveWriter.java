@@ -1,11 +1,13 @@
 package blockamon.io;
 
+import blockamon.items.Item;
 import blockamon.objects.Player;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Set;
 
 public class SaveWriter implements ISaveWriter
 {
@@ -95,7 +97,7 @@ public class SaveWriter implements ISaveWriter
         appendLn(builder, "Player");
         appendLn(builder, "Money:" + player.getMoney());
         appendLn(builder, "Position:" + player.getPosition().getPositionString());
-        //TODO: Items
+        BuildItemString(builder, player);
         //TODO: Blockamon
         return builder.toString();
     }
@@ -105,5 +107,14 @@ public class SaveWriter implements ISaveWriter
     private void appendLn(StringBuilder builder, String data) {
         builder.append(data);
         builder.append(NEW_LINE);
+    }
+
+    private void BuildItemString(StringBuilder builder, Player player) {
+        Item[] items = player.getItems();
+        for(Item item : items) {
+            appendLn(builder, "Item");
+            appendLn(builder, "Name:'" + item.getName() + "'");
+            appendLn(builder, "Count:" + player.getItemCount(item));
+        }
     }
 }

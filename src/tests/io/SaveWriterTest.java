@@ -152,6 +152,40 @@ public class SaveWriterTest extends TestCase {
         }
     }
 
+    public void test_saves_player_with_two_items_and_no_blockamon_to_disk() {
+        Player player = new Player();
+        player.setMoney(200);
+        player.setPosition(50, 20);
+        player.addItem(Item.HEALVIAL);
+        player.addItem(Item.HEALVIAL);
+        player.addItem(Item.BLOCKABALL);
+
+        try {
+            _saveWriter.SaveGame(player);
+
+            File loadFile = _fileChooserHandler.getLoadFile();
+            assertTrue(loadFile.exists());
+
+            ArrayList<String> lines = TestExtensions.readAllLines(loadFile);
+            assertLineIsEqualTo(lines.size(), 9);
+
+            int currentLine = 0;
+            assertLineIsEqualTo(lines.get(currentLine++), "Player");
+            assertLineIsEqualTo(lines.get(currentLine++), "Money:200.0");
+            assertLineIsEqualTo(lines.get(currentLine++), "Position:50,20");
+            assertLineIsEqualTo(lines.get(currentLine++), "Item");
+            assertLineIsEqualTo(lines.get(currentLine++), "Name:'" + Item.HEALVIAL.getName() + "'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Count:2");
+            assertLineIsEqualTo(lines.get(currentLine++), "Item");
+            assertLineIsEqualTo(lines.get(currentLine++), "Name:'" + Item.BLOCKABALL.getName() + "'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Count:1");
+        }
+        catch(IOException ioe) {
+            ioe.printStackTrace();
+            fail("IOException happened");
+        }
+    }
+
     private void assertLineIsEqualTo(Object actual, Object expected) {
         assertEquals(expected, actual);
     }

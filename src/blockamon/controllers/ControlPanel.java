@@ -591,7 +591,7 @@ public class ControlPanel extends JPanel {
 		return amCaught;
 	}
 	private void createItemButtons(boolean inBattle) {
-		Set<Item> items = player.getItems();
+		Item[] items = player.getItems();
         for(JMenuItem menuItem : _inventoryButtons) {
             PlayerItems.remove(menuItem);
         }
@@ -602,7 +602,7 @@ public class ControlPanel extends JPanel {
         }
 		PlayerItems.add(inventoryBackButton);
 		// if there are items add the buttons
-		if (items.size() > 0) {
+		if (items.length > 0) {
 			removeButtons("Battle");
 			addButtons("Items");
 			if (inBattle) {
