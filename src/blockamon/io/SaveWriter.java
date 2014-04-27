@@ -1,13 +1,14 @@
 package blockamon.io;
 
 import blockamon.items.Item;
+import blockamon.objects.Blockamon;
 import blockamon.objects.Player;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Set;
+import java.util.ArrayList;
 
 public class SaveWriter implements ISaveWriter
 {
@@ -98,7 +99,7 @@ public class SaveWriter implements ISaveWriter
         appendLn(builder, "Money:" + player.getMoney());
         appendLn(builder, "Position:" + player.getPosition().getPositionString());
         BuildItemString(builder, player);
-        //TODO: Blockamon
+        BuildBlockamonString(builder, player.getBlockamon());
         return builder.toString();
     }
 
@@ -115,6 +116,21 @@ public class SaveWriter implements ISaveWriter
             appendLn(builder, "Item");
             appendLn(builder, "Name:'" + item.getName() + "'");
             appendLn(builder, "Count:" + player.getItemCount(item));
+        }
+    }
+
+    private void BuildBlockamonString(StringBuilder builder, ArrayList<Blockamon> blockamons) {
+        for(int i = 0; i < blockamons.size(); i++) {
+            Blockamon blockamon = blockamons.get(i);
+            appendLn(builder, "Blockamon");
+            appendLn(builder, "Name:'" + blockamon.getName() + "'");
+            appendLn(builder, "Type:'" + blockamon.getElementType() + "'");
+            appendLn(builder, "Status:'" + blockamon.getStatus() + "'");
+            appendLn(builder, "CurrentHealth:" + blockamon.currentHitPoints());
+            appendLn(builder, "TotalHealth:" + blockamon.maxHP());
+            appendLn(builder, "Level:" + blockamon.getCurrentLevel());
+            appendLn(builder, "IsLead:" + blockamon.isLead());
+            appendLn(builder, "Position:" + i);
         }
     }
 }

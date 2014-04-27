@@ -5,8 +5,6 @@ import blockamon.input.KeyListen;
 import blockamon.items.Item;
 import blockamon.objects.Blockamon;
 import blockamon.objects.data.Direction;
-import blockamon.objects.images.DirectionalObjectImage;
-import blockamon.objects.images.ObjectImage;
 import blockamon.objects.Player;
 import blockamon.objects.buildings.HealingCenter;
 import blockamon.objects.buildings.ItemShop;
@@ -224,7 +222,7 @@ public class World extends JFrame implements MessageDialogListener {
 		   player.getY() + player.getHeight() > wildGrass.getY())
 		{
 			//does a wildBlockamon appear?
-		    wildGrass.wildBlockamonAppearance(player.getBlockamon(), player.getX()+ player.getWidth(), player.getY());
+		    wildGrass.wildBlockamonAppearance(player.getActiveBlockamon(), player.getX()+ player.getWidth(), player.getY());
 		}
 		//if the player is outside the bounds of the grass
 		else

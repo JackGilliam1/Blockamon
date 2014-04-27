@@ -3,8 +3,6 @@ package blockamon.controllers;
 import blockamon.World;
 import blockamon.objects.ElementType;
 import blockamon.objects.data.Direction;
-import blockamon.objects.images.DirectionalObjectImage;
-import blockamon.objects.images.ObjectImage;
 import blockamon.objects.Player;
 import blockamon.objects.Blockamon;
 
@@ -117,7 +115,7 @@ public class BlockamonBattle {
 				+ blockamon.getCurrentHealth(), "Everyones current Health", JOptionPane.INFORMATION_MESSAGE, "info");
 	}
 	public void changeActiveBlockamon(Player player) {
-		playerBlock = player.getBlockamon();
+		playerBlock = player.getActiveBlockamon();
 	}
 	public void doAttack(Player player) {
 		if (playerBlock != null && blockamon != null) {
@@ -181,7 +179,7 @@ public class BlockamonBattle {
 		// resets the stats of both blockamon
 		blockamon.resetAttack();
 		player.resetMyBlocksAttack();
-		addPlayersBlock(player.getBlockamon(), null);
+		addPlayersBlock(player.getActiveBlockamon(), null);
 		world.remove(blockamon);
 		theWorld.changeBattleState();
 		theWorld.takeTheFocus();

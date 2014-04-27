@@ -39,6 +39,7 @@ public class Blockamon extends IBoundable {
     private static final int DEFAULT_EXPERIENCE = 0;
     private static final int DEFAULT_EXPERIENCE_NEEDED = 50;
     private static final double DEFAULT_ATTACK_POWER = 1.0;
+    private String status = "NONE";
 
     public Blockamon(ElementType type) {
         this(type, type.toString(), DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_LEVEL, DEFAULT_EXPERIENCE_NEEDED, type.getElementColor().getColor());
@@ -401,4 +402,7 @@ public class Blockamon extends IBoundable {
     }
 
 
+    public String getStatus() {
+        return status;
+    }
 }

@@ -148,17 +148,13 @@ public class Player extends IBoundable {
         }
 	}
 
-
-
-    public void addToParty(Blockamon capturedBlockamon){
+    public void addToParty(Blockamon blockamon){
         if(canAddToParty()) {
-            _blockamon.add(capturedBlockamon);
-        }
-        else {
+            _blockamon.add(blockamon);
         }
     }
     public boolean canAddToParty() {
-        return (getPartySize() + 1) < getPartyLimit();
+        return getPartySize() < getPartyLimit();
     }
 
     public double getMoney() {
@@ -173,7 +169,10 @@ public class Player extends IBoundable {
     public synchronized  int getPartySize() {
         return _blockamon.size();
     }
-	public synchronized Blockamon getBlockamon() {
+    public synchronized ArrayList<Blockamon> getBlockamon() {
+        return _blockamon;
+    }
+	public synchronized Blockamon getActiveBlockamon() {
 		//creation of the activeBlockamon is sent to nothing
 		Blockamon activeBlockamon = null;
 		//for the amount of Blockamon a player can hold
@@ -190,13 +189,13 @@ public class Player extends IBoundable {
     public synchronized Blockamon getLeadBlockamon() {
         return getBlockamonAt(0);
     }
-    public synchronized  void setLeadBlockamon(Blockamon blockamon) {
-        if(getPartySize() > 0)
-        {
-            _blockamon.set(0, blockamon);
-        }
-        else {
-            addToParty(blockamon);
+    public synchronized void setLeadBlockamon(Blockamon blockamon) {
+        if(canAddToParty()) {
+            for(Blockamon blockamonInParty : getBlockamon()) {
+                blockamonInParty.isLead(false);
+            }
+            blockamon.isLead(true);
+            _blockamon.add(0, blockamon);
         }
     }
     public synchronized Blockamon getBlockamonAt(int index) {

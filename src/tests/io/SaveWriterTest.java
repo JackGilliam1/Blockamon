@@ -60,11 +60,11 @@ public class SaveWriterTest extends TestCase {
      * Position:1
      */
     public void test_saves_player_with_no_items_and_one_blockamon_to_disk() {
+        Player player = new Player();
         Blockamon leadBlockamon = new Blockamon(ElementType.BUG);
         leadBlockamon.maxHitPoints(800);
         leadBlockamon.currentHitPoints(80);
         leadBlockamon.setCurrentLevel(17);
-        Player player = new Player();
         player.setPosition(8, 5);
         player.setMoney(200);
         player.setLeadBlockamon(leadBlockamon);
@@ -75,22 +75,22 @@ public class SaveWriterTest extends TestCase {
             File loadedGame = _fileChooserHandler.getLoadFile();
             assertTrue(loadedGame.exists());
 
-            ArrayList<String> linesRead = TestExtensions.readAllLines(loadedGame);
-            assertLineIsEqualTo(linesRead.size(), 12);
+            ArrayList<String> lines = TestExtensions.readAllLines(loadedGame);
+            assertLineIsEqualTo(lines.size(), 12);
 
-            int currentIndex = 0;
-            assertLineIsEqualTo(linesRead.get(currentIndex++), "Player");
-            assertLineIsEqualTo(linesRead.get(currentIndex++), "Money:200.0");
-            assertLineIsEqualTo(linesRead.get(currentIndex++), "Position:8,5");
-            assertLineIsEqualTo(linesRead.get(currentIndex++), "Blockamon");
-            assertLineIsEqualTo(linesRead.get(currentIndex++), "Name:'BUG'");
-            assertLineIsEqualTo(linesRead.get(currentIndex++), "Type:'BUG'");
-            assertLineIsEqualTo(linesRead.get(currentIndex++), "Status:'NONE'");
-            assertLineIsEqualTo(linesRead.get(currentIndex++), "CurrentHealth:80");
-            assertLineIsEqualTo(linesRead.get(currentIndex++), "TotalHealth:800");
-            assertLineIsEqualTo(linesRead.get(currentIndex++), "Level:17");
-            assertLineIsEqualTo(linesRead.get(currentIndex++), "IsLead:true");
-            assertLineIsEqualTo(linesRead.get(currentIndex++), "Position:0");
+            int currentLine = 0;
+            assertLineIsEqualTo(lines.get(currentLine++), "Player");
+            assertLineIsEqualTo(lines.get(currentLine++), "Money:200.0");
+            assertLineIsEqualTo(lines.get(currentLine++), "Position:8,5");
+            assertLineIsEqualTo(lines.get(currentLine++), "Blockamon");
+            assertLineIsEqualTo(lines.get(currentLine++), "Name:'BUG'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Type:'BUG'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Status:'NONE'");
+            assertLineIsEqualTo(lines.get(currentLine++), "CurrentHealth:80");
+            assertLineIsEqualTo(lines.get(currentLine++), "TotalHealth:800");
+            assertLineIsEqualTo(lines.get(currentLine++), "Level:17");
+            assertLineIsEqualTo(lines.get(currentLine++), "IsLead:true");
+            assertLineIsEqualTo(lines.get(currentLine++), "Position:0");
         }
         catch(IOException ioe) {
             ioe.printStackTrace();
@@ -186,6 +186,223 @@ public class SaveWriterTest extends TestCase {
         }
     }
 
+    public void test_saves_player_with_one_item_and_one_blockamon_to_disk() {
+        Player player = new Player();
+        player.setMoney(200);
+        player.setPosition(50, 20);
+        player.addItem(Item.HEALVIAL);
+        Blockamon leadBlockamon = new Blockamon(ElementType.BUG);
+        leadBlockamon.maxHitPoints(800);
+        leadBlockamon.currentHitPoints(80);
+        leadBlockamon.setCurrentLevel(17);
+        player.setLeadBlockamon(leadBlockamon);
+
+        try {
+            _saveWriter.SaveGame(player);
+
+            File loadFile = _fileChooserHandler.getLoadFile();
+            assertTrue(loadFile.exists());
+
+            ArrayList<String> lines = TestExtensions.readAllLines(loadFile);
+            assertLineIsEqualTo(lines.size(), 15);
+
+            int currentLine = 0;
+            assertLineIsEqualTo(lines.get(currentLine++), "Player");
+            assertLineIsEqualTo(lines.get(currentLine++), "Money:200.0");
+            assertLineIsEqualTo(lines.get(currentLine++), "Position:50,20");
+            assertLineIsEqualTo(lines.get(currentLine++), "Item");
+            assertLineIsEqualTo(lines.get(currentLine++), "Name:'" + Item.HEALVIAL.getName() + "'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Count:1");
+            assertLineIsEqualTo(lines.get(currentLine++), "Blockamon");
+            assertLineIsEqualTo(lines.get(currentLine++), "Name:'BUG'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Type:'BUG'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Status:'NONE'");
+            assertLineIsEqualTo(lines.get(currentLine++), "CurrentHealth:80");
+            assertLineIsEqualTo(lines.get(currentLine++), "TotalHealth:800");
+            assertLineIsEqualTo(lines.get(currentLine++), "Level:17");
+            assertLineIsEqualTo(lines.get(currentLine++), "IsLead:true");
+            assertLineIsEqualTo(lines.get(currentLine++), "Position:0");
+        }
+        catch(IOException ioe) {
+            ioe.printStackTrace();
+            fail("IOException happened");
+        }
+    }
+
+    public void test_saves_player_with_two_items_and_one_blockamon_to_disk() {
+        Player player = new Player();
+        player.setMoney(200);
+        player.setPosition(50, 20);
+        player.addItem(Item.HEALVIAL);
+        player.addItem(Item.HEALVIAL);
+        player.addItem(Item.BLOCKABALL);
+        Blockamon leadBlockamon = new Blockamon(ElementType.BUG);
+        leadBlockamon.maxHitPoints(800);
+        leadBlockamon.currentHitPoints(80);
+        leadBlockamon.setCurrentLevel(17);
+        player.setLeadBlockamon(leadBlockamon);
+
+        try {
+            _saveWriter.SaveGame(player);
+
+            File loadFile = _fileChooserHandler.getLoadFile();
+            assertTrue(loadFile.exists());
+
+            ArrayList<String> lines = TestExtensions.readAllLines(loadFile);
+            assertLineIsEqualTo(lines.size(), 18);
+
+            int currentLine = 0;
+            assertLineIsEqualTo(lines.get(currentLine++), "Player");
+            assertLineIsEqualTo(lines.get(currentLine++), "Money:200.0");
+            assertLineIsEqualTo(lines.get(currentLine++), "Position:50,20");
+            assertLineIsEqualTo(lines.get(currentLine++), "Item");
+            assertLineIsEqualTo(lines.get(currentLine++), "Name:'" + Item.HEALVIAL.getName() + "'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Count:2");
+            assertLineIsEqualTo(lines.get(currentLine++), "Item");
+            assertLineIsEqualTo(lines.get(currentLine++), "Name:'" + Item.BLOCKABALL.getName() + "'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Count:1");
+            assertLineIsEqualTo(lines.get(currentLine++), "Blockamon");
+            assertLineIsEqualTo(lines.get(currentLine++), "Name:'BUG'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Type:'BUG'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Status:'NONE'");
+            assertLineIsEqualTo(lines.get(currentLine++), "CurrentHealth:80");
+            assertLineIsEqualTo(lines.get(currentLine++), "TotalHealth:800");
+            assertLineIsEqualTo(lines.get(currentLine++), "Level:17");
+            assertLineIsEqualTo(lines.get(currentLine++), "IsLead:true");
+            assertLineIsEqualTo(lines.get(currentLine++), "Position:0");
+        }
+        catch(IOException ioe) {
+            ioe.printStackTrace();
+            fail("IOException happened");
+        }
+    }
+
+    public void test_saves_player_with_one_item_and_two_blockamons_to_disk() {
+        Player player = new Player();
+        player.setMoney(200);
+        player.setPosition(50, 20);
+        player.addItem(Item.HEALVIAL);
+        Blockamon firstBlockamon = new Blockamon(ElementType.BUG);
+        firstBlockamon.maxHitPoints(800);
+        firstBlockamon.currentHitPoints(80);
+        firstBlockamon.setCurrentLevel(17);
+        player.setLeadBlockamon(firstBlockamon);
+
+        Blockamon leadBlockamon = new Blockamon(ElementType.ICE);
+        leadBlockamon.maxHitPoints(8000);
+        leadBlockamon.currentHitPoints(800);
+        leadBlockamon.setCurrentLevel(20);
+        player.setLeadBlockamon(leadBlockamon);
+
+        try {
+            _saveWriter.SaveGame(player);
+
+            File loadFile = _fileChooserHandler.getLoadFile();
+            assertTrue(loadFile.exists());
+
+            ArrayList<String> lines = TestExtensions.readAllLines(loadFile);
+            assertLineIsEqualTo(lines.size(), 24);
+
+            int currentLine = 0;
+            assertLineIsEqualTo(lines.get(currentLine++), "Player");
+            assertLineIsEqualTo(lines.get(currentLine++), "Money:200.0");
+            assertLineIsEqualTo(lines.get(currentLine++), "Position:50,20");
+
+            assertLineIsEqualTo(lines.get(currentLine++), "Item");
+            assertLineIsEqualTo(lines.get(currentLine++), "Name:'" + Item.HEALVIAL.getName() + "'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Count:1");
+
+            assertLineIsEqualTo(lines.get(currentLine++), "Blockamon");
+            assertLineIsEqualTo(lines.get(currentLine++), "Name:'ICE'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Type:'ICE'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Status:'NONE'");
+            assertLineIsEqualTo(lines.get(currentLine++), "CurrentHealth:800");
+            assertLineIsEqualTo(lines.get(currentLine++), "TotalHealth:8000");
+            assertLineIsEqualTo(lines.get(currentLine++), "Level:20");
+            assertLineIsEqualTo(lines.get(currentLine++), "IsLead:true");
+            assertLineIsEqualTo(lines.get(currentLine++), "Position:0");
+
+            assertLineIsEqualTo(lines.get(currentLine++), "Blockamon");
+            assertLineIsEqualTo(lines.get(currentLine++), "Name:'BUG'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Type:'BUG'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Status:'NONE'");
+            assertLineIsEqualTo(lines.get(currentLine++), "CurrentHealth:80");
+            assertLineIsEqualTo(lines.get(currentLine++), "TotalHealth:800");
+            assertLineIsEqualTo(lines.get(currentLine++), "Level:17");
+            assertLineIsEqualTo(lines.get(currentLine++), "IsLead:false");
+            assertLineIsEqualTo(lines.get(currentLine++), "Position:1");
+        }
+        catch(IOException ioe) {
+            ioe.printStackTrace();
+            fail("IOException happened");
+        }
+    }
+
+    public void test_saves_player_with_two_items_and_two_blockamons_to_disk() {
+        Player player = new Player();
+        player.setMoney(200);
+        player.setPosition(50, 20);
+        player.addItem(Item.HEALVIAL);
+        player.addItem(Item.HEALVIAL);
+        player.addItem(Item.BLOCKABALL);
+        Blockamon firstBlockamon = new Blockamon(ElementType.BUG);
+        firstBlockamon.maxHitPoints(800);
+        firstBlockamon.currentHitPoints(80);
+        firstBlockamon.setCurrentLevel(17);
+        player.setLeadBlockamon(firstBlockamon);
+
+        Blockamon leadBlockamon = new Blockamon(ElementType.ICE);
+        leadBlockamon.maxHitPoints(8000);
+        leadBlockamon.currentHitPoints(800);
+        leadBlockamon.setCurrentLevel(20);
+        player.setLeadBlockamon(leadBlockamon);
+
+        try {
+            _saveWriter.SaveGame(player);
+
+            File loadFile = _fileChooserHandler.getLoadFile();
+            assertTrue(loadFile.exists());
+
+            ArrayList<String> lines = TestExtensions.readAllLines(loadFile);
+            assertLineIsEqualTo(lines.size(), 27);
+
+            int currentLine = 0;
+            assertLineIsEqualTo(lines.get(currentLine++), "Player");
+            assertLineIsEqualTo(lines.get(currentLine++), "Money:200.0");
+            assertLineIsEqualTo(lines.get(currentLine++), "Position:50,20");
+
+            assertLineIsEqualTo(lines.get(currentLine++), "Item");
+            assertLineIsEqualTo(lines.get(currentLine++), "Name:'" + Item.HEALVIAL.getName() + "'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Count:2");
+            assertLineIsEqualTo(lines.get(currentLine++), "Item");
+            assertLineIsEqualTo(lines.get(currentLine++), "Name:'" + Item.BLOCKABALL.getName() + "'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Count:1");
+
+            assertLineIsEqualTo(lines.get(currentLine++), "Blockamon");
+            assertLineIsEqualTo(lines.get(currentLine++), "Name:'ICE'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Type:'ICE'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Status:'NONE'");
+            assertLineIsEqualTo(lines.get(currentLine++), "CurrentHealth:800");
+            assertLineIsEqualTo(lines.get(currentLine++), "TotalHealth:8000");
+            assertLineIsEqualTo(lines.get(currentLine++), "Level:20");
+            assertLineIsEqualTo(lines.get(currentLine++), "IsLead:true");
+            assertLineIsEqualTo(lines.get(currentLine++), "Position:0");
+
+            assertLineIsEqualTo(lines.get(currentLine++), "Blockamon");
+            assertLineIsEqualTo(lines.get(currentLine++), "Name:'BUG'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Type:'BUG'");
+            assertLineIsEqualTo(lines.get(currentLine++), "Status:'NONE'");
+            assertLineIsEqualTo(lines.get(currentLine++), "CurrentHealth:80");
+            assertLineIsEqualTo(lines.get(currentLine++), "TotalHealth:800");
+            assertLineIsEqualTo(lines.get(currentLine++), "Level:17");
+            assertLineIsEqualTo(lines.get(currentLine++), "IsLead:false");
+            assertLineIsEqualTo(lines.get(currentLine++), "Position:1");
+        }
+        catch(IOException ioe) {
+            ioe.printStackTrace();
+            fail("IOException happened");
+        }
+    }
     private void assertLineIsEqualTo(Object actual, Object expected) {
         assertEquals(expected, actual);
     }
