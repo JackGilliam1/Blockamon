@@ -2,16 +2,13 @@ package blockamon.io;
 
 import blockamon.IPlayerCreator;
 import blockamon.items.Item;
+import blockamon.objects.Blockamon;
+import blockamon.objects.ElementType;
 import blockamon.objects.Player;
 
 import java.io.*;
 import java.util.ArrayList;
 
-/**
- * User: Jack's Computer
- * Date: 4/27/2014
- * Time: 1:47 PM
- */
 public class SaveLoader implements ISaveLoader {
 
     private IPlayerCreator _playerCreator;
@@ -31,7 +28,22 @@ public class SaveLoader implements ISaveLoader {
                 currentLine = 1;
             }
             currentLine = SetupPlayerInfo(fileLines, player, currentLine);
-            currentLine = SetupPlayerItems(fileLines, player, currentLine);
+            int blockamonStart = -1;
+            int itemsStart = -1;
+            for(int i = 0; i < fileLines.size(); i++) {
+                if(fileLines.get(i).equals("Item") && itemsStart == -1) {
+                    itemsStart = i;
+                }
+                if(fileLines.get(i).equals("Blockamon") && blockamonStart == -1) {
+                    blockamonStart = i;
+                }
+            }
+            if(itemsStart != -1) {
+                SetupPlayerItems(fileLines, player, itemsStart);
+            }
+            if(blockamonStart != -1) {
+                SetupPlayerBlockamon(fileLines, player, blockamonStart);
+            }
         }
         return player;
     }
@@ -48,13 +60,61 @@ public class SaveLoader implements ISaveLoader {
     }
 
     private int SetupPlayerItems(ArrayList<String> fileLines, Player player, int currentLine) {
-        while(currentLine < fileLines.size() && fileLines.get(currentLine++).contains("Item")) {
-            String itemName = getStringValue(fileLines.get(currentLine++));
+        while(currentLine < fileLines.size() && fileLines.get(currentLine).contains("Item")) {
+            String itemName = getStringValue(fileLines.get(currentLine + 1));
             Item item = Item.valueOf(itemName);
-            int count = getIntValue(fileLines.get(currentLine++));
+            int count = getIntValue(fileLines.get(currentLine + 2));
             for(int i = 0; i < count;i++) {
                 player.addItem(item);
             }
+            currentLine += 3;
+        }
+        return currentLine;
+    }
+
+    private int SetupPlayerBlockamon(ArrayList<String> fileLines, Player player, int currentLine) {
+        Blockamon blockamon;
+        while(currentLine < fileLines.size() && fileLines.get(currentLine).contains("Blockamon")) {
+            /**
+             * Name:'Some Blockamon Name'
+             * Type:'Fire'
+             * Status:'FAINTED'
+             * CurrentHealth:0
+             * TotalHealth:800
+             * Level:14
+             * CurrentEXP:20
+             * EXPNeeded:200
+             * TotalAttack:18
+             * IsLead:true
+             * Position:0
+             */
+            String blockamonName = getStringValue(fileLines.get(currentLine + 1));
+            ElementType type = ElementType.valueOf(getStringValue(fileLines.get(currentLine + 2)));
+            blockamon = new Blockamon(type);
+            blockamon.setName(blockamonName);
+            String status = getStringValue(fileLines.get(currentLine + 3));
+            blockamon.setStatus(status);
+            int currentHealth = getIntValue(fileLines.get(currentLine + 4));
+            blockamon.currentHitPoints(currentHealth);
+            int maxHP = getIntValue(fileLines.get(currentLine + 5));
+            blockamon.maxHP(maxHP);
+            int level = getIntValue(fileLines.get(currentLine + 6));
+            blockamon.setCurrentLevel(level);
+            int currentExp = getIntValue(fileLines.get(currentLine + 7));
+            blockamon.setExperience(currentExp);
+            int expNeeded = getIntValue(fileLines.get(currentLine + 8));
+            blockamon.setNeededExperience(expNeeded);
+            double totalAttack = getDoubleValue(fileLines.get(currentLine + 9));
+            blockamon.setTotalAttack(totalAttack);
+            boolean isLead = getBooleanValue(fileLines.get(currentLine + 10));
+            blockamon.isLead(isLead);
+            if(isLead) {
+                player.setLeadBlockamon(blockamon);
+            }
+            else {
+                player.addToParty(blockamon);
+            }
+            currentLine += 12;
         }
         return currentLine;
     }
@@ -65,6 +125,10 @@ public class SaveLoader implements ISaveLoader {
 
     private String getStringValue(String line) {
         return line.split(":")[1].replace("\'", "");
+    }
+
+    private boolean getBooleanValue(String line) {
+        return Boolean.parseBoolean(line.split(":")[1]);
     }
 
     private double getDoubleValue(String line) {

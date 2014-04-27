@@ -39,7 +39,7 @@ public class Blockamon extends IBoundable {
     private static final int DEFAULT_EXPERIENCE = 0;
     private static final int DEFAULT_EXPERIENCE_NEEDED = 50;
     private static final double DEFAULT_ATTACK_POWER = 1.0;
-    private String status = "NONE";
+    private String _status = "NONE";
 
     public Blockamon(ElementType type) {
         this(type, type.toString(), DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_LEVEL, DEFAULT_EXPERIENCE_NEEDED, type.getElementColor().getColor());
@@ -124,7 +124,7 @@ public class Blockamon extends IBoundable {
      * Sets the total attack of this blockamon to the specified value
      * @param value The new total attack of this blockamon
      */
-    public void setTotalAttack(int value) {
+    public void setTotalAttack(double value) {
         _totalAttack = value;
     }
     public void setAttackPower(double value) {
@@ -401,8 +401,8 @@ public class Blockamon extends IBoundable {
         _currentHP = (_currentHP += hp) - (_currentHP % _maxHP);
     }
 
-
+    public void setStatus(String status) { _status = status;}
     public String getStatus() {
-        return status;
+        return _status;
     }
 }

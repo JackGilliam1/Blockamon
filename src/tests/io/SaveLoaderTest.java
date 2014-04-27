@@ -77,7 +77,7 @@ public class SaveLoaderTest extends TestCase {
         _playerSaved.setMoney(2000);
         _playerSaved.setPosition(50, 20);
         _playerSaved.addItem(Item.HEALVIAL);
-        _playerSaved.addItem(Item.BLOCKABALL);
+        _playerSaved.addItem(Item.HEALVIAL);
         _playerSaved.addItem(Item.BLOCKABALL);
 
         try {
@@ -88,8 +88,8 @@ public class SaveLoaderTest extends TestCase {
             assertIsEqualTo(playerLoaded.getMoney(), _playerSaved.getMoney(), "Player Money");
             assertIsEqualTo(playerLoaded.getX(), _playerSaved.getX(), "Player X Position");
             assertIsEqualTo(playerLoaded.getY(), _playerSaved.getY(), "Player Y Position");
-            assertIsEqualTo(playerLoaded.getItemCount(Item.HEALVIAL), 1);
-            assertIsEqualTo(playerLoaded.getItemCount(Item.BLOCKABALL), 2);
+            assertIsEqualTo(playerLoaded.getItemCount(Item.HEALVIAL), 2);
+            assertIsEqualTo(playerLoaded.getItemCount(Item.BLOCKABALL), 1);
         }
         catch(IOException ioe) {
             ioe.printStackTrace();
@@ -110,6 +110,7 @@ public class SaveLoaderTest extends TestCase {
         leadBlockamon.setNeededExperience(80);
         leadBlockamon.setTotalAttack(20);
         leadBlockamon.setName("Blocky Name");
+        leadBlockamon.isLead(true);
         _playerSaved.setLeadBlockamon(leadBlockamon);
 
         try {
@@ -121,11 +122,66 @@ public class SaveLoaderTest extends TestCase {
             assertIsEqualTo(playerLoaded.getX(), _playerSaved.getX(), "Player X Position");
             assertIsEqualTo(playerLoaded.getY(), _playerSaved.getY(), "Player Y Position");
             assertIsEqualTo(playerLoaded.getItemCount(Item.HEALVIAL), 1);
+
             ArrayList<Blockamon> blockamons = playerLoaded.getBlockamon();
             assertIsEqualTo(blockamons.size(), 1);
 
             Blockamon firstBlockamon = blockamons.get(0);
             assertBlockamonIsEqualTo(firstBlockamon, leadBlockamon);
+        }
+        catch(IOException ioe) {
+            ioe.printStackTrace();
+            fail("IOException happened");
+        }
+    }
+
+    public void test_loads_player_with_two_items_and_two_blockamon() {
+        _playerSaved.setMoney(2000);
+        _playerSaved.setPosition(50, 20);
+        _playerSaved.addItem(Item.HEALVIAL);
+        _playerSaved.addItem(Item.BLOCKABALL);
+        _playerSaved.addItem(Item.BLOCKABALL);
+
+        Blockamon leadBlockamon = new Blockamon(ElementType.BUG);
+        leadBlockamon.maxHP(200);
+        leadBlockamon.currentHitPoints(20);
+        leadBlockamon.setCurrentLevel(80);
+        leadBlockamon.setExperience(75);
+        leadBlockamon.setNeededExperience(80);
+        leadBlockamon.setTotalAttack(20);
+        leadBlockamon.setName("Blocky Name");
+        leadBlockamon.isLead(true);
+        _playerSaved.setLeadBlockamon(leadBlockamon);
+
+        Blockamon secondBlockamon = new Blockamon(ElementType.ICE);
+        secondBlockamon.maxHP(2000);
+        secondBlockamon.currentHitPoints(200);
+        secondBlockamon.setCurrentLevel(800);
+        secondBlockamon.setExperience(705);
+        secondBlockamon.setNeededExperience(800);
+        secondBlockamon.setTotalAttack(200);
+        secondBlockamon.setName("Blocky Namejydjgf");
+        secondBlockamon.isLead(false);
+        _playerSaved.addToParty(secondBlockamon);
+
+        try {
+            _saveWriter.SaveGame(_playerSaved);
+
+            Player playerLoaded = _saveLoader.LoadSave();
+            assertNotNull(playerLoaded);
+            assertIsEqualTo(playerLoaded.getMoney(), _playerSaved.getMoney(), "Player Money");
+            assertIsEqualTo(playerLoaded.getX(), _playerSaved.getX(), "Player X Position");
+            assertIsEqualTo(playerLoaded.getY(), _playerSaved.getY(), "Player Y Position");
+            assertIsEqualTo(playerLoaded.getItemCount(Item.HEALVIAL), 1);
+
+            ArrayList<Blockamon> blockamons = playerLoaded.getBlockamon();
+            assertIsEqualTo(blockamons.size(), 2);
+
+            Blockamon firstBlockamon = blockamons.get(0);
+            assertBlockamonIsEqualTo(firstBlockamon, leadBlockamon);
+
+            Blockamon secondBlockamonLoaded = blockamons.get(1);
+            assertBlockamonIsEqualTo(secondBlockamonLoaded, secondBlockamon);
         }
         catch(IOException ioe) {
             ioe.printStackTrace();

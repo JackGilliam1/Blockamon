@@ -50,6 +50,9 @@ public class SaveWriterTest extends TestCase {
      * CurrentHealth:0
      * TotalHealth:800
      * Level:14
+     * CurrentEXP:20
+     * EXPNeeded:200
+     * TotalAttack:18
      * IsLead:true
      * Position:0
      *
