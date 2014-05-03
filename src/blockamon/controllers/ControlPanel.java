@@ -1,9 +1,14 @@
 package blockamon.controllers;
 
+import blockamon.controllers.menuActions.BuildingAction;
+import blockamon.controllers.menuActions.LoadAction;
+import blockamon.controllers.menuActions.MoneyAction;
+import blockamon.controllers.menuActions.SaveAction;
 import blockamon.io.*;
 import blockamon.items.Item;
 import blockamon.objects.Blockamon;
 import blockamon.objects.Player;
+import blockamon.objects.buildings.Building;
 import blockamon.objects.buildings.HealingCenter;
 import blockamon.objects.buildings.ItemShop;
 import blockamon.objects.encounters.Grass;
@@ -20,7 +25,7 @@ import java.util.*;
 public class ControlPanel extends JPanel {
 
     private enum MenuItemType {
-        ATTACK("Attack"), FLEE("Flee"), SWITCH("Switch"),
+        ATTACK("Attack"), FLEE("Flee"), SWITCH("OOBSwitch"),
         HEAL("Heal"), ITEM("Item"), MONEY("Money"), INFO("Info"),
         BUY("Buy"), SAVE("Save"), LOAD("Load"),
         BACK("Back");
@@ -36,17 +41,17 @@ public class ControlPanel extends JPanel {
         }
     }
 
-    private enum MenuType {
+    private enum MenuTypes {
         EXPLORE(), BATTLE(), SHOP("Shop"), HEAL("Heal"),
-        SWITCH("Switch"), INFO("Info"), ITEM("Items");
+        SWITCH("OOBSwitch"), INFO("Info"), ITEM("Items");
 
         private String text;
 
-        MenuType() {
+        MenuTypes() {
             this("Actions");
         }
 
-        MenuType(String text) {
+        MenuTypes(String text) {
             this.text = text;
         }
 
@@ -59,10 +64,10 @@ public class ControlPanel extends JPanel {
     private ISaveLoader _saveLoader;
 
     public Map<MenuItemType, JMenuItem> menuItems;
-    public Map<MenuType, JMenu> menus;
+    public Map<MenuTypes, JMenu> menus;
     public JMenuBar menuBar;
 
-    private JMenuBar createMenuBar(Map<MenuType, JMenu> menuMap) {
+    private JMenuBar createMenuBar(Map<MenuTypes, JMenu> menuMap) {
         final JMenuBar jMenuBar = new JMenuBar();
         Collection<JMenu> menus = menuMap.values();
         for(final JMenu menu : menus) {
@@ -78,29 +83,29 @@ public class ControlPanel extends JPanel {
         }
         return menuItems;
     }
-    private Map<MenuType, JMenu> getMenus() {
-        final Map<MenuType, JMenu> menus = new HashMap<MenuType, JMenu>();
-        final MenuType[] menuTypes = MenuType.values();
-        for(final MenuType menuType : menuTypes) {
+    private Map<MenuTypes, JMenu> getMenus() {
+        final Map<MenuTypes, JMenu> menus = new HashMap<MenuTypes, JMenu>();
+        final MenuTypes[] menuTypes = MenuTypes.values();
+        for(final MenuTypes menuType : menuTypes) {
             menus.put(menuType, new JMenu(menuType.getText()));
         }
         return menus;
     }
     private void attachMenuItems() {
-        addToMenu(MenuType.BATTLE, MenuItemType.ATTACK, MenuItemType.SWITCH,
+        addToMenu(MenuTypes.BATTLE, MenuItemType.ATTACK, MenuItemType.SWITCH,
                          MenuItemType.FLEE, MenuItemType.ITEM, MenuItemType.INFO);
-        addToMenu(MenuType.HEAL, MenuItemType.HEAL);
-        addToMenu(MenuType.SHOP, MenuItemType.BUY);
+        addToMenu(MenuTypes.HEAL, MenuItemType.HEAL);
+        addToMenu(MenuTypes.SHOP, MenuItemType.BUY);
 
     }
-    private void addToMenu(MenuType menuType, MenuItemType... menuItemTypes) {
+    private void addToMenu(MenuTypes menuType, MenuItemType... menuItemTypes) {
         final JMenu menu = getMenu(menuType);
         for(final MenuItemType menuItemType : menuItemTypes) {
             menu.add(getMenuItem(menuItemType));
         }
         setMenu(menuType, menu);
     }
-    private void removeFromMenu(MenuType menuType, MenuItemType... menuItemTypes) {
+    private void removeFromMenu(MenuTypes menuType, MenuItemType... menuItemTypes) {
         final JMenu menu = getMenu(menuType);
         for(final MenuItemType menuItemType : menuItemTypes) {
             menu.remove(getMenuItem(menuItemType));
@@ -110,22 +115,22 @@ public class ControlPanel extends JPanel {
     private JMenuItem getMenuItem(MenuItemType menuItemType) {
         return menuItems.get(menuItemType);
     }
-    private JMenu getMenu(MenuType menuType) {
+    private JMenu getMenu(MenuTypes menuType) {
         return menus.get(menuType);
     }
-    private void setMenu(MenuType menuType, JMenu menu) {
+    private void setMenu(MenuTypes menuType, JMenu menu) {
         menus.put(menuType, menu);
     }
 
-    private void setMenuEnabled(MenuType menuType, boolean isEnabled) {
+    private void setMenuEnabled(MenuTypes menuType, boolean isEnabled) {
         final JMenu menu = getMenu(menuType);
         menu.setEnabled(isEnabled);
         setMenu(menuType, menu);
     }
-    private void disableMenu(MenuType menuType) {
+    private void disableMenu(MenuTypes menuType) {
         setMenuEnabled(menuType, false);
     }
-    private void enableMenu(MenuType menuType) {
+    private void enableMenu(MenuTypes menuType) {
         setMenuEnabled(menuType, true);
     }
 
@@ -438,11 +443,11 @@ public class ControlPanel extends JPanel {
 		// adds an ActionListener to the button
 		button.addActionListener(new ActionListener() {
 
-			public void actionPerformed(ActionEvent e) {
-				JMenuItem theButton = (JMenuItem) e.getSource();
-				displayInfo(theButton, amInBattle);
-			}
-		});
+            public void actionPerformed(ActionEvent e) {
+                JMenuItem theButton = (JMenuItem) e.getSource();
+                displayInfo(theButton, amInBattle);
+            }
+        });
 		// sets the bounds of the item
 		return button;
 	}
@@ -817,23 +822,102 @@ public class ControlPanel extends JPanel {
 		this.repaint();
 	}
 
-    
-    private enum MenuTypes {
+
+
+
+    //TODO: This is the new stuff, finish this stuff up
+    private Map<MenuType, JMenu> _menus = new HashMap<MenuType, JMenu>();
+
+    private JMenu setupActionsMenu(Player player, ISaveWriter saveWriter, ISaveLoader saveLoader) {
+        JMenu menu = new JMenu("Actions");
+        JMenuItem moneyMenuItem = new JMenuItem(new MoneyAction(player));
+        menu.add(moneyMenuItem);
+
+        JMenuItem saveMenuItem = new JMenuItem(new SaveAction(player, saveWriter));
+        menu.add(saveMenuItem);
+
+        JMenuItem loadMenuItem = new JMenuItem(new LoadAction(player, saveLoader));
+        menu.add(loadMenuItem);
+
+        menu.setVisible(false);
+        _menus.put(MenuType.OutOfBattle, menu);
+        return menu;
+    }
+
+    private JMenu setupBuildingMenu(Player player, Building building, MenuType menuType) {
+        JMenu menu = new JMenu();
+        List<String> buttonNames = building.getActions();
+        for(String buttonName : buttonNames) {
+            JMenuItem menuItem = new JMenuItem(new BuildingAction(player, building, buttonName));
+            menu.add(menuItem);
+        }
+        menu.setVisible(false);
+        _menus.put(menuType, menu);
+        return menu;
+    }
+
+    private JMenu getMenu(MenuType menu) {
+        if(_menus.containsKey(menu)) {
+            return _menus.get(menu);
+        }
+        return null;
+    }
+
+    private void switchToMenu(MenuType menuType) {
+        hideAllMenus();
+        JMenu menu = getMenu(menuType);
+        menu.setVisible(true);
+    }
+
+    private void hideAllMenus() {
+        MenuType[] menuTypes = MenuType.values();
+        for(MenuType menuType : menuTypes) {
+            JMenu menu = getMenu(menuType);
+            if(menu != null) {
+                menu.setVisible(false);
+            }
+        }
+    }
+
+    private void doAction(ButtonTypes buttonTypes) {
+        switch(buttonTypes) {
+            case Money:
+                break;
+            case Save:
+                break;
+            case Load:
+                break;
+            case Info:
+                break;
+            case ShopBack:
+                break;
+            case OOBBack:
+                break;
+            case Back:
+                break;
+        }
+    }
+
+    private enum MenuType {
+        OutOfBattle,
         ItemShop,
+        Buy,
         HealShop,
         Switch,
+        OOBSwitch,
         Info,
-        Buy
+        OOBInfo,
+        Battle,
+        Items,
+        OOBItems,
     }
 
     private enum ButtonTypes {
-        ItemShop,
-        HealShop,
-        SwitchMenu,
         Money,
         Save,
         Load,
         Info,
+        ShopBack,
         OOBBack,
         Back
     }

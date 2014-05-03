@@ -18,8 +18,8 @@ public class HealingCenter extends Building {
         return actions;
     }
 
-    public void doAction(Player player, ActionObject action) {
-        if(action.isHealAction()) {
+    public void doAction(Player player, String action) {
+        if(action.equals("HEAL")) {
             List<Blockamon> blockamons = player.getBlockamon();
             for (Blockamon blockamon : blockamons) {
                 blockamon.fullyHeal();

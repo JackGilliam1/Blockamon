@@ -24,5 +24,5 @@ public abstract class Building extends JComponent {
 
     public abstract List<String> getActions();
 
-    public abstract void doAction(Player player, ActionObject action);
+    public abstract void doAction(Player player, String action);
 }

@@ -29,14 +29,16 @@ public class ItemShop extends Building {
     public List<String> getActions() {
         List<String> actions = new ArrayList<String>();
         for(Item item : Item.values()) {
-            actions.add(item.toString());
+            actions.add(item.getName());
         }
         return actions;
     }
 
-    public void doAction(Player player, ActionObject action) {
-        if(action.isItemAction()) {
-            player.addItem(action.getItem());
+    public void doAction(Player player, String action) {
+        for(Item item : _items) {
+            if(item.getName().equals(action)) {
+                player.addItem(item);
+            }
         }
     }
 
