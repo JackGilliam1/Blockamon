@@ -45,10 +45,10 @@ public class BlockamonBattle {
 			addObjects();
 			addPlayersBlock(null, playerBlock);
 			// tells the user which block appeared
-			whichBlockamon(blockamon.getElementType());
+			whichBlockamon(blockamon.elementType());
 			// tells the user their health and the opponents health
-			printText("Your Blockamons health: " + playerBlock.getCurrentHealth()
-					+ " Your Foes Blockamons Health " + blockamon.getCurrentHealth(), "Everyones current Health", JOptionPane.INFORMATION_MESSAGE, "info");
+			printText("Your Blockamons health: " + playerBlock.currentHp()
+					+ " Your Foes Blockamons Health " + blockamon.currentHp(), "Everyones current Health", JOptionPane.INFORMATION_MESSAGE, "info");
 			// determines whether the player or the blockamon attacks first
 			whoGoesFirst();
 			// commences the battle
@@ -87,7 +87,7 @@ public class BlockamonBattle {
 		// if it is the players turn currently
 		if (playerIsFaster) {
 			// the opponent takes damage
-			blockamon.takeDamage(playerBlock.getCurrentAttack(), playerIsFaster);
+			blockamon.takeDamage(playerBlock.currentAttack(), playerIsFaster);
 		}
 		// if it is not the players turn
 		else {
@@ -98,21 +98,21 @@ public class BlockamonBattle {
 
 	private void playerTakesDamage() {
 		// the players blockamon takes damage
-		playerBlock.takeDamage(blockamon.getCurrentAttack(), playerIsFaster);
+		playerBlock.takeDamage(blockamon.currentAttack(), playerIsFaster);
 	}
 	public void printAttackOfBattle() {
 		// informs the user of the attack of their blockamon and the enemies
 		// blockamon
-		printText("Damage that you do: " + playerBlock.getCurrentAttack() + "  "
-				+ "Damage your enemy does: " + blockamon.getCurrentAttack(), "Each Blocks Attack", JOptionPane.INFORMATION_MESSAGE, "info");
+		printText("Damage that you do: " + playerBlock.currentAttack() + "  "
+				+ "Damage your enemy does: " + blockamon.currentAttack(), "Each Blocks Attack", JOptionPane.INFORMATION_MESSAGE, "info");
 	}
 	public void printStatusOfBattle() {
 		// tells the current health for both the player and the
 		// opponent
 		printText("Your Blockamons health: "
-				+ playerBlock.getCurrentHealth()
+				+ playerBlock.currentHp()
 				+ " Your Foes Blockamons Health "
-				+ blockamon.getCurrentHealth(), "Everyones current Health", JOptionPane.INFORMATION_MESSAGE, "info");
+				+ blockamon.currentHp(), "Everyones current Health", JOptionPane.INFORMATION_MESSAGE, "info");
 	}
 	public void changeActiveBlockamon(Player player) {
 		playerBlock = player.getActiveBlockamon();
@@ -187,8 +187,8 @@ public class BlockamonBattle {
 	}
 
 	private void blockBattle() {
-		ElementType playerType = playerBlock.getElementType();
-		ElementType foeType = blockamon.getElementType();
+		ElementType playerType = playerBlock.elementType();
+		ElementType foeType = blockamon.elementType();
         double playerAttackPower = 1;
         double foeAttackPower = 1;
         if(playerType.negatesAttackAgainst(foeType)) {
@@ -210,8 +210,8 @@ public class BlockamonBattle {
 	}
 
 	private void adjustAttackPowers(double playerAttackPower, double foeAttackPower) {
-		playerBlock.setAttackPower(playerAttackPower);
-		blockamon.setAttackPower(foeAttackPower);
+		playerBlock.currentAttack(playerAttackPower);
+		blockamon.currentAttack(foeAttackPower);
 	}
 
 	// player attempts to flee

@@ -129,12 +129,12 @@ public class Load {
 		double health = Double.parseDouble(splitHealth[1]);
 		boolean isLead = Boolean.parseBoolean(splitIsActive[1]);
 		aBlock = BlockamonGenerator.generateBlockamonOfType(type);
-        aBlock.setTotalHealth(health);
-        aBlock.setTotalAttack((int) attack);
-        aBlock.setName(name);
-        aBlock.setCurrentLevel(level);
-        aBlock.setExperience(currentExperience);
-        aBlock.setNeededExperience(neededExperience);
+        aBlock.maxHp(health);
+        aBlock.totalAttack((int) attack);
+        aBlock.name(name);
+        aBlock.level(level);
+        aBlock.currentExp(currentExperience);
+        aBlock.neededExp(neededExperience);
         aBlock.isLead(isLead);
         player.setBlockamonAt(position, aBlock);
 	}

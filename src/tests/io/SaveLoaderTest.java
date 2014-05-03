@@ -103,13 +103,13 @@ public class SaveLoaderTest extends TestCase {
         _playerSaved.addItem(Item.HEALVIAL);
 
         Blockamon leadBlockamon = new Blockamon(ElementType.BUG);
-        leadBlockamon.maxHP(200);
-        leadBlockamon.currentHitPoints(20);
-        leadBlockamon.setCurrentLevel(80);
-        leadBlockamon.setExperience(75);
-        leadBlockamon.setNeededExperience(80);
-        leadBlockamon.setTotalAttack(20);
-        leadBlockamon.setName("Blocky Name");
+        leadBlockamon.maxHp(200);
+        leadBlockamon.currentHp(20);
+        leadBlockamon.level(80);
+        leadBlockamon.currentExp(75);
+        leadBlockamon.neededExp(80);
+        leadBlockamon.totalAttack(20);
+        leadBlockamon.name("Blocky Name");
         leadBlockamon.isLead(true);
         _playerSaved.setLeadBlockamon(leadBlockamon);
 
@@ -143,24 +143,24 @@ public class SaveLoaderTest extends TestCase {
         _playerSaved.addItem(Item.BLOCKABALL);
 
         Blockamon leadBlockamon = new Blockamon(ElementType.BUG);
-        leadBlockamon.maxHP(200);
-        leadBlockamon.currentHitPoints(20);
-        leadBlockamon.setCurrentLevel(80);
-        leadBlockamon.setExperience(75);
-        leadBlockamon.setNeededExperience(80);
-        leadBlockamon.setTotalAttack(20);
-        leadBlockamon.setName("Blocky Name");
+        leadBlockamon.maxHp(200);
+        leadBlockamon.currentHp(20);
+        leadBlockamon.level(80);
+        leadBlockamon.currentExp(75);
+        leadBlockamon.neededExp(80);
+        leadBlockamon.totalAttack(20);
+        leadBlockamon.name("Blocky Name");
         leadBlockamon.isLead(true);
         _playerSaved.setLeadBlockamon(leadBlockamon);
 
         Blockamon secondBlockamon = new Blockamon(ElementType.ICE);
-        secondBlockamon.maxHP(2000);
-        secondBlockamon.currentHitPoints(200);
-        secondBlockamon.setCurrentLevel(800);
-        secondBlockamon.setExperience(705);
-        secondBlockamon.setNeededExperience(800);
-        secondBlockamon.setTotalAttack(200);
-        secondBlockamon.setName("Blocky Namejydjgf");
+        secondBlockamon.maxHp(2000);
+        secondBlockamon.currentHp(200);
+        secondBlockamon.level(800);
+        secondBlockamon.currentExp(705);
+        secondBlockamon.neededExp(800);
+        secondBlockamon.totalAttack(200);
+        secondBlockamon.name("Blocky Namejydjgf");
         secondBlockamon.isLead(false);
         _playerSaved.addToParty(secondBlockamon);
 
@@ -190,14 +190,14 @@ public class SaveLoaderTest extends TestCase {
     }
 
     private void assertBlockamonIsEqualTo(Blockamon actual, Blockamon expected) {
-        assertIsEqualTo(actual.getElementType(), expected.getElementType());
-        assertIsEqualTo(actual.maxHP(), expected.maxHP());
-        assertIsEqualTo(actual.currentHitPoints(), expected.currentHitPoints());
-        assertIsEqualTo(actual.getCurrentLevel(), expected.getCurrentLevel());
-        assertIsEqualTo(actual.getExperience(), expected.getExperience());
-        assertIsEqualTo(actual.getNeededExperience(), expected.getNeededExperience());
-        assertIsEqualTo(actual.getTotalAttack(), expected.getTotalAttack());
-        assertIsEqualTo(actual.getName(), expected.getName());
+        assertIsEqualTo(actual.elementType(), expected.elementType());
+        assertIsEqualTo(actual.maxHp(), expected.maxHp());
+        assertIsEqualTo(actual.currentHp(), expected.currentHp());
+        assertIsEqualTo(actual.level(), expected.level());
+        assertIsEqualTo(actual.currentExp(), expected.currentExp());
+        assertIsEqualTo(actual.neededExp(), expected.neededExp());
+        assertIsEqualTo(actual.totalAttack(), expected.totalAttack());
+        assertIsEqualTo(actual.name(), expected.name());
         assertIsEqualTo(actual.isLead(), expected.isLead());
     }
 

@@ -7,12 +7,6 @@ import java.util.*;
 public class Blockamon extends IBoundable {
 
     //TODO: Fix information being displayed incorrectly
-    private String _name;
-    private double _currentAttack;
-    private double _totalAttack;
-    private double _totalHealth;
-    private double _currentHealth;
-    private double _attackPower;
 
 	private static final Random randomNumberGenerator = new Random();
 
@@ -31,7 +25,7 @@ public class Blockamon extends IBoundable {
 	private static final double HEALTH_ADDITION_MULTIPLIER = 1.2;
 	private static final double EXPERIENCE_NEEDED_MULTIPLIER = 2.5;
 	private static final double EXPERIENCE_GAIN_MULTIPLIER = 1.5;
-	private int randomExperience, currentLevel, experience, soNotZero, experienceNeeded;
+	private int randomExperience, _currentLevel, _currentExp, soNotZero, _neededExp;
 
     private static final int DEFAULT_WIDTH = 50;
     private static final int DEFAULT_HEIGHT = 30;
@@ -41,21 +35,21 @@ public class Blockamon extends IBoundable {
     private static final double DEFAULT_ATTACK_POWER = 1.0;
     private String _status = "NONE";
 
-    public Blockamon(ElementType type) {
-        this(type, type.toString(), DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_LEVEL, DEFAULT_EXPERIENCE_NEEDED, type.getElementColor().getColor());
-    }
+//    public Blockamon(ElementType type) {
+//        this(type, type.toString(), DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_LEVEL, DEFAULT_EXPERIENCE_NEEDED, type.getElementColor().getColor());
+//    }
     public Blockamon(ElementType type, String name, int width, int height, int currentLevel, int experienceNeeded, Color color) {
         this(type, name, width, height, currentLevel, DEFAULT_EXPERIENCE, experienceNeeded, color);
     }
     public Blockamon(ElementType type, String name, int width, int height, int currentLevel, int experience, int experienceNeeded, Color color) {
-        setElementType(type);
-        setName(name);
+        elementType(type);
+        name(name);
         this.setSize(width, height);
-        setTotalHealth(randomNumberGenerator.nextInt(healthRange) + healthAddition);
-        setTotalAttack(randomNumberGenerator.nextInt(attackRange) + attackAddition);
-        this.currentLevel = currentLevel;
-        this.experience = experience;
-        this.experienceNeeded = experienceNeeded;
+        maxHp(randomNumberGenerator.nextInt(healthRange) + healthAddition);
+        totalAttack(randomNumberGenerator.nextInt(attackRange) + attackAddition);
+        this._currentLevel = currentLevel;
+        this._currentExp = experience;
+        this._neededExp = experienceNeeded;
         randomExperience = 15;
         soNotZero = 5;
         isLead(false);
@@ -66,15 +60,14 @@ public class Blockamon extends IBoundable {
         this.add(backGround, 0);
     }
 
-    //<editor-fold desc="Getters and Setters">
     /**
      * Retrieves the name of this blockamon
      * @return The name of this blockamon
      */
-    public String getName() {
+    public String name() {
         if(_name == null)
         {
-            setName(getElementType().toString());
+            name(elementType().toString());
         }
         return _name;
     }
@@ -82,109 +75,15 @@ public class Blockamon extends IBoundable {
      * Sets the name of this blockamon to the specified value
      * @param value The new name of this blockamon
      */
-    public void setName(String value) {
+    public void name(String value) {
         _name = value;
-    }
-    /**
-     * Retrieves the element type of this blockamon
-     * @return The element type of this blockamon
-     */
-    public ElementType getElementType() {
-        return _element;
-    }
-    /**
-     * Sets the element type of this blockamon to the specified value
-     * @param value The new element type of this blockamon
-     */
-    private void setElementType(ElementType value) {
-        _element = value;
-    }
-    /**
-     * Retrieves the base attack of this blockamon
-     * @return The base attack of this blockamon
-     */
-    public double getCurrentAttack() {
-        return _currentAttack * getAttackPower();
-    }
-    /**
-     * Sets the base attack of this blockamon to the specified value
-     * @param value The new base attack of this blockamon
-     */
-    public void setCurrentAttack(double value) {
-        _currentAttack = value;
-    }
-    /**
-     * Retrieves the total attack of this blockamon
-     * @return The total attack of this blockamon
-     */
-    public double getTotalAttack() {
-        return _totalAttack;
-    }
-    /**
-     * Sets the total attack of this blockamon to the specified value
-     * @param value The new total attack of this blockamon
-     */
-    public void setTotalAttack(double value) {
-        _totalAttack = value;
-    }
-    public void setAttackPower(double value) {
-        _attackPower = value;
-    }
-    public double getAttackPower() {
-        return _attackPower;
-    }
-    /**
-     * Retrieves the total health of this blockamon
-     * @return The total health of this blockamon
-     */
-    public double getTotalHealth() {
-        return _totalHealth;
-    }
-    /**
-     * Sets the total health of this blockamon to the specified value
-     * @param value The new total health of this blockamon
-     */
-    public void setTotalHealth(double value) {
-        _totalHealth = value;
-    }
-    /**
-     * Retrieves the current health of this blockamon
-     * @return The current health of this blockamon
-     */
-    public double getCurrentHealth() {
-        return _currentHealth;
-    }
-    /**
-     * Sets the current health of this blockamon to the specified value
-     * @param value The new current health of this blockamon
-     */
-    public void setCurrentHealth(double value) {
-        _currentHealth = value;
-    }
-    public int getCurrentLevel() {
-        return currentLevel;
-    }
-    public void setCurrentLevel(int value) {
-        currentLevel = value;
-    }
-    public int getExperience() {
-        return experience;
-    }
-    public void setExperience(int value) {
-        experience = value;
-    }
-    public int getNeededExperience() {
-        return experienceNeeded;
-    }
-    public void setNeededExperience(int value) {
-        experienceNeeded = value;
     }
     /**
      * Indicates whether this blockamon has fainted (Health at Zero)
      * @return True if this blockamon has a health less than or equal to zero
      */
     public boolean hasFainted() {
-        return getCurrentHealth() <= 0;
+        return currentHp() == 0;
     }
     public boolean isLead() {
         return isLead;
@@ -198,14 +97,14 @@ public class Blockamon extends IBoundable {
      * Heals the blockamon to full health
      */
     public void fullyHeal() {
-        setCurrentHealth(getTotalHealth());
+        currentHp(maxHp());
     }
 
     /**
      * Heals the basic attack of the blockamon
      */
     public void healAttack() {
-        setCurrentAttack(getTotalAttack());
+        currentAttack(totalAttack());
     }
 
     /**
@@ -213,14 +112,14 @@ public class Blockamon extends IBoundable {
      * @param value The amount to damage this blockamon for
      */
     public void damage(double value) {
-        final double currentHealth = getCurrentHealth();
+        final double currentHealth = currentHp();
         final double newHealth = (currentHealth - value) + ((value%currentHealth)%value);
-        setCurrentHealth(newHealth);
+        currentHp(newHealth);
     }
 
 	public void levelUp() {
-        setCurrentLevel(getCurrentLevel() + 1);
-		showInfo("Your blockamon is now level " + getCurrentLevel(), "Level up", JOptionPane.INFORMATION_MESSAGE);
+        level(level() + 1);
+		showInfo("Your blockamon is now level " + level(), "Level up", JOptionPane.INFORMATION_MESSAGE);
 		addToStats();
 	}
 	private void showInfo(String text, String title, int type) {
@@ -229,17 +128,17 @@ public class Blockamon extends IBoundable {
     //TODO: Move this method out of this class, as it doesn't belong here
 	public void gainExperience() {
 		int experienceGain = randomNumberGenerator.nextInt(randomExperience) + soNotZero;
-		experience += experienceGain;
-		if(experience + experienceGain < experienceNeeded)
+		_currentExp += experienceGain;
+		if(_currentExp + experienceGain < _neededExp)
 		{
-			showInfo("Your Blockamon Gained " + experienceGain + " experience\nOnly " +(experienceNeeded - experience) + " needed for a level up", "Experience Gained", JOptionPane.INFORMATION_MESSAGE);
+			showInfo("Your Blockamon Gained " + experienceGain + " _experience\nOnly " +(_neededExp - _currentExp) + " needed for a level up", "Experience Gained", JOptionPane.INFORMATION_MESSAGE);
 		}
-		if(experience >= experienceNeeded)
+		if(_currentExp >= _neededExp)
 		{
 			showInfo("Your isLead Blockamon has gained a level!", "Level Up", JOptionPane.INFORMATION_MESSAGE);
 			levelUp();
-			experienceNeeded *= EXPERIENCE_NEEDED_MULTIPLIER;
-			experience = 0;
+			_neededExp *= EXPERIENCE_NEEDED_MULTIPLIER;
+			_currentExp = 0;
 			randomExperience *= EXPERIENCE_GAIN_MULTIPLIER;
 //			healthRange *= HEALTH_MULTIPLIER;
 //			healthAddition *= HEALTH_ADDITION_MULTIPLIER;
@@ -253,21 +152,17 @@ public class Blockamon extends IBoundable {
 		showInfo("Your Blockamon gained " + attackAddition + " attack and " + healthAddition + " health", "Stats Upgraded", JOptionPane.INFORMATION_MESSAGE);
         _totalAttack += attackAddition;
         _currentAttack += attackAddition;
-        _totalHealth += healthAddition;
-        _currentHealth = healthAddition;
 		resetAttack();
 		resetHealth();
 	}
-
-
 	public void setStats(double health, boolean isLead, double attack, String name, int level, int currentExp, int neededExp) {
-		setTotalHealth(health);
+		maxHp(health);
 		isLead(isLead);
-		setCurrentAttack(attack);
-		setName(name);
-		currentLevel = level;
-		experience = currentExp;
-	    experienceNeeded = neededExp;
+		currentAttack(attack);
+		name(name);
+		_currentLevel = level;
+		_currentExp = currentExp;
+	    _neededExp = neededExp;
 		resetAttack();
 		resetHealth();
 	}
@@ -290,7 +185,7 @@ public class Blockamon extends IBoundable {
 			missedAttack(isPlayersTurn);
 			damage = NEGATED_VALUE;
 		}
-	    setCurrentHealth(getCurrentHealth() - damage);
+	    currentHp(currentHp() - damage);
 	}
 	private void scoredCritical(boolean isPlayersTurn) {
 		String who = whoDidIt(isPlayersTurn);
@@ -310,26 +205,25 @@ public class Blockamon extends IBoundable {
 		}
 		return who;
 	}
-
     //resets the attack and attack power to their defaults
     public void resetAttack() {
-        setCurrentAttack(getTotalAttack());
-        setAttackPower(DEFAULT_ATTACK_POWER);
+        currentAttack(totalAttack());
+        currentAttack(DEFAULT_ATTACK_POWER);
     }
 
     public void resetHealth() {
-        setCurrentHealth(getTotalHealth());//health = totalHealth;
+        currentHp(maxHp());//health = totalHealth;
     }
 
     public String toString() {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Level: ");
-        stringBuilder.append(getCurrentLevel());
+        stringBuilder.append(level());
         stringBuilder.append("\n");
         stringBuilder.append("Attack: ");
-        stringBuilder.append(getCurrentAttack());
+        stringBuilder.append(currentAttack());
         stringBuilder.append("/");
-        stringBuilder.append(getTotalAttack());
+        stringBuilder.append(totalAttack());
         stringBuilder.append("\n");
         stringBuilder.append("Status: ");
         if(this.hasFainted()) {
@@ -337,18 +231,18 @@ public class Blockamon extends IBoundable {
         }
         else {
             stringBuilder.append("Current Health: ");
-            stringBuilder.append(getCurrentHealth());
+            stringBuilder.append(currentHp());
             stringBuilder.append("/");
-            stringBuilder.append(getTotalHealth());
+            stringBuilder.append(maxHp());
         }
         stringBuilder.append("\n");
         stringBuilder.append("Type: ");
-        stringBuilder.append(getElementType());
+        stringBuilder.append(elementType());
         stringBuilder.append("\n");
         stringBuilder.append("Experience: ");
-        stringBuilder.append(getExperience());
+        stringBuilder.append(this.currentExp());
         stringBuilder.append("/");
-        stringBuilder.append(getNeededExperience());
+        stringBuilder.append(neededExp());
         return stringBuilder.toString();
     }
 
@@ -356,53 +250,82 @@ public class Blockamon extends IBoundable {
 
 
     private ElementType _element;
-    private int _maxHP;
-    private int _currentHP;
+    private double _maxHp;
+    private double _currentHp;
+    private String _name;
+    private double _currentAttack;
+    private double _totalAttack;
+    private double _maxAttack;
 
-    public Blockamon(int maxHP) {
-        this(maxHP, ElementType.NORMAL);
-    }
-
-    public Blockamon(int maxHP, ElementType type) {
-        maxHP(maxHP);
-        currentHitPoints(maxHP);
+    public Blockamon(ElementType type) {
         _element = type;
     }
 
-    public ElementType element() {
+    public ElementType elementType() {
         return _element;
     }
-    public void element(ElementType element) {
+    public void elementType(ElementType element) {
         _element = element;
     }
 
-    public int maxHP() {
-        return _maxHP;
+    public double maxHp() {
+        return _maxHp;
     }
-    public void maxHP(int maxHP) {
-        _maxHP = maxHP;
+    public void maxHp(double maxHp) {
+        _maxHp = maxHp;
     }
 
-    public int currentHitPoints() {
-        return _currentHP;
+    public double currentHp() {
+        return _currentHp;
     }
-    public void currentHitPoints(int currentHP) {
-        _currentHP = currentHP;
+    public void currentHp(double currentHp) {
+        _currentHp = currentHp;
+    }
+
+    public double currentAttack() {
+        return _currentAttack;
+    }
+    public void currentAttack(double currentAttack) {
+        _currentAttack = currentAttack;
+    }
+    public double totalAttack() {
+        return _totalAttack;
+    }
+    public void totalAttack(double totalAttack) {
+        _totalAttack = totalAttack;
+    }
+    public int currentExp() {
+        return _currentExp;
+    }
+    public void currentExp(int currentExp) {
+        _currentExp = currentExp;
+    }
+    public int neededExp() {
+        return _neededExp;
+    }
+    public void neededExp(int neededExp) {
+        _neededExp = neededExp;
+    }
+    public int level() {
+        return _currentLevel;
+    }
+    public void level(int value) {
+        _currentLevel = value;
     }
 
     public void takeDamage(int hp) {
-        _currentHP -= hp;
-        if(_currentHP < 0) {
-            _currentHP = 0;
+        _currentHp -= hp;
+        if(_currentHp < 0) {
+            _currentHp = 0;
         }
     }
 
     public void heal(int hp) {
-        _currentHP = (_currentHP += hp) - (_currentHP % _maxHP);
+        _currentHp = (_currentHp += hp) - (_currentHp % _maxHp);
     }
 
-    public void setStatus(String status) { _status = status;}
-    public String getStatus() {
+    public void status(String status) { _status = status;}
+    public String status() {
         return _status;
     }
 }

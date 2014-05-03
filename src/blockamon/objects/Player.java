@@ -230,14 +230,28 @@ public class Player extends IBoundable {
             }
         }
     }
+    public synchronized void addItems(Item item, int count) {
+        if(canAddItem(count)) {
+            if(_itemsMap.containsKey(item)) {
+                _itemsMap.remove(item);
+                _itemsMap.put(item, _itemsMap.get(item) + count);
+            }
+            else {
+                _itemsMap.put(item, count);
+            }
+        }
+    }
     public synchronized int getItemCount(Item item) {
         if(_itemsMap.containsKey(item)) {
             return _itemsMap.get(item);
         }
         return 0;
     }
-    public synchronized  boolean canAddItem() {
+    public synchronized boolean canAddItem() {
         return getBagSpaceUsed() < getBagSpace();
+    }
+    public synchronized boolean canAddItem(int count) {
+        return getBagSpaceUsed() + count < getBagSpace();
     }
     public synchronized Item[] getItems() {
         int current = 0;

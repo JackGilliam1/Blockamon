@@ -394,7 +394,7 @@ public class ControlPanel extends JPanel {
 				}
 					// puts a button inside the partyButtons array
 					infoButtons[partySlotNum] = createInfoButtons( ""
-							+ playerBlockamon.getName(), inBattle);
+							+ playerBlockamon.name(), inBattle);
 					info.add(infoButtons[partySlotNum]);
 					// there is an item
 					thereIsABlockamon = true;
@@ -441,7 +441,7 @@ public class ControlPanel extends JPanel {
 			if (infoButtons[position] == theButton) {
 				Blockamon chosenBlockamon = player.getBlockamonAt(position);
 				if (chosenBlockamon != null) {
-					printText(chosenBlockamon.toString(), "Info for " + chosenBlockamon.getName(), JOptionPane.INFORMATION_MESSAGE, "info");
+					printText(chosenBlockamon.toString(), "Info for " + chosenBlockamon.name(), JOptionPane.INFORMATION_MESSAGE, "info");
 					if (inBattle) {
 						addButtons("Battle");
 						removeButtons("Info");
@@ -474,7 +474,7 @@ public class ControlPanel extends JPanel {
 				// puts a button inside the partyButtons array
 				partyButtons[partySlotNum] = createPartyButtons(
 						" " + (buttonNumber) + " "
-								+ playerBlockamon.getName(), inBattle);
+								+ playerBlockamon.name(), inBattle);
 				switchMenu.add(partyButtons[partySlotNum]);
 				// there is an item
 				thereIsABlockamon = true;
@@ -544,7 +544,7 @@ public class ControlPanel extends JPanel {
 				if (!chosenBlockamon.equals(activeBlockamon)) {
                     activeBlockamon.isLead(false);
                     chosenBlockamon.isLead(true);
-                    printText(chosenBlockamon.getName()
+                    printText(chosenBlockamon.name()
                                       + " is now the active Blockamon",
                                      "Active Blockamon has changed",
                                      JOptionPane.INFORMATION_MESSAGE, "info");
@@ -573,15 +573,15 @@ public class ControlPanel extends JPanel {
 		int maxCaughtChance = CHANCETOCATCHWHENHIGHEST;
 		Random randNum = new Random();
 		// if the enemy Blockamon is past 75% health left
-		if (PBlock.getCurrentHealth() <= (PBlock.getTotalHealth() * .75)) {
+		if (PBlock.currentHp() <= (PBlock.maxHp() * .75)) {
 			maxCaughtChance = CHANCETOCATCHWHENHIGH;
 		}
 		// if the enemy Blockamon is past 50% health left
-		if (PBlock.getCurrentHealth() <= (PBlock.getTotalHealth() * .5)) {
+		if (PBlock.currentHp() <= (PBlock.maxHp() * .5)) {
 			maxCaughtChance = CHANCETOCATCHWHENLOW;
 		}
 		// if the enemy Blockamon is past 25% health left
-		if (PBlock.getCurrentHealth() <= (PBlock.getTotalHealth() * .25)) {
+		if (PBlock.currentHp() <= (PBlock.maxHp() * .25)) {
 			maxCaughtChance = CHANCETOCATCHWHENLOWEST;
 		}
 		int catchValue = randNum.nextInt(maxCaughtChance);
@@ -644,7 +644,7 @@ public class ControlPanel extends JPanel {
 							PBlock.heal((int) playersItem.getHealAmount());
 							// inform the user what their blockamons health is
 							printText("Your Blockamon Now has "
-									+ PBlock.getCurrentHealth() + " Health",
+									+ PBlock.currentHp() + " Health",
 									"Current Health",
 									JOptionPane.INFORMATION_MESSAGE, "info");
 							// set the item in that position to null
@@ -686,7 +686,7 @@ public class ControlPanel extends JPanel {
 											if (playerChosenName != null
 													&& !playerChosenName
 															.equals("")) {
-												blockamon.setName(playerChosenName);
+												blockamon.name(playerChosenName);
 												correctName = true;
 											} else {
 												printText(

@@ -1,6 +1,6 @@
 package blockamon.objects;
 
-import blockamon.ExtensionMethods;
+import blockamon.Extensions;
 
 import java.util.*;
 
@@ -72,7 +72,7 @@ public enum ElementType {
     }
 
     private static void addWeaknesses(ElementType element, ElementType... weaknesses) {
-        _weaknesses.put(element, ExtensionMethods.toArrayList(weaknesses));
+        _weaknesses.put(element, Extensions.toArrayList(weaknesses));
     }
 
     private static void setUpResistances() {
@@ -98,7 +98,7 @@ public enum ElementType {
     }
 
     private static void addResistance(ElementType element, ElementType... resistances) {
-        _resistances.put(element, ExtensionMethods.toArrayList(resistances));
+        _resistances.put(element, Extensions.toArrayList(resistances));
     }
 
     private static void setUpNegations(){
@@ -112,7 +112,7 @@ public enum ElementType {
     }
 
     private static void addNegation(ElementType element, ElementType... negations) {
-        _negations.put(element, ExtensionMethods.toArrayList(negations));
+        _negations.put(element, Extensions.toArrayList(negations));
     }
 
     private static void setUpDummyElementTypes() {

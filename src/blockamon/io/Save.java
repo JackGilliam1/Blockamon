@@ -64,8 +64,8 @@ public class Save {
 			Blockamon blockamon = player.getBlockamonAt(position);
 			if(blockamon != null)
 			{
-				save.printf(BLOCKAMONSTATSFORMAT, position, blockamon.getName(), blockamon.getCurrentLevel(),
-						blockamon.getCurrentAttack(), blockamon.getElementType(), blockamon.getTotalHealth(), blockamon.isLead(), blockamon.getExperience(), blockamon.getNeededExperience());
+				save.printf(BLOCKAMONSTATSFORMAT, position, blockamon.name(), blockamon.level(),
+						blockamon.currentAttack(), blockamon.elementType(), blockamon.maxHp(), blockamon.isLead(), blockamon.currentExp(), blockamon.neededExp());
 			}
 		}
 		save.printf(PLAYERPOSITIONFORMAT, player.getX(), player.getY());

@@ -89,7 +89,7 @@ public class World extends JFrame implements MessageDialogListener {
 		Player player = new Player();
         generateStartingBlockamon(player);
         player.setLocation(playerXStartingLocation, playerYStartingLocation);
-        final String message = String.format(_receivedMessageFormat, player.getLeadBlockamon().getElementType());
+        final String message = String.format(_receivedMessageFormat, player.getLeadBlockamon().elementType());
         displayDialog(message, "Block received", JOptionPane.INFORMATION_MESSAGE);
 		this.addKeyListener(new KeyListen(this));
 		return player;
@@ -246,7 +246,7 @@ public class World extends JFrame implements MessageDialogListener {
      * Displays a Message Dialog box using the specified parameters
      * @param message The message to display
      * @param title The title of the message box
-     * @param typeOfMessage The type of message being displayed
+     * @param typeOfMessage The elementType of message being displayed
      */
     public void displayDialog(String message, String title, int typeOfMessage) {
         JOptionPane.showMessageDialog(null, message, title, typeOfMessage);

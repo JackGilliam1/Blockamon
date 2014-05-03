@@ -1,4 +1,4 @@
-package tests;
+package blockamon;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,12 +8,24 @@ import java.util.ArrayList;
 
 /**
  * User: Jack's Computer
- * Date: 4/27/2014
- * Time: 11:43 AM
+ * Date: 1/5/14
+ * Time: 2:26 PM
  */
-public class TestExtensions {
-    private TestExtensions()
-    {
+public final class Extensions {
+    private Extensions() {
+    }
+
+    public static <T> ArrayList<T> toArrayList(T... values) {
+        ArrayList<T> savedValues = new ArrayList<T>();
+        for(T value : values)
+        {
+            savedValues.add(value);
+        }
+        return savedValues;
+    }
+
+    public static <T> T as(Object obj, Class<T> tClass) {
+        return tClass.isInstance(obj) ? (T) obj : null;
     }
 
     public static ArrayList<String> readAllLines(File file) throws IOException {

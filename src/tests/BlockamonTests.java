@@ -1,4 +1,5 @@
 package tests;
+import blockamon.objects.ElementType;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import blockamon.objects.Blockamon;
@@ -15,29 +16,30 @@ public class BlockamonTests extends TestCase {
     private Blockamon blockamon;
 
     public BlockamonTests() {
-        blockamon = new Blockamon(20);
+        blockamon = new Blockamon(ElementType.NORMAL);
+        blockamon.maxHp(20);
     }
 
     public void testBlockamonHitPointsSubtracts() throws AssertionFailedError {
         takeDamage(10);
-        assertEquals(10, blockamon.currentHitPoints());
+        assertEquals(10, blockamon.currentHp());
     }
 
     public void testBlockamonHitPointsStaysAboveZero() throws AssertionFailedError {
         takeDamage(21);
-        assertEquals(0, blockamon.currentHitPoints());
+        assertEquals(0, blockamon.currentHp());
     }
 
     public void testBlockamonHitPointsAdds() throws Exception {
         takeDamage(10);
         heal(10);
-        assertEquals(20, blockamon.currentHitPoints());
+        assertEquals(20, blockamon.currentHp());
     }
 
     public void testBlockamonHitPointsStayAtOrBelowMaxHitPoints() throws AssertionFailedError {
         takeDamage(5);
         heal(10);
-        assertEquals(20, blockamon.currentHitPoints());
+        assertEquals(20, blockamon.currentHp());
     }
 
     private void takeDamage(int amount) {

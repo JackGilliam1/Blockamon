@@ -1,5 +1,6 @@
 package blockamon.io;
 
+import blockamon.Extensions;
 import blockamon.IPlayerCreator;
 import blockamon.items.Item;
 import blockamon.objects.Blockamon;
@@ -7,7 +8,7 @@ import blockamon.objects.ElementType;
 import blockamon.objects.Player;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class SaveLoader implements ISaveLoader {
 
@@ -21,60 +22,57 @@ public class SaveLoader implements ISaveLoader {
 
     public Player LoadSave() throws IOException {
         Player player = _playerCreator.createNewPlayer();
-        ArrayList<String> fileLines = readAllLines(_fileChooserHandler.getLoadFile());
-        if(fileLines.size() > 0) {
-            int currentLine = 0;
-            if(fileLines.get(0).contains("Player")) {
-                currentLine = 1;
-            }
-            currentLine = SetupPlayerInfo(fileLines, player, currentLine);
-            int blockamonStart = -1;
-            int itemsStart = -1;
-            for(int i = 0; i < fileLines.size(); i++) {
-                if(fileLines.get(i).equals("Item") && itemsStart == -1) {
-                    itemsStart = i;
-                }
-                if(fileLines.get(i).equals("Blockamon") && blockamonStart == -1) {
-                    blockamonStart = i;
-                }
-            }
-            if(itemsStart != -1) {
-                SetupPlayerItems(fileLines, player, itemsStart);
-            }
-            if(blockamonStart != -1) {
-                SetupPlayerBlockamon(fileLines, player, blockamonStart);
-            }
+        List<String> fileLines = Extensions.readAllLines(_fileChooserHandler.getLoadFile());
+        if(fileLines.size() < 0) {
+            return player;
         }
+
+        LineStorage lineStorage = storeAllLines(fileLines);
+
+        SetupPlayerInfo(lineStorage, player);
+        SetupPlayerItems(lineStorage, player);
+        SetupPlayerBlockamon(lineStorage, player);
         return player;
     }
 
-    private int SetupPlayerInfo(ArrayList<String> fileLines, Player player, int currentLine) {
-        if(fileLines.size() > 3) {
-            double money = getDoubleValue(fileLines.get(currentLine++));
-            player.setMoney(money);
-            int x = getIntValue(fileLines.get(currentLine++));
-            int y = getIntValue(fileLines.get(currentLine++));
-            player.setPosition(x, y);
+    private LineStorage storeAllLines(List<String> lines) {
+        LineStorage lineStorage = new LineStorage();
+        for(String line : lines) {
+            lineStorage.addLine(line);
         }
-        return currentLine;
+        return lineStorage;
     }
 
-    private int SetupPlayerItems(ArrayList<String> fileLines, Player player, int currentLine) {
-        while(currentLine < fileLines.size() && fileLines.get(currentLine).contains("Item")) {
-            String itemName = getStringValue(fileLines.get(currentLine + 1));
-            Item item = Item.valueOf(itemName);
-            int count = getIntValue(fileLines.get(currentLine + 2));
-            for(int i = 0; i < count;i++) {
-                player.addItem(item);
-            }
-            currentLine += 3;
-        }
-        return currentLine;
+    private void SetupPlayerInfo(LineStorage lineStorage, Player player) {
+        String playerLine = lineStorage.getPlayerLine();
+
+        MapStore mapStore = MapStore.createMapStore(playerLine);
+
+        double money = asDouble(mapStore.getValue("Money"));
+        player.setMoney(money);
+
+        int x = asInt(mapStore.getValue("PositionX"));
+        int y = asInt(mapStore.getValue("PositionY"));
+        player.setPosition(x, y);
     }
 
-    private int SetupPlayerBlockamon(ArrayList<String> fileLines, Player player, int currentLine) {
-        Blockamon blockamon;
-        while(currentLine < fileLines.size() && fileLines.get(currentLine).contains("Blockamon")) {
+    private void SetupPlayerItems(LineStorage lineStorage, Player player) {
+        List<String> itemLines = lineStorage.getItemLines();
+
+        List<MapStore> mapStores = MapStore.createMapStores(itemLines);
+
+        for(MapStore mapStore : mapStores) {
+            Item item = Item.valueOf(mapStore.getValue("Name").replace("'", ""));
+            int count = asInt(mapStore.getValue("Count"));
+            player.addItems(item, count);
+        }
+    }
+
+    private void SetupPlayerBlockamon(LineStorage lineStorage, Player player) {
+        List<String> blockamonLines = lineStorage.getBlockamonLines();
+
+        List<MapStore> mapStores = MapStore.createMapStores(blockamonLines);
+
             /**
              * Name:'Some Blockamon Name'
              * Type:'Fire'
@@ -88,35 +86,34 @@ public class SaveLoader implements ISaveLoader {
              * IsLead:true
              * Position:0
              */
-            String blockamonName = getStringValue(fileLines.get(currentLine + 1));
-            ElementType type = ElementType.valueOf(getStringValue(fileLines.get(currentLine + 2)));
-            blockamon = new Blockamon(type);
-            blockamon.setName(blockamonName);
-            String status = getStringValue(fileLines.get(currentLine + 3));
-            blockamon.setStatus(status);
-            int currentHealth = getIntValue(fileLines.get(currentLine + 4));
-            blockamon.currentHitPoints(currentHealth);
-            int maxHP = getIntValue(fileLines.get(currentLine + 5));
-            blockamon.maxHP(maxHP);
-            int level = getIntValue(fileLines.get(currentLine + 6));
-            blockamon.setCurrentLevel(level);
-            int currentExp = getIntValue(fileLines.get(currentLine + 7));
-            blockamon.setExperience(currentExp);
-            int expNeeded = getIntValue(fileLines.get(currentLine + 8));
-            blockamon.setNeededExperience(expNeeded);
-            double totalAttack = getDoubleValue(fileLines.get(currentLine + 9));
-            blockamon.setTotalAttack(totalAttack);
-            boolean isLead = getBooleanValue(fileLines.get(currentLine + 10));
-            blockamon.isLead(isLead);
-            if(isLead) {
-                player.setLeadBlockamon(blockamon);
-            }
-            else {
-                player.addToParty(blockamon);
-            }
-            currentLine += 12;
+        for(MapStore mapStore : mapStores) {
+            ElementType type = ElementType
+                    .valueOf(mapStore.getValue("Type"));
+            Blockamon blockamon = new Blockamon(type);
+            blockamon.name(mapStore.getValue("Name"));
+            blockamon.status(mapStore.getValue("Status"));
+            blockamon.maxHp(asDouble(mapStore.getValue("MaxHp")));
+            blockamon.currentHp(asDouble(mapStore.getValue("CurrentHp")));
+            blockamon.totalAttack(asDouble(mapStore.getValue("MaxAttack")));
+            blockamon.currentAttack(blockamon.totalAttack());
+            blockamon.level(asInt(mapStore.getValue("Level")));
+            blockamon.currentExp(asInt(mapStore.getValue("CurrentExp")));
+            blockamon.neededExp(asInt(mapStore.getValue("NeededExp")));
+            blockamon.isLead(asBoolean(mapStore.getValue("IsLead")));
+            player.addToParty(blockamon);
         }
-        return currentLine;
+    }
+
+    private boolean asBoolean(String s) {
+        return Boolean.parseBoolean(s);
+    }
+
+    private double asDouble(String s) {
+        return Double.parseDouble(s);
+    }
+
+    private int asInt(String s) {
+        return Integer.parseInt(s);
     }
 
     private int getIntValue(String line) {
@@ -135,29 +132,38 @@ public class SaveLoader implements ISaveLoader {
         return Double.parseDouble(line.split(":")[1]);
     }
 
-    private ArrayList<String> readAllLines(File file) throws IOException {
-        ArrayList<String> linesRead = new ArrayList<String>();
-        BufferedReader bufferedReader = null;
-        FileReader fileReader = null;
-        try {
-            fileReader = new FileReader(file);
-            bufferedReader = new BufferedReader(fileReader);
-            String lineRead = "";
-            while(lineRead != null) {
-                lineRead = bufferedReader.readLine();
-                if(lineRead != null) {
-                    linesRead.add(lineRead);
-                }
+    private class LineStorage {
+        private String _playerLine;
+        private List<String> _items;
+        private List<String> _blockamon;
+
+        public LineStorage() {
+            _items = new ArrayList<String>();
+            _blockamon = new ArrayList<String>();
+        }
+
+        public void addLine(String line) {
+            if(line.startsWith("Player")) {
+                _playerLine = line;
+            }
+            else if(line.startsWith("Item")) {
+                _items.add(line);
+            }
+            else if(line.startsWith("Blockamon")) {
+                _blockamon.add(line);
             }
         }
-        finally {
-            if(bufferedReader != null) {
-                bufferedReader.close();
-            }
-            if(fileReader != null) {
-                fileReader.close();
-            }
+
+        public List<String> getItemLines() {
+            return _items;
         }
-        return linesRead;
+
+        public List<String> getBlockamonLines() {
+            return _blockamon;
+        }
+
+        public String getPlayerLine() {
+            return _playerLine;
+        }
     }
 }
