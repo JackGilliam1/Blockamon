@@ -1,7 +1,6 @@
 package blockamon.controllers;
 
-import blockamon.io.Load;
-import blockamon.io.Save;
+import blockamon.io.*;
 import blockamon.items.Item;
 import blockamon.objects.Blockamon;
 import blockamon.objects.Player;
@@ -15,6 +14,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import java.io.IOException;
 import java.util.*;
 
 public class ControlPanel extends JPanel {
@@ -55,16 +55,12 @@ public class ControlPanel extends JPanel {
         }
     }
 
+    private ISaveWriter _saveWriter;
+    private ISaveLoader _saveLoader;
+
     public Map<MenuItemType, JMenuItem> menuItems;
     public Map<MenuType, JMenu> menus;
     public JMenuBar menuBar;
-
-    public ControlPanel() {
-        menuItems = getMenuItems();
-        menus = getMenus();
-        attachMenuItems();
-        menuBar = createMenuBar(menus);
-    }
 
     private JMenuBar createMenuBar(Map<MenuType, JMenu> menuMap) {
         final JMenuBar jMenuBar = new JMenuBar();
@@ -179,8 +175,16 @@ public class ControlPanel extends JPanel {
     private static final String HEALTH_FORMAT = "Current Health: %d/Max Health: %d";
     private static final String INFO_FORMAT = LEVEL_FORMAT + ATTACK_FORMAT + STATUS_FORMAT + TYPE_FORMAT + EXP_FORMAT;
 
-	public ControlPanel(Player player, ItemShop itemShop, HealingCenter healingCenter, Grass wildGrass) {
+	public ControlPanel(ISaveWriter saveWriter, ISaveLoader saveLoader,
+                        Player player,
+                        ItemShop itemShop,
+                        HealingCenter healingCenter,
+                        Grass wildGrass) {
 		super();
+
+        _saveWriter = saveWriter;
+        _saveLoader = saveLoader;
+
 		this.setLayout(new FlowLayout());
 		this.player = player;
 		this.itemShop = itemShop;
@@ -294,11 +298,17 @@ public class ControlPanel extends JPanel {
                                          "Total Money", JOptionPane.INFORMATION_MESSAGE,
                                          "info");
                     } else if (source == saveButton) {
-                        @SuppressWarnings("unused")
-                        Save aNewSaveFile = new Save(player);
+                        try {
+                            _saveWriter.SaveGame(player);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
                     } else if (source == loadButton) {
-                        @SuppressWarnings("unused")
-                        Load loadAGame = new Load(player);
+                        try {
+                            _saveLoader.LoadSave(player);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
                     } else if (source == showInfoButton) {
                         createInfoButtons(true);
                     } else if (source == OOBshowInfoButton) {

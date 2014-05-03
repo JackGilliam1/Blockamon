@@ -2,6 +2,7 @@ package blockamon;
 
 import blockamon.controllers.ControlPanel;
 import blockamon.input.KeyListen;
+import blockamon.io.*;
 import blockamon.items.Item;
 import blockamon.objects.Blockamon;
 import blockamon.objects.data.Direction;
@@ -16,6 +17,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 public class World extends JFrame implements MessageDialogListener {
@@ -34,10 +37,11 @@ public class World extends JFrame implements MessageDialogListener {
     private static final int playerXStartingLocation = 130;
     private static final int playerYStartingLocation = 100;
 
-
+    private FileFilter _fileFilter;
 
 	public World() {
 		super(GAME_TITLE);
+        _fileFilter = new FileNameExtensionFilter("Blockamon SAVE", "save");
 		this.setLayout(new BorderLayout());
 		inBattle = false;
 		playingField = new JPanel(null);
@@ -53,7 +57,12 @@ public class World extends JFrame implements MessageDialogListener {
         createItemShop();
         createHealingCenter();
         createGrass();
-        menu = new ControlPanel(getPlayer(), getItemShop(), getHealingCenter(), getTheGrass());
+        menu = new ControlPanel(createSaveWriter(_fileFilter),
+                createSaveLoader(_fileFilter),
+                getPlayer(),
+                getItemShop(),
+                getHealingCenter(),
+                getTheGrass());
         menu.addButtons("OutofBattle");
         add(menu, BorderLayout.NORTH);
         add(playingField, BorderLayout.CENTER);
@@ -62,6 +71,22 @@ public class World extends JFrame implements MessageDialogListener {
         setVisible(true);
         this.repaint();
     }
+
+    private ISaveWriter createSaveWriter(FileFilter fileFilter) {
+        return new SaveWriter(new FileChooserHandler(fileFilter));
+    }
+
+    private ISaveLoader createSaveLoader(FileFilter fileFilter) {
+        return new SaveLoader(
+                new FileChooserHandler(fileFilter),
+                        new PlayerCreator());
+    }
+
+
+
+
+
+
 
     public ControlPanel getMenu() {
         return menu;

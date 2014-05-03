@@ -20,8 +20,8 @@ public class SaveLoader implements ISaveLoader {
         _playerCreator = playerCreator;
     }
 
-    public Player LoadSave() throws IOException {
-        Player player = _playerCreator.createNewPlayer();
+    public Player LoadSave(Player player) throws IOException {
+        player.clear();
         List<String> fileLines = Extensions.readAllLines(_fileChooserHandler.getLoadFile());
         if(fileLines.size() < 0) {
             return player;
@@ -33,6 +33,10 @@ public class SaveLoader implements ISaveLoader {
         SetupPlayerItems(lineStorage, player);
         SetupPlayerBlockamon(lineStorage, player);
         return player;
+    }
+
+    public Player LoadSave() throws IOException {
+        return LoadSave(_playerCreator.createNewPlayer());
     }
 
     private LineStorage storeAllLines(List<String> lines) {

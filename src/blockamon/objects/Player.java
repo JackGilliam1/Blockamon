@@ -6,7 +6,6 @@ import blockamon.objects.data.Direction;
 import blockamon.objects.data.ImageData;
 import blockamon.objects.images.DirectionalObjectImage;
 import blockamon.objects.images.IDirectionalObjectImage;
-import blockamon.objects.images.ObjectImage;
 
 import javax.swing.*;
 import java.util.*;
@@ -22,7 +21,7 @@ public class Player extends IBoundable {
 
 	private static int blockamonX, blockamonY;
 
-	private double amountOfMoney = 0;
+	private double _money = 0;
 	private static final int PARTYLIMIT = 6;
 	private static final int BAGSPACE = 6;
 	private static final Random randomNumberGenerator = new Random();
@@ -109,7 +108,7 @@ public class Player extends IBoundable {
 
 	public void receiveMoney() {
 		int money = randomNumberGenerator.nextInt(50)+50;
-		amountOfMoney += money;
+		_money += money;
 		JOptionPane.showMessageDialog(null, "You have received " + money + " money", "You are richer", JOptionPane.INFORMATION_MESSAGE);
 	}
 	public void loseMoney() {
@@ -130,9 +129,9 @@ public class Player extends IBoundable {
         }
 	}
     public void removeMoney(double amount) {
-        amountOfMoney -= amount;
-        if(amountOfMoney < 0) {
-            amountOfMoney = 0;
+        _money -= amount;
+        if(_money < 0) {
+            _money = 0;
         }
     }
 
@@ -161,10 +160,10 @@ public class Player extends IBoundable {
     }
 
     public double getMoney() {
-        return amountOfMoney;
+        return _money;
     }
     public void setMoney(double amount) {
-        amountOfMoney = amount;
+        _money = amount;
     }
     public synchronized  int getPartyLimit() {
         return PARTYLIMIT;
@@ -297,5 +296,12 @@ public class Player extends IBoundable {
         Blockamon block = _blockamon.get(positionOne);
         _blockamon.set(positionOne, _blockamon.get(positionTwo));
         _blockamon.set(positionTwo, block);
+    }
+
+
+    public synchronized void clear() {
+        _money = 0;
+        _blockamon.clear();
+        _itemsMap.clear();
     }
 }

@@ -11,4 +11,5 @@ import java.io.IOException;
  */
 public interface ISaveLoader {
     public Player LoadSave() throws IOException;
+    public Player LoadSave(Player player) throws IOException;
 }
