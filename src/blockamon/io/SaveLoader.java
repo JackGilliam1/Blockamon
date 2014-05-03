@@ -116,22 +116,6 @@ public class SaveLoader implements ISaveLoader {
         return Integer.parseInt(s);
     }
 
-    private int getIntValue(String line) {
-        return Integer.parseInt(line.split(":")[1]);
-    }
-
-    private String getStringValue(String line) {
-        return line.split(":")[1].replace("\'", "");
-    }
-
-    private boolean getBooleanValue(String line) {
-        return Boolean.parseBoolean(line.split(":")[1]);
-    }
-
-    private double getDoubleValue(String line) {
-        return Double.parseDouble(line.split(":")[1]);
-    }
-
     private class LineStorage {
         private String _playerLine;
         private List<String> _items;
