@@ -816,4 +816,25 @@ public class ControlPanel extends JPanel {
 		}
 		this.repaint();
 	}
+
+    
+    private enum MenuTypes {
+        ItemShop,
+        HealShop,
+        Switch,
+        Info,
+        Buy
+    }
+
+    private enum ButtonTypes {
+        ItemShop,
+        HealShop,
+        SwitchMenu,
+        Money,
+        Save,
+        Load,
+        Info,
+        OOBBack,
+        Back
+    }
 }

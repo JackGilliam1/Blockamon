@@ -1,13 +1,15 @@
 package blockamon.objects.buildings;
+import blockamon.input.*;
+import blockamon.objects.Player;
 import blockamon.objects.images.ObjectImage;
 import blockamon.items.Item;
 import blockamon.objects.data.AppearanceData;
 import blockamon.objects.data.ImageData;
 
 import javax.swing.*;
+import java.util.List;
 
-public class Building extends JComponent {
-
+public abstract class Building extends JComponent {
     private static final String _imagesFolder = "buildings";
     private static ImageData _imageData = new ImageData(_imagesFolder);
     private ObjectImage _image;
@@ -20,11 +22,7 @@ public class Building extends JComponent {
 		this.repaint();
 	}
 
-	public Item getSpecificItem(int position) {
-		return null;
-	}
+    public abstract List<String> getActions();
 
-	public int getNumberOfItems() {
-		return 0;
-	}
+    public abstract void doAction(Player player, ActionObject action);
 }

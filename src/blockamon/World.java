@@ -132,7 +132,7 @@ public class World extends JFrame implements MessageDialogListener {
     }
     //creates the place that can heal
     private void createHealingCenter() {
-        healingCenter = new HealingCenter(null, null);
+        healingCenter = new HealingCenter();
         playingField.add(healingCenter);
         playingField.repaint();
     }

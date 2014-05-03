@@ -1,6 +1,8 @@
 package blockamon.objects.buildings;
 
+import blockamon.input.ActionObject;
 import blockamon.items.Item;
+import blockamon.objects.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,22 @@ public class ItemShop extends Building {
             stockItem(item);
         }
     }
-	public Item getSpecificItem(int index) {
+
+    public List<String> getActions() {
+        List<String> actions = new ArrayList<String>();
+        for(Item item : Item.values()) {
+            actions.add(item.toString());
+        }
+        return actions;
+    }
+
+    public void doAction(Player player, ActionObject action) {
+        if(action.isItemAction()) {
+            player.addItem(action.getItem());
+        }
+    }
+
+    public Item getSpecificItem(int index) {
         return _items.get(index);
 	}
 	public int getNumberOfItems() {
