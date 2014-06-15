@@ -13,33 +13,34 @@ import blockamon.objects.Blockamon;
  */
 public class BlockamonTests extends TestCase {
 
+    private static final double MaxHp = 20.0;
     private Blockamon blockamon;
 
     public BlockamonTests() {
         blockamon = new Blockamon(ElementType.NORMAL);
-        blockamon.maxHp(20);
+        blockamon.maxHp(MaxHp);
     }
 
     public void testBlockamonHitPointsSubtracts() throws AssertionFailedError {
         takeDamage(10);
-        assertEquals(10, blockamon.currentHp());
+        assertEquals(10.0, blockamon.currentHp());
     }
 
     public void testBlockamonHitPointsStaysAboveZero() throws AssertionFailedError {
         takeDamage(21);
-        assertEquals(0, blockamon.currentHp());
+        assertEquals(0.0, blockamon.currentHp());
     }
 
     public void testBlockamonHitPointsAdds() throws Exception {
         takeDamage(10);
         heal(10);
-        assertEquals(20, blockamon.currentHp());
+        assertEquals(MaxHp, blockamon.currentHp());
     }
 
     public void testBlockamonHitPointsStayAtOrBelowMaxHitPoints() throws AssertionFailedError {
         takeDamage(5);
         heal(10);
-        assertEquals(20, blockamon.currentHp());
+        assertEquals(MaxHp, blockamon.currentHp());
     }
 
     private void takeDamage(int amount) {

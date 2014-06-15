@@ -45,9 +45,9 @@ public class World extends JFrame implements MessageDialogListener {
 		this.setLayout(new BorderLayout());
 		inBattle = false;
 		playingField = new JPanel(null);
+        playingField.setBorder(BorderFactory.createLineBorder(Color.black));
 		playingField.setPreferredSize(new Dimension(400, 300));
 		worldSize = playingField.getPreferredSize();
-		playingField.setBorder(BorderFactory.createLineBorder(Color.black));
 	}
 
     public void run() {
@@ -57,17 +57,17 @@ public class World extends JFrame implements MessageDialogListener {
         createItemShop();
         createHealingCenter();
         createGrass();
-        menu = new ControlPanel(createSaveWriter(_fileFilter),
+        menu = new ControlPanel(getPlayer(),
+                createSaveWriter(_fileFilter),
                 createSaveLoader(_fileFilter),
-                getPlayer(),
                 getItemShop(),
-                getHealingCenter(),
-                getTheGrass());
-        menu.addButtons("OutofBattle");
+                getHealingCenter());
+
         add(menu, BorderLayout.NORTH);
         add(playingField, BorderLayout.CENTER);
         pack();
         player.setVisible(true);
+        this.addKeyListener(new KeyListen(this, menu));
         setVisible(true);
         this.repaint();
     }
@@ -111,24 +111,17 @@ public class World extends JFrame implements MessageDialogListener {
 	}
 	//creates the player
 	private Player createPlayer() {
-		Player player = new Player();
+        IPlayerCreator playerCreator = new PlayerCreator();
+        Player player = playerCreator.createNewPlayer();
         generateStartingBlockamon(player);
         player.setLocation(playerXStartingLocation, playerYStartingLocation);
         final String message = String.format(_receivedMessageFormat, player.getLeadBlockamon().elementType());
         displayDialog(message, "Block received", JOptionPane.INFORMATION_MESSAGE);
-		this.addKeyListener(new KeyListen(this));
 		return player;
 	}
 
     private void generateStartingBlockamon(Player player) {
-        //determine which blockamon the player will receive to start
-        Blockamon leadBlockamon;
-        if((leadBlockamon = player.getLeadBlockamon()) == null)
-        {
-            leadBlockamon = BlockamonGenerator.generateRandomBlockamon();
-            player.setLeadBlockamon(leadBlockamon);
-        }
-        leadBlockamon.isLead(true);
+        player.setLeadBlockamon(BlockamonGenerator.generateRandomBlockamon());
     }
     //creates the place that can heal
     private void createHealingCenter() {
@@ -154,60 +147,14 @@ public class World extends JFrame implements MessageDialogListener {
 		player.loseMoney();
 		playingField.repaint();
 	}
-	public void inStore() {
-		//if the player is within the bounds of the healing center
-		if(player.getX() < itemShop.getX()+itemShop.getWidth()&&
-		player.getX()+ player.getWidth() > itemShop.getX()&&
-		player.getY() < itemShop.getY()+itemShop.getHeight()&&
-		player.getY() + player.getHeight() > itemShop.getY())
-		{
-			counter2 = 0;
-			//add the buttons to heal
-			menu.removeButtons("Store");
-			menu.addButtons("ItemShop");
-			menu.removeButtons("OutOfBattle");
-			menu.removeButtons("OOBInfoBackButton");
-			menu.removeButtons("Info");
-		}
-		else
-		{
-				//remove the buttons to heal
-				menu.removeButtons("ItemShop");
-				menu.removeButtons("Store");
-				if(counter2 == 0)
-				{
-					menu.addButtons("OutofBattle");
-				}
-				counter2++;
-		}
+	public boolean isInStore() {
+        return itemShop.getAppearanceData().contains(player.getAppearanceData());
 	}
 	public JPanel getPlayingField() {
 		return playingField;
 	}
-	public void inHealingStation() {
-		//if the player is within the bounds of the healing center
-		if(player.getX() < healingCenter.getX()+ healingCenter.getWidth()&&
-		player.getX()+ player.getWidth() > healingCenter.getX()&&
-		player.getY() < healingCenter.getY()+ healingCenter.getHeight()&&
-		player.getY() + player.getHeight() > healingCenter.getY())
-		{
-			counter = 0;
-			//add the buttons to heal
-			menu.addButtons("HealCenter");
-			menu.removeButtons("OutOfBattle");
-			menu.removeButtons("OOBinfoBackButton");
-			menu.removeButtons("Info");
-		}
-		else
-		{
-			//remove the buttons to heal
-				menu.removeButtons("HealCenter");
-				if(counter == 0)
-				{
-					menu.addButtons("OutOfBattle");
-					counter++;
-				}
-		}
+	public boolean isInHealingStation() {
+        return healingCenter.getAppearanceData().contains(player.getAppearanceData());
 	}
 	//returns the player
 	public Player getPlayer() {
@@ -227,9 +174,8 @@ public class World extends JFrame implements MessageDialogListener {
 
 	//moves the player
 	public void movePlayer(char aKey) {
-		menu.removeButtons("info");
-		menu.removeButtons("OOBinfoBackButton");
 		//tells the player to move
+        System.out.println("Moving player");
 		player.movePlayer(aKey, this.getWidth(), this.getHeight());
 	}
 
@@ -241,18 +187,10 @@ public class World extends JFrame implements MessageDialogListener {
 	//determines whether the player is within the grass or not
 	public void blockAppear() {
 		//if the player is within the bounds of the grass
-		if(player.getX() < wildGrass.getX()+wildGrass.getWidth()&&
-		   player.getX()+ player.getWidth() > wildGrass.getX()&&
-		   player.getY() < wildGrass.getY()+wildGrass.getHeight()&&
-		   player.getY() + player.getHeight() > wildGrass.getY())
+		if(wildGrass.getAppearanceData().contains(player.getAppearanceData()))
 		{
 			//does a wildBlockamon appear?
 		    wildGrass.wildBlockamonAppearance(player.getActiveBlockamon(), player.getX()+ player.getWidth(), player.getY());
-		}
-		//if the player is outside the bounds of the grass
-		else
-		{
-
 		}
 	}
 
@@ -264,7 +202,7 @@ public class World extends JFrame implements MessageDialogListener {
 
 
     public void displayMessageDialog(MessageDialogEvent dialogEvent) {
-        JOptionPane.showMessageDialog(null, dialogEvent.getMessage(), dialogEvent.getMessageTitle(), dialogEvent.getMessageType());
+        System.out.println(dialogEvent.getMessageTitle() + " " + dialogEvent.getMessageType());
     }
 
     /**
@@ -274,6 +212,6 @@ public class World extends JFrame implements MessageDialogListener {
      * @param typeOfMessage The elementType of message being displayed
      */
     public void displayDialog(String message, String title, int typeOfMessage) {
-        JOptionPane.showMessageDialog(null, message, title, typeOfMessage);
+        System.out.println(title + ": " + message);
     }
 }

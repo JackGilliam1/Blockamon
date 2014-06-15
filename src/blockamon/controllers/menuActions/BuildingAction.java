@@ -11,17 +11,16 @@ import java.awt.event.ActionEvent;
 * Date: 5/3/2014
 * Time: 2:25 PM
 */
-public class BuildingAction extends AbstractAction {
-    private Player _player;
-    private Building _building;
+public abstract class BuildingAction extends AbstractAction {
+    private String _name;
+    protected Player _player;
 
-    public BuildingAction(Player player, Building building, String actionCommand) {
-        super(actionCommand);
+    public BuildingAction(String name, Player player) {
+        _name = name;
         _player = player;
-        _building = building;
     }
-
-    public void actionPerformed(ActionEvent e) {
-        _building.doAction(_player, e.getActionCommand());
+    public String getName() {
+        return _name;
     }
+    public abstract void actionPerformed(ActionEvent e);
 }

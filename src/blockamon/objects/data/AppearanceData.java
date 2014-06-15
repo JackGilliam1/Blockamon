@@ -54,4 +54,11 @@ public class AppearanceData {
         setX(x);
         setY(y);
     }
+
+    public boolean contains(AppearanceData data){
+        return this.getX() <= data.getX()+data.getWidth()&&
+               this.getX()+ this.getWidth() >= data.getX()&&
+               this.getY() <= data.getY()+data.getHeight()&&
+               this.getY() + this.getHeight() >= data.getY();
+    }
 }

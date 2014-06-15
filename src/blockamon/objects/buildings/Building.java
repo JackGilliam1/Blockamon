@@ -1,8 +1,8 @@
 package blockamon.objects.buildings;
-import blockamon.input.*;
+
+import blockamon.controllers.menuActions.BuildingAction;
 import blockamon.objects.Player;
 import blockamon.objects.images.ObjectImage;
-import blockamon.items.Item;
 import blockamon.objects.data.AppearanceData;
 import blockamon.objects.data.ImageData;
 
@@ -12,17 +12,21 @@ import java.util.List;
 public abstract class Building extends JComponent {
     private static final String _imagesFolder = "buildings";
     private static ImageData _imageData = new ImageData(_imagesFolder);
+    private AppearanceData _appearanceData;
     private ObjectImage _image;
 
 	public Building(int xPosition, int yPosition, int width, int height, String image) {
-		super();
+        _appearanceData = new AppearanceData(xPosition, yPosition, width, height);
 		this.setBounds(xPosition, yPosition, width, height);
-		_image = new ObjectImage(new AppearanceData(width, height), new ImageData(_imagesFolder, image));
+        _imageData = new ImageData(_imagesFolder, image);
+		_image = new ObjectImage(new AppearanceData(width, height), _imageData);
 		this.add(_image, 0);
 		this.repaint();
 	}
 
-    public abstract List<String> getActions();
+    public abstract List<BuildingAction> getActions(Player player);
 
-    public abstract void doAction(Player player, String action);
+    public AppearanceData getAppearanceData() {
+        return _appearanceData;
+    }
 }

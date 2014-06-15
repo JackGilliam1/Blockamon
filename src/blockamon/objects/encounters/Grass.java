@@ -5,6 +5,7 @@ import blockamon.controllers.ControlPanel;
 import blockamon.World;
 import blockamon.objects.Blockamon;
 import blockamon.objects.Player;
+import blockamon.objects.data.AppearanceData;
 import generators.BlockamonGenerator;
 
 import java.awt.*;
@@ -15,6 +16,7 @@ public class Grass extends shapes.Rectangle {
 	/**
 	 *
 	 */
+    private AppearanceData _appearanceData;
 	private static final long serialVersionUID = 2967832841209310540L;
 	private World world;
 	private BlockamonBattle battle;
@@ -27,6 +29,7 @@ public class Grass extends shapes.Rectangle {
 	public Grass(int XPosition, int YPosition, int width, int height, World w, ControlPanel menu)
 	{
 		super(XPosition, YPosition, width, height);
+        _appearanceData = new AppearanceData(XPosition, YPosition, width, height);
 		this.setBackground(Color.green);
 		world = w;
 	}
@@ -92,4 +95,8 @@ public class Grass extends shapes.Rectangle {
 	{
 		battle.addPlayersBlock(inActiveBlock, activeBlock);
 	}
+
+    public AppearanceData getAppearanceData() {
+        return _appearanceData;
+    }
 }

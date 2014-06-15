@@ -1,4 +1,6 @@
 package blockamon.objects.buildings;
+import blockamon.controllers.menuActions.BuildingAction;
+import blockamon.controllers.menuActions.HealAction;
 import blockamon.input.ActionObject;
 import blockamon.objects.Blockamon;
 import blockamon.objects.Player;
@@ -12,20 +14,14 @@ public class HealingCenter extends Building {
 		super(300, 20, 75, 75, "HealShop");
 	}
 
-    public List<String> getActions() {
-        List<String> actions = new ArrayList<String>();
-        actions.add("HEAL");
+    public List<BuildingAction> getActions(Player player) {
+        List<BuildingAction> actions = new ArrayList<BuildingAction>();
+        actions.add(new HealAction(player));
         return actions;
     }
 
     public void doAction(Player player, String action) {
         if(action.equals("HEAL")) {
-            List<Blockamon> blockamons = player.getBlockamon();
-            for (Blockamon blockamon : blockamons) {
-                blockamon.fullyHeal();
-            }
-            JOptionPane.showMessageDialog(null,
-                    "Your blockamon are now healed", "Blocks healed", JOptionPane.INFORMATION_MESSAGE);
         }
 	}
 }

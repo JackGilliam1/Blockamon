@@ -826,7 +826,26 @@ public class ControlPanel extends JPanel {
 
 
     //TODO: This is the new stuff, finish this stuff up
+    private JMenuBar _menuBar;
+    private MenuType _shownMenu;
     private Map<MenuType, JMenu> _menus = new HashMap<MenuType, JMenu>();
+
+    public ControlPanel(Player player, ISaveWriter saveWriter, ISaveLoader saveLoader,
+                        ItemShop itemShop,
+                        HealingCenter healingCenter) {
+        _menuBar = new JMenuBar();
+        JMenu outOfBattleActions = setupActionsMenu(player, saveWriter, saveLoader);
+        outOfBattleActions.setVisible(true);
+        outOfBattleActions.setEnabled(true);
+        _menuBar.add(outOfBattleActions);
+        JMenu itemShopActions = setupBuildingMenu(player, itemShop, MenuType.ItemShop);
+        _menuBar.add(itemShopActions);
+        JMenu healShopActions = setupBuildingMenu(player, healingCenter, MenuType.HealShop);
+        _menuBar.add(healShopActions);
+
+        System.out.println("set up menubar with number of menus: " + _menuBar.getMenuCount());
+        this.add(_menuBar);
+    }
 
     private JMenu setupActionsMenu(Player player, ISaveWriter saveWriter, ISaveLoader saveLoader) {
         JMenu menu = new JMenu("Actions");
@@ -845,10 +864,12 @@ public class ControlPanel extends JPanel {
     }
 
     private JMenu setupBuildingMenu(Player player, Building building, MenuType menuType) {
-        JMenu menu = new JMenu();
-        List<String> buttonNames = building.getActions();
-        for(String buttonName : buttonNames) {
-            JMenuItem menuItem = new JMenuItem(new BuildingAction(player, building, buttonName));
+        JMenu menu = new JMenu(menuType.toString());
+        List<BuildingAction> buildingActions = building.getActions(player);
+        for(BuildingAction buildingAction : buildingActions) {
+            JMenuItem menuItem = new JMenuItem(buildingAction);
+            menuItem.setText(buildingAction.getName());
+            System.out.println("Setting up building action: " + buildingAction.getName());
             menu.add(menuItem);
         }
         menu.setVisible(false);
@@ -863,10 +884,15 @@ public class ControlPanel extends JPanel {
         return null;
     }
 
-    private void switchToMenu(MenuType menuType) {
+    public void switchToMenu(MenuType menuType) {
+        if(_shownMenu == menuType) {
+            return;
+        }
         hideAllMenus();
         JMenu menu = getMenu(menuType);
+        System.out.println("Switching to menu: " + menuType);
         menu.setVisible(true);
+        _shownMenu = menuType;
     }
 
     private void hideAllMenus() {
@@ -898,7 +924,7 @@ public class ControlPanel extends JPanel {
         }
     }
 
-    private enum MenuType {
+    public enum MenuType {
         OutOfBattle,
         ItemShop,
         Buy,
@@ -912,7 +938,7 @@ public class ControlPanel extends JPanel {
         OOBItems,
     }
 
-    private enum ButtonTypes {
+    public enum ButtonTypes {
         Money,
         Save,
         Load,

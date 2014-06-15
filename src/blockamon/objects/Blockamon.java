@@ -272,6 +272,12 @@ public class Blockamon extends IBoundable {
         return _maxHp;
     }
     public void maxHp(double maxHp) {
+        if(_currentHp == 0.0 || _currentHp == _maxHp) {
+            currentHp(maxHp);
+        }
+        else {
+            currentHp(_currentHp + (_maxHp - maxHp));
+        }
         _maxHp = maxHp;
     }
 

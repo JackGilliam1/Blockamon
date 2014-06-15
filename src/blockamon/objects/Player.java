@@ -298,6 +298,9 @@ public class Player extends IBoundable {
         _blockamon.set(positionTwo, block);
     }
 
+    public AppearanceData getAppearanceData() {
+        return _appearanceData;
+    }
 
     public synchronized void clear() {
         _money = 0;

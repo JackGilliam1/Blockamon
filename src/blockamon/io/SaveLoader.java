@@ -21,8 +21,12 @@ public class SaveLoader implements ISaveLoader {
     }
 
     public Player LoadSave(Player player) throws IOException {
+        File file = _fileChooserHandler.getLoadFile();
+        if(file == null) {
+            return player;
+        }
         player.clear();
-        List<String> fileLines = Extensions.readAllLines(_fileChooserHandler.getLoadFile());
+        List<String> fileLines = Extensions.readAllLines(file);
         if(fileLines.size() < 0) {
             return player;
         }

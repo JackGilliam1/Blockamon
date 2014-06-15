@@ -1,5 +1,7 @@
 package blockamon.objects.buildings;
 
+import blockamon.controllers.menuActions.BuildingAction;
+import blockamon.controllers.menuActions.ItemAction;
 import blockamon.input.ActionObject;
 import blockamon.items.Item;
 import blockamon.objects.Player;
@@ -26,17 +28,20 @@ public class ItemShop extends Building {
         }
     }
 
-    public List<String> getActions() {
-        List<String> actions = new ArrayList<String>();
+    public List<BuildingAction> getActions(Player player) {
+        List<BuildingAction> actions = new ArrayList<BuildingAction>();
         for(Item item : Item.values()) {
-            actions.add(item.getName());
+            actions.add(new ItemAction(item.getName() + ", " + item.getPrice(), player, item));
         }
         return actions;
     }
 
     public void doAction(Player player, String action) {
+        action = action.toLowerCase();
         for(Item item : _items) {
-            if(item.getName().equals(action)) {
+            String itemName = item.getName();
+            if(itemName.toLowerCase().equals(action)) {
+                System.out.println("Adding item to player: " + itemName);
                 player.addItem(item);
             }
         }
