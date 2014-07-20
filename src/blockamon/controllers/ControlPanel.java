@@ -1,8 +1,8 @@
 package blockamon.controllers;
 
-import blockamon.controllers.menuActions.BuildingAction;
 import blockamon.controllers.menuActions.LoadAction;
 import blockamon.controllers.menuActions.MoneyAction;
+import blockamon.controllers.menuActions.PlayerAction;
 import blockamon.controllers.menuActions.SaveAction;
 import blockamon.io.*;
 import blockamon.items.Item;
@@ -865,8 +865,8 @@ public class ControlPanel extends JPanel {
 
     private JMenu setupBuildingMenu(Player player, Building building, MenuType menuType) {
         JMenu menu = new JMenu(menuType.toString());
-        List<BuildingAction> buildingActions = building.getActions(player);
-        for(BuildingAction buildingAction : buildingActions) {
+        List<PlayerAction> buildingActions = building.getActions(player);
+        for(PlayerAction buildingAction : buildingActions) {
             JMenuItem menuItem = new JMenuItem(buildingAction);
             menuItem.setText(buildingAction.getName());
             System.out.println("Setting up building action: " + buildingAction.getName());

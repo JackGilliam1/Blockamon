@@ -1,6 +1,6 @@
 package blockamon.objects.buildings;
 
-import blockamon.controllers.menuActions.BuildingAction;
+import blockamon.controllers.menuActions.PlayerAction;
 import blockamon.objects.Player;
 import blockamon.objects.images.ObjectImage;
 import blockamon.objects.data.AppearanceData;
@@ -14,8 +14,10 @@ public abstract class Building extends JComponent {
     private static ImageData _imageData = new ImageData(_imagesFolder);
     private AppearanceData _appearanceData;
     private ObjectImage _image;
+    private String _name;
 
-	public Building(int xPosition, int yPosition, int width, int height, String image) {
+	public Building(int xPosition, int yPosition, int width, int height, String image, String name) {
+        _name = name;
         _appearanceData = new AppearanceData(xPosition, yPosition, width, height);
 		this.setBounds(xPosition, yPosition, width, height);
         _imageData = new ImageData(_imagesFolder, image);
@@ -24,9 +26,13 @@ public abstract class Building extends JComponent {
 		this.repaint();
 	}
 
-    public abstract List<BuildingAction> getActions(Player player);
+    public abstract List<PlayerAction> getActions(Player player);
 
     public AppearanceData getAppearanceData() {
         return _appearanceData;
+    }
+
+    public String getName() {
+        return _name;
     }
 }

@@ -1,21 +1,18 @@
 package blockamon.objects.buildings;
-import blockamon.controllers.menuActions.BuildingAction;
 import blockamon.controllers.menuActions.HealAction;
-import blockamon.input.ActionObject;
-import blockamon.objects.Blockamon;
+import blockamon.controllers.menuActions.PlayerAction;
 import blockamon.objects.Player;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HealingCenter extends Building {
 	public HealingCenter() {
-		super(300, 20, 75, 75, "HealShop");
+		super(300, 20, 75, 75, "HealShop", "HealShop");
 	}
 
-    public List<BuildingAction> getActions(Player player) {
-        List<BuildingAction> actions = new ArrayList<BuildingAction>();
+    public List<PlayerAction> getActions(Player player) {
+        List<PlayerAction> actions = new ArrayList<PlayerAction>();
         actions.add(new HealAction(player));
         return actions;
     }

@@ -1,0 +1,55 @@
+Blockamon Menus:
+Item Shop menu ->
+	Buy menu->
+		List of items ->
+			(Confirmation Dialog) ->
+			Back
+		Back
+
+Heal Center menu ->
+	Heal
+	
+Out of Battle menu ->
+	Blockamon menu ->
+		List of blockamon ->
+			(Blockamon Dialog) ->
+				Switch menu ->
+					(Switch dialog)
+						A List of blockamon excluding the switching one
+					Cancel
+				Info
+					(Info dialog)
+						Ok
+				Cancel
+		Back
+	Bag menu ->
+		List of items ->
+			(Info dialog) ->
+				Select blockamon to use it on if not a capture item, otherwise do nothing (give info?)
+				Back
+		Back
+	Money
+	Save
+	Load
+		
+In Battle menu ->
+	Attack menu ->
+		Menu with moves?
+		Back
+	Bag menu ->
+		List of items ->
+			(Info dialog) ->
+				Select blockamon to use it on, if it isn't a capture item, otherwise try to capture opposing blockamon
+				Back
+		Back
+	Blockamon menu ->
+		List of blockamon ->
+			(Blockamon Dialog) ->
+				Switch
+					Switch with current in battle blockamon
+				Info
+					(Info dialog)
+						Ok
+				Cancel
+		Back
+	Flee

@@ -10,9 +10,9 @@ import java.awt.event.ActionEvent;
  * Date: 6/15/2014
  * Time: 3:09 PM
  */
-public class HealAction extends BuildingAction {
+public class HealAction extends PlayerAction {
     public HealAction(Player player) {
-        super("Heal", player);
+        super("Heal", "Heal", player);
     }
 
     public void actionPerformed(ActionEvent e) {

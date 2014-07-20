@@ -11,11 +11,11 @@ import java.awt.event.ActionEvent;
  * Date: 6/15/2014
  * Time: 3:02 PM
  */
-public class ItemAction extends BuildingAction {
+public class ItemAction extends PlayerAction {
     private Item _item;
 
-    public ItemAction(String name, Player player, Item item) {
-        super(name, player);
+    public ItemAction(String actionText, Player player, Item item) {
+        super(actionText, item.toString(), player);
         _item = item;
     }
 
