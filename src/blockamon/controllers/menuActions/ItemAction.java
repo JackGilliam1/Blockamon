@@ -1,5 +1,7 @@
 package blockamon.controllers.menuActions;
 
+import blockamon.io.IPrinter;
+import blockamon.io.PrintManager;
 import blockamon.items.Item;
 import blockamon.objects.Player;
 
@@ -20,6 +22,7 @@ public class ItemAction extends PlayerAction {
     }
 
     public void actionPerformed(ActionEvent e) {
+        //TODO: Switch messages to display in ui using the IDisplay
         if(_player.getMoney() >= _item.getPrice()) {
             System.out.println("Adding item to player: " + getName());
             _player.addItem(_item);

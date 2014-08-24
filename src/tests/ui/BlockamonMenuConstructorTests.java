@@ -2,20 +2,20 @@ package tests.ui;
 
 import blockamon.controllers.BlockamonMenuConstructor;
 import blockamon.controllers.menuActions.*;
-import blockamon.io.ISaveWriter;
+import blockamon.io.Printer;
 import blockamon.items.Item;
+import blockamon.objects.Blockamon;
+import blockamon.objects.ElementType;
 import blockamon.objects.Player;
 import blockamon.objects.buildings.Building;
 import blockamon.objects.buildings.HealingCenter;
 import blockamon.objects.buildings.ItemShop;
 import junit.framework.TestCase;
 import org.junit.Assert;
+import tests.mocks.FakeSaveLoader;
 import tests.mocks.FakeSaveWriter;
 
 import javax.swing.*;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User: Jack's Computer
@@ -26,11 +26,14 @@ public class BlockamonMenuConstructorTests extends TestCase {
     private Player _player;
     private BlockamonMenuConstructor _constructor;
     private FakeSaveWriter _saveWriter;
+    private FakeSaveLoader _saveLoader;
 
     public BlockamonMenuConstructorTests() {
+        Printer.EnableLogging = false;
         _player = new Player();
         _saveWriter = new FakeSaveWriter();
-        _constructor = new BlockamonMenuConstructor(_player, _saveWriter);
+        _saveLoader = new FakeSaveLoader();
+        _constructor = new BlockamonMenuConstructor(_player, _saveWriter, _saveLoader);
     }
 
     public void testCreatesTheItemShopMenu() {
@@ -112,6 +115,115 @@ public class BlockamonMenuConstructorTests extends TestCase {
         assertNameAndText(menu.getItem(4), "Load", "Load");
     }
 
+    public void testSaveActionIsCorrect() {
+        JMenu menu = _constructor.createOutOfBattleMenu();
+
+        JMenuItem saveMenuItem = getWithName(menu, "Save");
+        assertNotNull("Save menu item was not added", saveMenuItem);
+        assertNotNull("Save action was null", saveMenuItem.getAction());
+        assertEquals(SaveAction.class, saveMenuItem.getAction().getClass());
+    }
+
+    public void testLoadActionIsCorrect() {
+        JMenu menu = _constructor.createOutOfBattleMenu();
+
+        JMenuItem loadMenuItem = getWithName(menu, "Load");
+        assertNotNull("Load menu item was not added", loadMenuItem);
+        assertNotNull("Load action was null", loadMenuItem.getAction());
+        assertEquals(LoadAction.class, loadMenuItem.getAction().getClass());
+    }
+
+    public void testMoneyActionIsCorrect() {
+        JMenu menu = _constructor.createOutOfBattleMenu();
+
+        JMenuItem moneyMenuItem = getWithName(menu, "Money");
+        assertNotNull("Money menu item was not added", moneyMenuItem);
+        assertNotNull("Money action was null", moneyMenuItem.getAction());
+        assertEquals(MoneyAction.class, moneyMenuItem.getAction().getClass());
+    }
+
+    public void testBagActionIsCorrect() {
+        JMenu menu = _constructor.createOutOfBattleMenu();
+
+        JMenuItem bagMenuItem = getWithName(menu, "Bag");
+        assertNotNull("Bag menu item was not added", bagMenuItem);
+        assertNotNull("Bag action was null", bagMenuItem.getAction());
+        assertEquals(BagAction.class, bagMenuItem.getAction().getClass());
+    }
+
+    public void testBlockamonActionIsCorrect() {
+        JMenu menu = _constructor.createOutOfBattleMenu();
+
+        JMenuItem blockamonMenuItem = getWithName(menu, "Blockamon");
+        assertNotNull("Blockamon menu item was added", blockamonMenuItem);
+        assertNotNull("Blockamon action was not set", blockamonMenuItem.getAction());
+        assertEquals(BlockamonMenuAction.class, blockamonMenuItem.getAction().getClass());
+    }
+
+    public void testCreatesItemMenuWithNoItemsCorrectly() {
+        JMenu menu = _constructor.createItemMenu();
+        assertNameAndText(menu, "Items", "Items");
+
+        assertEquals("Number of menus was not correct", 1, menu.getItemCount());
+
+        JMenuItem backButton = menu.getItem(0);
+        assertNameAndText(backButton, "Back", "Back");
+        assertNotNull("Back button was not added", backButton);
+        assertNotNull("Back button action was not set", backButton.getAction());
+        assertEquals(BackAction.class, backButton.getAction().getClass());
+    }
+
+    public void testCreatesItemMenuWithItemsCorrectly() {
+        _player.addItem(Item.BLOCKABALL);
+        _player.addItem(Item.HEALVIAL);
+        JMenu menu = _constructor.createItemMenu();
+        assertNameAndText(menu, "Items", "Items");
+
+        assertEquals("Number of menus was not correct", 3, menu.getItemCount());
+
+        assertAllItemsHaveNames(menu);
+
+        JMenuItem blockaballItemMenu = getWithName(menu, "BLOCKABALL");
+        assertNotNull("Blockaball item menu was not added", blockaballItemMenu);
+        assertEquals("Blockaball text was not right", "Blockaball", blockaballItemMenu.getText());
+        assertNotNull("Blockaball action was not set", blockaballItemMenu.getAction());
+        assertEquals(ItemAction.class, blockaballItemMenu.getAction().getClass());
+
+        JMenuItem healVialItemMenu = getWithName(menu, "HEALVIAL");
+        assertNotNull("HealVial item menu was not added", healVialItemMenu);
+        assertEquals("HealVial text was not right", "Heal Vial", healVialItemMenu.getText());
+        assertNotNull("HealVial action was not set", healVialItemMenu.getAction());
+        assertEquals(ItemAction.class, healVialItemMenu.getAction().getClass());
+
+        JMenuItem backItemMenu = getWithName(menu, "Back");
+        assertNotNull("Back item menu was not added", backItemMenu);
+        assertEquals("Back item text was not right", "Back", backItemMenu.getText());
+        assertNotNull("Back action was not set", backItemMenu.getAction());
+        assertEquals(BackAction.class, backItemMenu.getAction().getClass());
+    }
+
+    public void testCreatesBlockamonMenuCorrectly() {
+        Blockamon blockamon = new Blockamon(ElementType.BUG);
+        _player.addToParty(blockamon);
+        JMenu menu = _constructor.createBlockamonMenu();
+
+        assertNameAndText(menu, "Blockamon", "Blockamon");
+
+        assertEquals("Number of menu items was not correct", 2, menu.getItemCount());
+
+        JMenuItem blockamonMenuItem = menu.getItem(0);
+        assertNameAndText(blockamonMenuItem, blockamon.elementType() + "0",
+                blockamon.name() + ", " + blockamon.level() + ", " + blockamon.currentHp() + "/" + blockamon.maxHp());
+        assertNotNull("Blockamon menu action not set", blockamonMenuItem.getAction());
+        assertEquals(BlockamonAction.class, blockamonMenuItem.getAction().getClass());
+
+        JMenuItem backItemMenu = menu.getItem(1);
+        assertNotNull("Back item menu was not added", backItemMenu);
+        assertEquals("Back item text was not right", "Back", backItemMenu.getText());
+        assertNotNull("Back action was not set", backItemMenu.getAction());
+        assertEquals(BackAction.class, backItemMenu.getAction().getClass());
+    }
+
     private void assertNameAndText(JMenu menu, String name, String text) {
         Assert.assertEquals("Name of the Menu should be " + name, name, menu.getName());
         Assert.assertEquals("Text of the Menu should be " + text, text, menu.getText());
@@ -122,4 +234,28 @@ public class BlockamonMenuConstructorTests extends TestCase {
         Assert.assertEquals("Text of menu item is " + text, text, menuItem.getText());
     }
 
+    private void assertAllItemsHaveNames(JMenu menu) {
+        for(int i = 0; i < menu.getItemCount(); i++) {
+            assertNotNull("Item at position " + i + " did not have a name", menu.getItem(i).getName());
+        }
+    }
+
+    private JMenuItem getWithName(JMenu menu, String name) {
+        int numOfItems = menu.getItemCount();
+        JMenuItem menuItem = null;
+        for(int i = 0; i < numOfItems; i++) {
+            JMenuItem item = menu.getItem(i);
+            if(item == null) {
+                continue;
+            }
+            if(item.getName() == null) {
+                continue;
+            }
+            if(item.getName().equals(name)) {
+                menuItem = item;
+                i = numOfItems;
+            }
+        }
+        return menuItem;
+    }
 }

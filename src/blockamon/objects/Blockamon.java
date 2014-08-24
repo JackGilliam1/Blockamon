@@ -1,9 +1,9 @@
 package blockamon.objects;
 
 import java.awt.*;
-
 import javax.swing.*;
 import java.util.*;
+
 public class Blockamon extends IBoundable {
 
     //TODO: Fix information being displayed incorrectly
@@ -35,9 +35,6 @@ public class Blockamon extends IBoundable {
     private static final double DEFAULT_ATTACK_POWER = 1.0;
     private String _status = "NONE";
 
-//    public Blockamon(ElementType type) {
-//        this(type, type.toString(), DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_LEVEL, DEFAULT_EXPERIENCE_NEEDED, type.getElementColor().getColor());
-//    }
     public Blockamon(ElementType type, String name, int width, int height, int currentLevel, int experienceNeeded, Color color) {
         this(type, name, width, height, currentLevel, DEFAULT_EXPERIENCE, experienceNeeded, color);
     }
@@ -60,10 +57,6 @@ public class Blockamon extends IBoundable {
         this.add(backGround, 0);
     }
 
-    /**
-     * Retrieves the name of this blockamon
-     * @return The name of this blockamon
-     */
     public String name() {
         if(_name == null)
         {
@@ -71,17 +64,9 @@ public class Blockamon extends IBoundable {
         }
         return _name;
     }
-    /**
-     * Sets the name of this blockamon to the specified value
-     * @param value The new name of this blockamon
-     */
     public void name(String value) {
         _name = value;
     }
-    /**
-     * Indicates whether this blockamon has fainted (Health at Zero)
-     * @return True if this blockamon has a health less than or equal to zero
-     */
     public boolean hasFainted() {
         return currentHp() == 0;
     }
@@ -91,7 +76,6 @@ public class Blockamon extends IBoundable {
     public void isLead(boolean isLead) {
         this.isLead = isLead;
     }
-    //</editor-fold>
 
     /**
      * Heals the blockamon to full health

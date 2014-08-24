@@ -1,7 +1,7 @@
 package blockamon.items;
 
 public enum Item {
-    HEALVIAL(100, true, 10, "Heal Vial"), BLOCKABALL(250, "Blocka Ball");
+    HEALVIAL(100, true, 10, "Heal Vial"), BLOCKABALL(250, "Blockaball");
 
     private String _name;
     private boolean heals;

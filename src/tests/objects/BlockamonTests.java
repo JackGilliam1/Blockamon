@@ -1,4 +1,4 @@
-package tests;
+package tests.objects;
 import blockamon.objects.ElementType;
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;

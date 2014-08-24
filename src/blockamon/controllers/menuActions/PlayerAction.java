@@ -16,6 +16,7 @@ public abstract class PlayerAction extends AbstractAction {
     protected Player _player;
 
     public PlayerAction(String text, String name, Player player) {
+        super(text);
         _text = text;
         _name = name;
         _player = player;

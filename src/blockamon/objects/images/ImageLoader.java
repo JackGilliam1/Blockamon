@@ -1,5 +1,7 @@
 package blockamon.objects.images;
 
+import blockamon.io.IPrinter;
+import blockamon.io.PrintManager;
 import blockamon.objects.data.ImageData;
 
 import javax.swing.*;
@@ -15,6 +17,7 @@ import java.util.Map;
  */
 public class ImageLoader implements IImageLoader {
 
+    private IPrinter _printer = PrintManager.getPrinter(this);
     private Map<String, Image> _loadedImages;
 
     public ImageLoader() {
@@ -25,18 +28,18 @@ public class ImageLoader implements IImageLoader {
         String imagePath = imageData.getFullFilePath();
         Image loadedImage = findLoadedImage(imagePath);
         if(loadedImage != null) {
-            System.out.println("Loaded Cached Image: " + imagePath);
+            _printer.out("Loaded Cached Image: " + imagePath);
             return loadedImage;
         }
 
         URL imgURL = getClass().getResource(imagePath);
         if (imgURL != null) {
             Image icon = new ImageIcon(imgURL).getImage();
-            System.out.println("Loaded image: " + imagePath);
+            _printer.out("Loaded image: " + imagePath);
             _loadedImages.put(imagePath, icon);
             return icon;
         } else {
-            System.err.println("Couldn't find file: " + imagePath);
+            _printer.err("Couldn't find file: " + imagePath);
         }
         return null;
     }
