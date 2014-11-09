@@ -1,5 +1,6 @@
 package blockamon.controllers.menuActions;
 
+import blockamon.controllers.WindowDisplay;
 import blockamon.objects.Player;
 
 import javax.swing.*;
@@ -13,14 +14,16 @@ import java.awt.event.ActionEvent;
 public class BagAction extends AbstractAction {
 
     private Player _player;
+    private WindowDisplay _windowDisplay;
 
-    public  BagAction(Player player) {
+    public  BagAction(Player player, WindowDisplay windowDisplay) {
         super("Bag");
         _player = player;
+        _windowDisplay = windowDisplay;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //TODO: Write the Bag action event
+        _windowDisplay.displayWindow(WindowDisplay.WindowType.BagWindow);
     }
 }

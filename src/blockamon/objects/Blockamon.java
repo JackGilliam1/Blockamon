@@ -201,6 +201,9 @@ public class Blockamon extends IBoundable {
 
     public String toString() {
         final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Name: ");
+        stringBuilder.append(name());
+        stringBuilder.append("\n");
         stringBuilder.append("Level: ");
         stringBuilder.append(level());
         stringBuilder.append("\n");
@@ -239,7 +242,6 @@ public class Blockamon extends IBoundable {
     private String _name;
     private double _currentAttack;
     private double _totalAttack;
-    private double _maxAttack;
 
     public Blockamon(ElementType type) {
         _element = type;

@@ -74,7 +74,7 @@ public class BlockamonMenuConstructor {
 
         JMenuItem bagMenuItem = new JMenuItem("Bag");
         bagMenuItem.setName("Bag");
-        bagMenuItem.setAction(new BagAction(_player));
+        bagMenuItem.setAction(new BagAction(_player, _windowDisplay));
         menu.add(bagMenuItem);
 
         JMenuItem moneyMenuItem = new JMenuItem("Money");

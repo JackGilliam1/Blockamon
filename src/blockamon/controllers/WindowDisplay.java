@@ -50,6 +50,7 @@ public class WindowDisplay {
 
     public enum WindowType {
         BlockamonWindow,
-        Money
+        Money,
+        BagWindow
     }
 }

@@ -1,17 +1,13 @@
 package blockamon.controllers;
 
-import blockamon.controllers.menuActions.LoadAction;
-import blockamon.controllers.menuActions.MoneyAction;
-import blockamon.controllers.menuActions.PlayerAction;
-import blockamon.controllers.menuActions.SaveAction;
 import blockamon.io.*;
 import blockamon.items.Item;
 import blockamon.objects.Blockamon;
 import blockamon.objects.Player;
-import blockamon.objects.buildings.Building;
 import blockamon.objects.buildings.HealingCenter;
 import blockamon.objects.buildings.ItemShop;
 import blockamon.objects.encounters.Grass;
+import blockamon.windows.BagWindow;
 import blockamon.windows.BlockamonWindow;
 import blockamon.windows.MoneyWindow;
 
@@ -842,6 +838,7 @@ public class ControlPanel extends JPanel {
         _menuConstructor = new BlockamonMenuConstructor(player, saveWriter, saveLoader, windowDisplay);
         windowDisplay.registerWindow(WindowDisplay.WindowType.Money, new MoneyWindow(player));
         windowDisplay.registerWindow(WindowDisplay.WindowType.BlockamonWindow, new BlockamonWindow(player));
+        windowDisplay.registerWindow(WindowDisplay.WindowType.BagWindow, new BagWindow(player));
 
         _menuBar = new JMenuBar();
         JMenu outOfBattleMenu = _menuConstructor.createOutOfBattleMenu();
