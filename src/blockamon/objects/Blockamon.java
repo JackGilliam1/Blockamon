@@ -243,6 +243,17 @@ public class Blockamon extends IBoundable {
 
     public Blockamon(ElementType type) {
         _element = type;
+        this.name(type.name());
+        int maxHp = randomNumberGenerator.nextInt(10);
+        if(maxHp < 5) {
+            maxHp = 5;
+        }
+        this.maxHp(maxHp);
+        int totalAttack = randomNumberGenerator.nextInt(2);
+        if(totalAttack < 1) {
+            totalAttack = 1;
+        }
+        this.totalAttack(totalAttack);
     }
 
     public ElementType elementType() {
@@ -283,6 +294,7 @@ public class Blockamon extends IBoundable {
     }
     public void totalAttack(double totalAttack) {
         _totalAttack = totalAttack;
+        currentAttack(totalAttack);
     }
     public int currentExp() {
         return _currentExp;
