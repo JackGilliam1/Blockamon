@@ -1,6 +1,7 @@
 package blockamon_tests.ui;
 
 import blockamon.controllers.BlockamonMenuConstructor;
+import blockamon.controllers.WindowDisplay;
 import blockamon.controllers.menuActions.*;
 import blockamon.io.Printer;
 import blockamon.items.Item;
@@ -33,7 +34,7 @@ public class BlockamonMenuConstructorTests extends TestCase {
         _player = new Player();
         _saveWriter = new FakeSaveWriter();
         _saveLoader = new FakeSaveLoader();
-        _constructor = new BlockamonMenuConstructor(_player, _saveWriter, _saveLoader);
+        _constructor = new BlockamonMenuConstructor(_player, _saveWriter, _saveLoader, new WindowDisplay());
     }
 
     public void testCreatesTheItemShopMenu() {
@@ -43,6 +44,7 @@ public class BlockamonMenuConstructorTests extends TestCase {
 
         Assert.assertNotNull(menu);
         Assert.assertEquals(building.getName(), menu.getName());
+        Assert.assertEquals(building.getName(), menu.getText());
         Assert.assertEquals(2, menu.getItemCount());
         for(int i = 0; i < menu.getItemCount(); i++) {
             JMenuItem menuItem = menu.getItem(i);
@@ -69,6 +71,7 @@ public class BlockamonMenuConstructorTests extends TestCase {
 
         Assert.assertNotNull(menu);
         Assert.assertEquals(building.getName(), menu.getName());
+        Assert.assertEquals(building.getName(), menu.getText());
         Assert.assertEquals(1, menu.getItemCount());
         for(int i = 0; i < menu.getItemCount(); i++) {
             JMenuItem menuItem = menu.getItem(i);

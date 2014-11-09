@@ -12,6 +12,8 @@ import blockamon.objects.buildings.Building;
 import blockamon.objects.buildings.HealingCenter;
 import blockamon.objects.buildings.ItemShop;
 import blockamon.objects.encounters.Grass;
+import blockamon.windows.BlockamonWindow;
+import blockamon.windows.MoneyWindow;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -829,52 +831,35 @@ public class ControlPanel extends JPanel {
     private JMenuBar _menuBar;
     private MenuType _shownMenu;
     private Map<MenuType, JMenu> _menus = new HashMap<MenuType, JMenu>();
+    private BlockamonMenuConstructor _menuConstructor;
 
-    public ControlPanel(Player player, ISaveWriter saveWriter, ISaveLoader saveLoader,
+    public ControlPanel(Player player,
+                        ISaveWriter saveWriter,
+                        ISaveLoader saveLoader,
                         ItemShop itemShop,
-                        HealingCenter healingCenter) {
+                        HealingCenter healingCenter,
+                        WindowDisplay windowDisplay) {
+        _menuConstructor = new BlockamonMenuConstructor(player, saveWriter, saveLoader, windowDisplay);
+        windowDisplay.registerWindow(WindowDisplay.WindowType.Money, new MoneyWindow(player));
+        windowDisplay.registerWindow(WindowDisplay.WindowType.BlockamonWindow, new BlockamonWindow(player));
+
         _menuBar = new JMenuBar();
-        JMenu outOfBattleActions = setupActionsMenu(player, saveWriter, saveLoader);
-        outOfBattleActions.setVisible(true);
-        outOfBattleActions.setEnabled(true);
-        _menuBar.add(outOfBattleActions);
-        JMenu itemShopActions = setupBuildingMenu(player, itemShop, MenuType.ItemShop);
-        _menuBar.add(itemShopActions);
-        JMenu healShopActions = setupBuildingMenu(player, healingCenter, MenuType.HealShop);
-        _menuBar.add(healShopActions);
+        JMenu outOfBattleMenu = _menuConstructor.createOutOfBattleMenu();
+        _menuBar.add(outOfBattleMenu);
+        _menus.put(MenuType.OutOfBattle, outOfBattleMenu);
+
+        JMenu itemShopMenu = _menuConstructor.createBuildingMenu(itemShop, player);
+        _menuBar.add(itemShopMenu);
+        _menus.put(MenuType.ItemShop, itemShopMenu);
+
+        JMenu healingCenterMenu = _menuConstructor.createBuildingMenu(healingCenter, player);
+        _menuBar.add(healingCenterMenu);
+        _menus.put(MenuType.HealShop, healingCenterMenu);
+
+        switchToMenu(MenuType.OutOfBattle);
 
         System.out.println("set up menubar with number of menus: " + _menuBar.getMenuCount());
         this.add(_menuBar);
-    }
-
-    private JMenu setupActionsMenu(Player player, ISaveWriter saveWriter, ISaveLoader saveLoader) {
-        JMenu menu = new JMenu("Actions");
-        JMenuItem moneyMenuItem = new JMenuItem(new MoneyAction(player));
-        menu.add(moneyMenuItem);
-
-        JMenuItem saveMenuItem = new JMenuItem(new SaveAction(player, saveWriter));
-        menu.add(saveMenuItem);
-
-        JMenuItem loadMenuItem = new JMenuItem(new LoadAction(player, saveLoader));
-        menu.add(loadMenuItem);
-
-        menu.setVisible(false);
-        _menus.put(MenuType.OutOfBattle, menu);
-        return menu;
-    }
-
-    private JMenu setupBuildingMenu(Player player, Building building, MenuType menuType) {
-        JMenu menu = new JMenu(menuType.toString());
-        List<PlayerAction> buildingActions = building.getActions(player);
-        for(PlayerAction buildingAction : buildingActions) {
-            JMenuItem menuItem = new JMenuItem(buildingAction);
-            menuItem.setText(buildingAction.getName());
-            System.out.println("Setting up building action: " + buildingAction.getName());
-            menu.add(menuItem);
-        }
-        menu.setVisible(false);
-        _menus.put(menuType, menu);
-        return menu;
     }
 
     private JMenu getMenu(MenuType menu) {
@@ -902,25 +887,6 @@ public class ControlPanel extends JPanel {
             if(menu != null) {
                 menu.setVisible(false);
             }
-        }
-    }
-
-    private void doAction(ButtonTypes buttonTypes) {
-        switch(buttonTypes) {
-            case Money:
-                break;
-            case Save:
-                break;
-            case Load:
-                break;
-            case Info:
-                break;
-            case ShopBack:
-                break;
-            case OOBBack:
-                break;
-            case Back:
-                break;
         }
     }
 

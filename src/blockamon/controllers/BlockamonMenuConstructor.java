@@ -21,15 +21,20 @@ public class BlockamonMenuConstructor {
     private Player _player;
     private ISaveWriter _saveWriter;
     private ISaveLoader _saveLoader;
+    private WindowDisplay _windowDisplay;
 
-    public BlockamonMenuConstructor(Player player, ISaveWriter saveWriter, ISaveLoader saveLoader) {
+    public BlockamonMenuConstructor(Player player,
+                                    ISaveWriter saveWriter,
+                                    ISaveLoader saveLoader,
+                                    WindowDisplay windowDisplay) {
         _player = player;
         _saveWriter = saveWriter;
         _saveLoader = saveLoader;
+        _windowDisplay = windowDisplay;
     }
 
     public JMenu createBuildingMenu(Building building, Player player) {
-        JMenu menu = new JMenu();
+        JMenu menu = new JMenu(building.getName());
         menu.setName(building.getName());
         List<PlayerAction> actions = building.getActions(player);
         for(PlayerAction action : actions) {
@@ -64,7 +69,7 @@ public class BlockamonMenuConstructor {
         menu.setName("OutOfBattle");
         JMenuItem blockamonMenuItem = new JMenuItem("Blockamon");
         blockamonMenuItem.setName("Blockamon");
-        blockamonMenuItem.setAction(new BlockamonMenuAction(_player));
+        blockamonMenuItem.setAction(new BlockamonMenuAction(_player, _windowDisplay));
         menu.add(blockamonMenuItem);
 
         JMenuItem bagMenuItem = new JMenuItem("Bag");
@@ -74,7 +79,7 @@ public class BlockamonMenuConstructor {
 
         JMenuItem moneyMenuItem = new JMenuItem("Money");
         moneyMenuItem.setName("Money");
-        moneyMenuItem.setAction(new MoneyAction(_player));
+        moneyMenuItem.setAction(new MoneyAction(_player, _windowDisplay));
         menu.add(moneyMenuItem);
 
         JMenuItem saveMenuItem = new JMenuItem("Save");

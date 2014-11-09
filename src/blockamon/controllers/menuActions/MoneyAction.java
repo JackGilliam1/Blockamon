@@ -1,5 +1,6 @@
 package blockamon.controllers.menuActions;
 
+import blockamon.controllers.WindowDisplay;
 import blockamon.objects.Player;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,14 +13,15 @@ import java.awt.event.ActionEvent;
 public class MoneyAction extends AbstractAction {
 
     private Player _player;
+    private WindowDisplay _windowDisplay;
 
-    public MoneyAction(Player player) {
+    public MoneyAction(Player player, WindowDisplay windowDisplay) {
         super("Money");
         _player = player;
+        _windowDisplay = windowDisplay;
     }
 
     public void actionPerformed(ActionEvent e) {
-        double money = _player.getMoney();
-        //TODO: Write the Money Action
+        _windowDisplay.displayWindow(WindowDisplay.WindowType.Money);
     }
 }

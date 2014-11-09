@@ -1,6 +1,7 @@
 package blockamon;
 
 import blockamon.controllers.ControlPanel;
+import blockamon.controllers.WindowDisplay;
 import blockamon.input.KeyListen;
 import blockamon.io.*;
 import blockamon.items.Item;
@@ -51,7 +52,7 @@ public class World extends JFrame implements IMessageDialogListener {
 	}
 
     public void run() {
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         player = createPlayer();
         playingField.add(player);
         createItemShop();
@@ -61,7 +62,8 @@ public class World extends JFrame implements IMessageDialogListener {
                 createSaveWriter(_fileFilter),
                 createSaveLoader(_fileFilter),
                 getItemShop(),
-                getHealingCenter());
+                getHealingCenter(),
+                new WindowDisplay());
 
         add(menu, BorderLayout.NORTH);
         add(playingField, BorderLayout.CENTER);
