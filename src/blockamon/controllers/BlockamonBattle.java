@@ -242,6 +242,7 @@ public class BlockamonBattle {
 		}
 	}
 
+    //TODO Use the Logger instead
 	// prints the text sent in
 	private String printText(String text, String title, int typeOfMessage, String methodToUse) {
 		String input = null;

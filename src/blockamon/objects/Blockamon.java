@@ -52,7 +52,7 @@ public class Blockamon extends IBoundable {
         isLead(false);
         resetHealth();
         resetAttack();
-        shapes.Rectangle backGround = new shapes.Rectangle(0, 0, this.getWidth(), this.getHeight());
+        blockamon.shapes.Rectangle backGround = new blockamon.shapes.Rectangle(0, 0, this.getWidth(), this.getHeight());
         backGround.setBackground(color);
         this.add(backGround, 0);
     }

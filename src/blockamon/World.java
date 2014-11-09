@@ -4,15 +4,15 @@ import blockamon.controllers.ControlPanel;
 import blockamon.input.KeyListen;
 import blockamon.io.*;
 import blockamon.items.Item;
-import blockamon.objects.Blockamon;
+import blockamon.listeners.IMessageDialogListener;
 import blockamon.objects.data.Direction;
 import blockamon.objects.Player;
 import blockamon.objects.buildings.HealingCenter;
 import blockamon.objects.buildings.ItemShop;
 import blockamon.objects.encounters.Grass;
-import generators.BlockamonGenerator;
-import listeners.MessageDialogEvent;
-import listeners.MessageDialogListener;
+import blockamon.generators.BlockamonGenerator;
+import blockamon.listeners.MessageDialogEvent;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,7 +21,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
-public class World extends JFrame implements MessageDialogListener {
+public class World extends JFrame implements IMessageDialogListener {
 
     private static final String GAME_TITLE = "Blockamon";
 	private JPanel playingField;

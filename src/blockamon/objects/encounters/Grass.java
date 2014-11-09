@@ -6,12 +6,12 @@ import blockamon.World;
 import blockamon.objects.Blockamon;
 import blockamon.objects.Player;
 import blockamon.objects.data.AppearanceData;
-import generators.BlockamonGenerator;
+import blockamon.generators.BlockamonGenerator;
 
 import java.awt.*;
 import java.util.*;
 
-public class Grass extends shapes.Rectangle {
+public class Grass extends blockamon.shapes.Rectangle {
 
 	/**
 	 *

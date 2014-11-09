@@ -9,7 +9,7 @@ public class Printer<T> implements IPrinter {
 
     public static boolean EnableLogging = true;
 
-    private static final String FORMAT = "%w: %w";
+    private static final String FORMAT = "%s: %s";
     private T _type;
 
     public Printer(T type) {
@@ -19,12 +19,14 @@ public class Printer<T> implements IPrinter {
     public void err(String message) {
         if(EnableLogging) {
             System.err.printf(FORMAT, _type.getClass().toString(), message);
+            System.err.println();
         }
     }
 
     public void out(String message) {
         if(EnableLogging) {
             System.out.printf(FORMAT, _type.getClass().toString(), message);
+            System.out.println();
         }
     }
 }

@@ -28,7 +28,6 @@ public class ImageLoader implements IImageLoader {
         String imagePath = imageData.getFullFilePath();
         Image loadedImage = findLoadedImage(imagePath);
         if(loadedImage != null) {
-            _printer.out("Loaded Cached Image: " + imagePath);
             return loadedImage;
         }
 
